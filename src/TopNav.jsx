@@ -1,24 +1,27 @@
 import React from "react";
+import "./TopNav.scss";
 
 const TopNav = () => {
   return (
     <nav>
-      <p>Welcome in our HouseHold Account</p>
-      <img src="#" alt="Family-logo" />
-      <form className="login" action="">
+      <p className="welcome">Welcome in our HouseHold Account</p>
+      <img src="/img/logo.png" alt="" className="logo" />
+      <form className="loginForm" action="">
         <input
           type="text"
-          placeholder="user"
-          class="login__input login__input--user"
+          placeholder="username"
+          className="loginForm__input loginForm__input--user"
         />
 
         <input
           type="password"
-          placeholder="PIN"
-          maxlength="4"
-          class="login__input login__input--pin"
+          placeholder="pin"
+          maxLength="4"
+          className="loginForm__input loginForm__input--pin"
         />
-        <button class="login__btn">&rarr;</button>
+        <button className="loginForm__btn">
+          LOG IN <span>&rarr;</span>
+        </button>
       </form>
     </nav>
   );

@@ -1,9 +1,10 @@
 import "./App.scss";
+import TopNav from "./TopNav.jsx";
 
 function App() {
   return (
     <div className="App">
-      <h1>Hello</h1>
+      <TopNav />
     </div>
   );
 }
