@@ -1,0 +1,63 @@
+ .main {
+     position: relative;
+     margin: 5rem auto;
+     background-color: orange;
+     // to pretend
+     height: 80rem;
+     max-width: 120rem;
+     display: flex;
+     flex-direction: column;
+     //to animation
+     opacity: 1;
+     transition: all 1s;
+ }
+ 
+ .status {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     &__label {
+         font-size: 2.2rem;
+         font-weight: 500;
+     }
+     &__date {
+         font-size: 1.4rem;
+         color: #777;
+     }
+     &__value {
+         font-size: 4rem;
+         font-weight: 400;
+     }
+ }
+ 
+ .accBody {
+     display: flex;
+     padding: 4rem;
+     .mov {
+         height: 30rem;
+         flex: 0 0 60%;
+         background-color: red;
+     }
+     .ops {
+         height: 30rem;
+         flex: 0 0 40%;
+         display: flex;
+         flex-direction: column;
+         justify-content: space-between;
+         padding: 4rem;
+         color: #333;
+         background-color: rgb(235, 233, 222);
+         .op {
+             height: 5rem;
+         }
+         .op--lend {
+             background-image: linear-gradient(to top left, #39b385, #9be15d);
+         }
+         .op--borrow {
+             background-image: linear-gradient(to bottom left, #ffb003, #ffcb03);
+         }
+         .op--close {
+             background-image: linear-gradient(to bottom left, #e52a5a, #ff585f);
+         }
+     }
+ }
