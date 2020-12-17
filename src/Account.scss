@@ -1,9 +1,8 @@
  .main {
      position: relative;
      margin: 5rem auto;
-     background-color: orange;
+     background-color: inherit;
      // to pretend
-     height: 80rem;
      max-width: 120rem;
      display: flex;
      flex-direction: column;
@@ -33,21 +32,66 @@
  
  .accBody {
      display: flex;
-     //  padding: 4rem;
+     padding: 4rem;
      .mov {
-         height: 30rem;
+         display: flex;
+         flex-direction: column;
+         height: 50rem;
+         background-color: white;
          flex: 0 0 60%;
-         background-color: red;
+         padding: 1rem 2rem;
+         border-radius: 2rem;
+         overflow: scroll;
+         &__row {
+             padding: 2.2rem 4rem;
+             display: flex;
+             align-items: center;
+             justify-content: space-between;
+             border-bottom: 1px solid #eee;
+         }
+         &__type {
+             font-size: 1.1rem;
+             text-transform: uppercase;
+             font-weight: 500;
+             color: white;
+             padding: .2rem 1rem;
+             border-radius: 5rem;
+             &--dep {
+                 background-image: linear-gradient(to top left, #39b385, #9be15d);
+             }
+             &--withD {
+                 background-image: linear-gradient(to top left, #e52a5a, #ff585f);
+                 margin-right: -4rem;
+             }
+         }
+         &__date {
+             font-size: 1.2rem;
+             text-transform: uppercase;
+             font-weight: 500;
+             color: #777;
+         }
+         &__message {
+             font-size: 1.2rem;
+             text-transform: uppercase;
+             font-weight: 500;
+             color: white;
+             padding: .5rem 1rem;
+             border-radius: 1rem;
+             background-image: linear-gradient(to top left, #756e70, #dbb3b5);
+         }
+         &__value {
+             font-size: 1.7rem;
+         }
      }
      .ops {
          flex: 0 0 40%;
          display: flex;
          flex-direction: column;
-         padding: 4rem;
          color: #333;
+         padding-right: 2rem;
          .op {
              &:not(:last-child) {
-                 margin-bottom: 3rem;
+                 margin-bottom: 3.9rem;
              }
              padding: 3rem 4rem;
              color: #444;
@@ -103,7 +147,7 @@
              }
          }
          .op--lend {
-             background-image: linear-gradient(to top left, #c8dad3, #595e56);
+             background-image: linear-gradient(to bottom right, #c8dad3, #595e56);
          }
          .op--borrow {
              background-image: linear-gradient(to bottom left, #c9e9a0, #10c06e);

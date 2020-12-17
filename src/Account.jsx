@@ -11,7 +11,7 @@ const Account = () => {
           <p className="status__date">Actuell Date with js...later</p>
         </div>
         <div>
-          <p className="status__value">0€</p>
+          <p className="status__value">4000 €</p>
         </div>
       </div>
       {/* account component */}
@@ -99,7 +99,50 @@ const Account = () => {
             </form>
           </div>
         </div>
-        <div className="mov"></div>
+        <div className="mov">
+          <div className="mov__row">
+            <div className="mov__type mov__type--dep">2 dep</div>
+            <div className="mov__date">2 days ago</div>
+            <div className="mov__message">For School</div>
+            <div className="mov__value">500$</div>
+          </div>
+          <div className="mov__row">
+            <div className="mov__type mov__type--dep">2 dep</div>
+            <div className="mov__date">2 days ago</div>
+            <div className="mov__message">For School</div>
+            <div className="mov__value">500$</div>
+          </div>
+          <div className="mov__row">
+            <div className="mov__type mov__type--dep">2 dep</div>
+            <div className="mov__date">2 days ago</div>
+            <div className="mov__message">For School</div>
+            <div className="mov__value">500$</div>
+          </div>
+          <div className="mov__row">
+            <div className="mov__type mov__type--dep">2 dep</div>
+            <div className="mov__date">2 days ago</div>
+            <div className="mov__message">For School</div>
+            <div className="mov__value">500$</div>
+          </div>
+          <div className="mov__row">
+            <div className="mov__type mov__type--dep">2 dep</div>
+            <div className="mov__date">2 days ago</div>
+            <div className="mov__message">For School</div>
+            <div className="mov__value">500$</div>
+          </div>{" "}
+          <div className="mov__row">
+            <div className="mov__type mov__type--dep">2 dep</div>
+            <div className="mov__date">2 days ago</div>
+            <div className="mov__message">For School</div>
+            <div className="mov__value">500$</div>
+          </div>
+          <div className="mov__row">
+            <div className="mov__type mov__type--withD">1 withdraw</div>
+            <div className="mov__date">2 days ago</div>
+            <div className="mov__message">For School</div>
+            <div className="mov__value">500$</div>
+          </div>
+        </div>
       </div>
     </div>
   );
