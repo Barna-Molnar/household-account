@@ -1,5 +1,6 @@
 import React from "react";
 import "./Account.scss";
+import "./data.js";
 
 const Account = () => {
   return (

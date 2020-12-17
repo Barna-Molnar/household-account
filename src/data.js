@@ -20,3 +20,12 @@ const account4 = {
 };
 
 const accounts = [account1, account2, account3, account4];
+
+const createUsername = function(accs) {
+    accs.forEach(acc => {
+        acc.username = acc.owner
+            .toUpperCase().split(' ').map(item => item[0]).join('')
+    });
+    console.log(accounts);
+}
+createUsername(accounts)
