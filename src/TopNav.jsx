@@ -44,6 +44,10 @@ class TopNav extends React.Component {
             onClick={(e) => {
               e.preventDefault();
               this.props.login(this.state.username, this.state.pin);
+              this.setState({
+                username: "",
+                pin: "",
+              });
             }}
           >
             LOG IN <span>&rarr;</span>

@@ -29,14 +29,30 @@ const createUsername = function(accs) {
         acc.username = acc.owner
             .toLowerCase().split(' ').map(item => item[0]).join('')
     });
-    console.log(accounts);
 }
 createUsername(accounts)
 
 // calc value
-const calcValue = (acc) => {
-    acc.value = acc.movements.reduce((acc, currVal) => acc + currVal, 0)
-    console.log(acc.value);
+export const calcValue = (accs) => {
+    accs.forEach(acc => {
+        acc.value = acc.movements.reduce((acc, currVal) => acc + currVal, 0)
+    })
 }
 
-calcValue(account1)
+calcValue(accounts)
+
+// {this.props.currentAcc !== undefined
+//     ? this.props.currentAcc.movements.map((mov, i) => {
+//         const type = mov > 0 ? "dep" : "withD";
+//         return `
+//       <div className="mov__row">
+//       <div className="mov__type mov__type--${type}">
+//       ${i + 1} ${type}</div>
+//       <div className="mov__date">2 days ago</div>
+//       <div className="mov__message">For School</div>
+//       <div className="mov__value">${mov}</div>
+//     </div>
+
+//       `;
+//       })
+//     : ""}

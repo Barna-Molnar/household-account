@@ -2,7 +2,7 @@ import "./App.scss";
 import TopNav from "./TopNav.jsx";
 import Account from "./Account.jsx";
 import React from "react";
-import { accounts } from "./data.js";
+import { accounts, calcValue } from "./data.js";
 import { login } from "./login.js";
 
 class App extends React.Component {
@@ -18,6 +18,7 @@ class App extends React.Component {
       currentAcc: login(username, pin),
     });
   }
+
   render() {
     return (
       <div className="App">
