@@ -2,9 +2,12 @@ import React from "react";
 import "./Account.scss";
 import "./data.js";
 
-const Account = () => {
+const Account = (props) => {
   return (
-    <div className="main">
+    <div
+      className="main"
+      style={props.currentAcc !== undefined ? { opacity: 1 } : { opacity: 0 }}
+    >
       {/* status component */}
       <div className="status">
         <div>
@@ -101,36 +104,7 @@ const Account = () => {
           </div>
         </div>
         <div className="mov">
-          <div className="mov__row">
-            <div className="mov__type mov__type--dep">2 dep</div>
-            <div className="mov__date">2 days ago</div>
-            <div className="mov__message">For School</div>
-            <div className="mov__value">500$</div>
-          </div>
-          <div className="mov__row">
-            <div className="mov__type mov__type--dep">2 dep</div>
-            <div className="mov__date">2 days ago</div>
-            <div className="mov__message">For School</div>
-            <div className="mov__value">500$</div>
-          </div>
-          <div className="mov__row">
-            <div className="mov__type mov__type--dep">2 dep</div>
-            <div className="mov__date">2 days ago</div>
-            <div className="mov__message">For School</div>
-            <div className="mov__value">500$</div>
-          </div>
-          <div className="mov__row">
-            <div className="mov__type mov__type--dep">2 dep</div>
-            <div className="mov__date">2 days ago</div>
-            <div className="mov__message">For School</div>
-            <div className="mov__value">500$</div>
-          </div>
-          <div className="mov__row">
-            <div className="mov__type mov__type--dep">2 dep</div>
-            <div className="mov__date">2 days ago</div>
-            <div className="mov__message">For School</div>
-            <div className="mov__value">500$</div>
-          </div>{" "}
+          {}
           <div className="mov__row">
             <div className="mov__type mov__type--dep">2 dep</div>
             <div className="mov__date">2 days ago</div>

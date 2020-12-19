@@ -1,30 +1,57 @@
 import React from "react";
 import "./TopNav.scss";
 
-const TopNav = () => {
-  return (
-    <nav>
-      <p className="welcome">Welcome in our HouseHold Account</p>
-      <img src="/img/logo.png" alt="" className="logo" />
-      <form className="loginForm" action="">
-        <input
-          type="text"
-          placeholder="username"
-          className="loginForm__input loginForm__input--user"
-        />
+class TopNav extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: "",
+      pin: "",
+    };
+  }
+  render() {
+    return (
+      <nav>
+        <p className="welcome">
+          {this.props.currentAcc === undefined
+            ? "Welcome in our HouseHold Account"
+            : `Welcome back ${this.props.currentAcc.owner.split(" ")[0]}`}
+        </p>
+        <img src="/img/logo.png" alt="" className="logo" />
+        <form className="loginForm" action="">
+          <input
+            onChange={(e) => {
+              this.setState({ username: e.target.value });
+            }}
+            value={this.state.username}
+            type="text"
+            placeholder="username"
+            className="loginForm__input loginForm__input--user"
+          />
 
-        <input
-          type="password"
-          placeholder="pin"
-          maxLength="4"
-          className="loginForm__input loginForm__input--pin"
-        />
-        <button className="loginForm__btn">
-          LOG IN <span>&rarr;</span>
-        </button>
-      </form>
-    </nav>
-  );
-};
+          <input
+            onChange={(e) => {
+              this.setState({ pin: e.target.value });
+            }}
+            value={this.state.pin}
+            type="password"
+            placeholder="pin"
+            maxLength="4"
+            className="loginForm__input loginForm__input--pin"
+          />
+          <button
+            className="loginForm__btn"
+            onClick={(e) => {
+              e.preventDefault();
+              this.props.login(this.state.username, this.state.pin);
+            }}
+          >
+            LOG IN <span>&rarr;</span>
+          </button>
+        </form>
+      </nav>
+    );
+  }
+}
 
 export default TopNav;
