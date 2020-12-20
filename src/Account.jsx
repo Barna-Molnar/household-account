@@ -23,7 +23,7 @@ class Account extends React.Component {
         <div className="status">
           <div>
             <p className="status__label">Current Status</p>
-            <p className="status__date">Actuell Date with js...later</p>
+            <p className="status__date">Actuel Date with js...later</p>
           </div>
           <div>
             <p className="status__value">
@@ -125,11 +125,11 @@ class Account extends React.Component {
           <div className="mov">
             {this.props.currentAcc?.movements.map((mov, i) => {
               return (
-                <Movements key={i} type={mov > 0 ? "dep" : "withD"} mov={mov} />
+                <Movements i={i} type={mov > 0 ? "dep" : "withD"} mov={mov} />
               );
             })}
 
-            <div className="mov__row">
+            {/* <div className="mov__row">
               <div className="mov__type mov__type--dep">2 dep</div>
               <div className="mov__date">2 days ago</div>
               <div className="mov__message">For School</div>
@@ -140,8 +140,24 @@ class Account extends React.Component {
               <div className="mov__date">2 days ago</div>
               <div className="mov__message">For School</div>
               <div className="mov__value">500$</div>
-            </div>
+            </div> */}
           </div>
+        </div>
+        <div className="summeries">
+          <p className="summeries__label">in</p>
+          <p className="summeries__value summeries__value--in">
+            {this.props.currentAcc?.movements
+              .filter((mov) => mov > 0)
+              .reduce((acc, curr) => acc + curr, 0)}
+            €
+          </p>
+          <p className="summeries__label">out</p>
+          <p className="summeries__value summeries__value--out">
+            {this.props.currentAcc?.movements
+              .filter((mov) => mov < 0)
+              .reduce((acc, curr) => acc + curr, 0)}
+            €
+          </p>
         </div>
       </div>
     );
