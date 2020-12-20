@@ -2,6 +2,7 @@ import React from "react";
 import "./Account.scss";
 import "./data.js";
 import { accounts, calcValue } from "./data.js";
+import Movements from "./Movements.jsx";
 
 class Account extends React.Component {
   constructor(props) {
@@ -122,6 +123,12 @@ class Account extends React.Component {
             </div>
           </div>
           <div className="mov">
+            {this.props.currentAcc.movements.map((mov, i) => {
+              return (
+                <Movements key={i} type={mov > 0 ? "dep" : "withD"} mov={mov} />
+              );
+            })}
+
             <div className="mov__row">
               <div className="mov__type mov__type--dep">2 dep</div>
               <div className="mov__date">2 days ago</div>
