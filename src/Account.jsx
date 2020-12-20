@@ -1,7 +1,6 @@
 import React from "react";
 import "./Account.scss";
 import "./data.js";
-import { accounts, calcValue } from "./data.js";
 import Movements from "./Movements.jsx";
 
 class Account extends React.Component {
@@ -28,9 +27,10 @@ class Account extends React.Component {
           </div>
           <div>
             <p className="status__value">
-              {this.props.currentAcc !== undefined
+              {this.props.currentAcc?.value}
+              {/* {this.props.currentAcc !== undefined
                 ? this.props.currentAcc.value
-                : 0}
+                : 0} */}
               €
             </p>
           </div>
@@ -123,7 +123,7 @@ class Account extends React.Component {
             </div>
           </div>
           <div className="mov">
-            {this.props.currentAcc.movements.map((mov, i) => {
+            {this.props.currentAcc?.movements.map((mov, i) => {
               return (
                 <Movements key={i} type={mov > 0 ? "dep" : "withD"} mov={mov} />
               );

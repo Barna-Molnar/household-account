@@ -2,7 +2,6 @@ import "./App.scss";
 import TopNav from "./TopNav.jsx";
 import Account from "./Account.jsx";
 import React from "react";
-import { accounts, calcValue } from "./data.js";
 import { login } from "./login.js";
 
 class App extends React.Component {
