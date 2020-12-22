@@ -20,18 +20,13 @@ class App extends React.Component {
     });
   }
   handleLend(fromAcc, forAcc, amount) {
-    const arr = accounts.find((acc) => acc.username === fromAcc);
-    this.setState((prev, props) => {
-      console.log(prev.currentAcc.movements.concat(-amount));
-      console.log(prev.currentAcc);
-
+    this.setState((prev) => {
       return {
         currentAcc: {
           ...prev.currentAcc,
           movements: prev.currentAcc.movements.concat(-amount),
         },
-        // currentAcc: this.state.accounts.find((acc) => acc.username === fromAcc),
-        // movements: this.state.currentAcc.movements.concat(-amount),
+
         accounts: this.state.accounts.map((acc) => {
           if (acc.username === fromAcc) {
             return { ...acc, movements: acc.movements.concat(-amount) };
