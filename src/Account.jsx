@@ -7,7 +7,10 @@ class Account extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      currentAcc: this.props.currentAcc,
       currentValue: "",
+      recepient: "",
+      lendAmount: "",
     };
   }
 
@@ -27,7 +30,11 @@ class Account extends React.Component {
           </div>
           <div>
             <p className="status__value">
-              {this.props.currentAcc?.value}
+              {this.props.currentAcc?.movements.reduce(
+                (acc, currVale) => acc + currVale,
+                0
+              )}
+              {/* {this.props.currentAcc?.value} */}
               {/* {this.props.currentAcc !== undefined
                 ? this.props.currentAcc.value
                 : 0} */}
@@ -43,15 +50,35 @@ class Account extends React.Component {
               <form action="#" className="form form--lend">
                 <div className="input-flex">
                   <input
+                    value={this.state.recepient}
+                    onChange={(e) => {
+                      this.setState({ recepient: e.target.value });
+                    }}
                     type="text"
                     className="form__input form__input--forWho"
                   />
 
                   <input
+                    value={this.state.lendAmount}
+                    onChange={(e) => {
+                      this.setState({ lendAmount: Number(e.target.value) });
+                    }}
                     type="number"
                     className="form__input form__input--amount"
                   />
-                  <button className="form__btn form__btn--lend">&rarr;</button>
+                  <button
+                    className="form__btn form__btn--lend"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      this.props.lend(
+                        this.props.currentAcc.username,
+                        this.state.recepient,
+                        this.state.lendAmount
+                      );
+                    }}
+                  >
+                    &rarr;
+                  </button>
                 </div>
                 <div className="label-flex">
                   <div>
