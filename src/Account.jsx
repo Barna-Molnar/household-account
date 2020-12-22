@@ -75,6 +75,10 @@ class Account extends React.Component {
                         this.state.recepient,
                         this.state.lendAmount
                       );
+                      this.setState({
+                        recepient: "",
+                        lendAmount: "",
+                      });
                     }}
                   >
                     &rarr;
