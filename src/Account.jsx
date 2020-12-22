@@ -150,7 +150,7 @@ class Account extends React.Component {
             </div>
           </div>
           <div className="mov">
-            {this.props.currentAcc?.movements.map((mov, i) => {
+            {this.props.currentAcc?.movements.reverse().map((mov, i) => {
               return (
                 <Movements i={i} type={mov > 0 ? "dep" : "withD"} mov={mov} />
               );
