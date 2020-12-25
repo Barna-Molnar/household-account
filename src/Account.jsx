@@ -11,6 +11,7 @@ class Account extends React.Component {
       currentValue: "",
       recepient: "",
       lendAmount: "",
+      message: "",
     };
   }
 
@@ -133,15 +134,46 @@ class Account extends React.Component {
               <h2>Block account</h2>
               <form action="#" className="form form--block">
                 <div className="input-flex">
-                  <input type="text" className="form__input form__input--Who" />
+                  <input
+                    value={this.state.recepient}
+                    onChange={(e) => {
+                      this.setState({ recepient: e.target.value });
+                    }}
+                    type="text"
+                    className="form__input form__input--Whoose"
+                  />
 
-                  <input type="text" className="form__input form__input--Why" />
-                  <button className="form__btn form__btn--block">&rarr;</button>
+                  <input
+                    value={this.state.message}
+                    onChange={(e) => {
+                      this.setState({ message: e.target.value });
+                    }}
+                    type="text"
+                    className="form__input form__input--Why"
+                  />
+                  <button
+                    className="form__btn form__btn--block"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      this.props.handleBlock(
+                        this.props.currentAcc.username,
+                        this.state.recepient,
+                        this.state.message
+                      );
+                      console.log(
+                        this.state.message,
+                        this.props.currentAcc?.username,
+                        this.state.recepient
+                      );
+                    }}
+                  >
+                    &rarr;
+                  </button>
                 </div>
                 <div className="label-flex">
                   <div>
                     <label htmlFor="#" className="form__label">
-                      Who
+                      Whoose Acc
                     </label>
                   </div>
                   <div>

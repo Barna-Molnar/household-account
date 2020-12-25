@@ -13,6 +13,23 @@ class App extends React.Component {
     };
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLend = this.handleLend.bind(this);
+    this.handleBlock = this.handleBlock.bind(this);
+  }
+  handleBlock(fromAcc, forAcc, message) {
+    if (fromAcc === "jm" || fromAcc === "tm") {
+      this.setState((prev) => {
+        return {
+          currentAcc: prev.currentAcc,
+          accounts: this.state.accounts.map((acc) => {
+            if (acc.username === forAcc) {
+              return { ...acc, message: message, isBlocked: true };
+            }
+            return acc;
+          }),
+        };
+      });
+    }
+    console.log("you are not allowed use this functionality");
   }
   handleLogin(username, pin) {
     this.setState({
@@ -46,6 +63,7 @@ class App extends React.Component {
         <TopNav currentAcc={this.state.currentAcc} login={this.handleLogin} />
         <Account
           currentAcc={this.state.currentAcc}
+          handleBlock={this.handleBlock}
           lend={this.handleLend}
           calcValue={calcValue}
         />

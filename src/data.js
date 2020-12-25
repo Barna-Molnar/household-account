@@ -12,11 +12,13 @@ export const account2 = {
 export const account3 = {
     owner: 'Steven Miller',
     movements: [200, -200, 340, -300, -20, 50, 400, -460],
+    isBlocked: false,
 };
 
 export const account4 = {
     owner: 'Katie Miller',
     movements: [430, 1000, 700, 50, 90],
+    isBlocked: false,
 };
 
 export const accounts = [account1, account2, account3, account4];
