@@ -37,12 +37,14 @@ class Account extends React.Component {
             <p
               className="status__message"
               style={
-                this.props.currentAcc?.message === undefined
+                this.props.currentAcc === undefined
                   ? { opacity: 0 }
-                  : { opacity: 100 }
+                  : this.props.currentAcc.isBlocked === true
+                  ? { opacity: 100 }
+                  : { opacity: 0 }
               }
             >
-              {this.props.currentAcc.message}
+              {this.props.currentAcc?.message}
             </p>
           </div>
           <div>
@@ -213,7 +215,7 @@ class Account extends React.Component {
                       });
                     }}
                   >
-                    &rarr;
+                    {`Unblock`}
                   </button>
                 </div>
                 <div className="label-flex">
