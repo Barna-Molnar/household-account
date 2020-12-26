@@ -10,11 +10,24 @@ class Account extends React.Component {
       currentAcc: this.props.currentAcc,
       currentValue: "",
       recepient: "",
+      accToBlock: "",
       lendAmount: "",
       message: "",
     };
+    this.blockBtnText = this.blockBtnText.bind(this);
   }
-
+  blockBtnText() {
+    const acc = this.props.accounts.find((acc) => {
+      if (acc.username === this.state.accToBlock) {
+        return acc;
+      }
+    });
+    if (acc === undefined || acc.isBlocked === false) {
+      return "block";
+    } else {
+      return "unblock";
+    }
+  }
   render() {
     return (
       <div
@@ -184,9 +197,10 @@ class Account extends React.Component {
               >
                 <div className="input-flex">
                   <input
-                    value={this.state.recepient}
+                    value={this.state.accToBlock}
                     onChange={(e) => {
-                      this.setState({ recepient: e.target.value });
+                      this.setState({ accToBlock: e.target.value });
+                      this.blockBtnText();
                     }}
                     type="text"
                     className="form__input form__input--Whoose"
@@ -206,16 +220,16 @@ class Account extends React.Component {
                       e.preventDefault();
                       this.props.handleBlock(
                         this.props.currentAcc.username,
-                        this.state.recepient,
+                        this.state.accToBlock,
                         this.state.message
                       );
                       this.setState({
-                        recepient: "",
+                        accToBlock: "",
                         message: "",
                       });
                     }}
                   >
-                    {`Unblock`}
+                    {this.blockBtnText()}
                   </button>
                 </div>
                 <div className="label-flex">

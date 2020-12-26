@@ -138,6 +138,12 @@
                     font-size: 1.8rem;
                     width: 50%;
                     cursor: pointer;
+                    &--block {
+                        padding: .3rem 1rem;
+                        font-size: 1.4rem;
+                        color: inherit;
+                        ;
+                    }
                 }
             }
             .form__input {

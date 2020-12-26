@@ -62,6 +62,7 @@ class App extends React.Component {
       <div className="App">
         <TopNav currentAcc={this.state.currentAcc} login={this.handleLogin} />
         <Account
+          accounts={this.state.accounts}
           currentAcc={this.state.currentAcc}
           handleBlock={this.handleBlock}
           lend={this.handleLend}
