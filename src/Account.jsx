@@ -20,7 +20,11 @@ class Account extends React.Component {
       <div
         className="main"
         style={
-          this.props.currentAcc !== undefined ? { opacity: 1 } : { opacity: 0 }
+          this.props.currentAcc === undefined
+            ? { opacity: 0 }
+            : this.props.currentAcc.isBlocked === true
+            ? { opacity: 0.3 }
+            : { opacity: 1 }
         }
       >
         {/* status component */}
@@ -28,6 +32,9 @@ class Account extends React.Component {
           <div>
             <p className="status__label">Current Status</p>
             <p className="status__date">Actuel Date with js...later</p>
+          </div>
+          <div>
+            <p className="status__message">TEXT from eltern</p>
           </div>
           <div>
             <p className="status__value">
@@ -160,11 +167,10 @@ class Account extends React.Component {
                         this.state.recepient,
                         this.state.message
                       );
-                      console.log(
-                        this.state.message,
-                        this.props.currentAcc?.username,
-                        this.state.recepient
-                      );
+                      this.setState({
+                        recepient: "",
+                        message: "",
+                      });
                     }}
                   >
                     &rarr;
