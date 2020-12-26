@@ -22,9 +22,9 @@ class Account extends React.Component {
         style={
           this.props.currentAcc === undefined
             ? { opacity: 0 }
-            : this.props.currentAcc.isBlocked === true
-            ? { opacity: 0.3 }
-            : { opacity: 1 }
+            : // : this.props.currentAcc.isBlocked === true
+              // ? { opacity: 0.3 }
+              { opacity: 1 }
         }
       >
         {/* status component */}
@@ -34,7 +34,16 @@ class Account extends React.Component {
             <p className="status__date">Actuel Date with js...later</p>
           </div>
           <div>
-            <p className="status__message">TEXT from eltern</p>
+            <p
+              className="status__message"
+              style={
+                this.props.currentAcc?.message === undefined
+                  ? { opacity: 0 }
+                  : { opacity: 100 }
+              }
+            >
+              {this.props.currentAcc.message}
+            </p>
           </div>
           <div>
             <p className="status__value">
@@ -55,7 +64,17 @@ class Account extends React.Component {
           <div className="ops">
             <div className="op op--lend">
               <h2>Lend money</h2>
-              <form action="#" className="form form--lend">
+              <form
+                action="#"
+                className="form form--lend"
+                style={
+                  this.props.currentAcc === undefined
+                    ? { opacity: 0 }
+                    : this.props.currentAcc.isBlocked === true
+                    ? { opacity: 0 }
+                    : { opacity: 1 }
+                }
+              >
                 <div className="input-flex">
                   <input
                     value={this.state.recepient}
@@ -108,7 +127,17 @@ class Account extends React.Component {
             </div>
             <div className="op op--borrow">
               <h2>Borrow money</h2>
-              <form action="#" className="form form--borrow">
+              <form
+                action="#"
+                className="form form--borrow"
+                style={
+                  this.props.currentAcc === undefined
+                    ? { opacity: 0 }
+                    : this.props.currentAcc.isBlocked === true
+                    ? { opacity: 0 }
+                    : { opacity: 1 }
+                }
+              >
                 <div className="input-flex">
                   <input
                     type="text"
@@ -139,7 +168,18 @@ class Account extends React.Component {
             </div>
             <div className="op op--block">
               <h2>Block account</h2>
-              <form action="#" className="form form--block">
+              <form
+                action="#"
+                className="form form--block"
+                style={
+                  this.props.currentAcc === undefined
+                    ? { opacity: 0 }
+                    : this.props.currentAcc.username === "jm" ||
+                      this.props.currentAcc.username === "tm"
+                    ? { opacity: 1 }
+                    : { opacity: 0 }
+                }
+              >
                 <div className="input-flex">
                   <input
                     value={this.state.recepient}
