@@ -18,10 +18,9 @@ class Account extends React.Component {
   }
   blockBtnText() {
     const acc = this.props.accounts.find((acc) => {
-      if (acc.username === this.state.accToBlock) {
-        return acc;
-      }
+      return acc.username === this.state.accToBlock;
     });
+    console.log(acc);
     if (acc === undefined || acc.isBlocked === false) {
       return "block";
     } else {
