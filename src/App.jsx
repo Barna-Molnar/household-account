@@ -22,7 +22,7 @@ class App extends React.Component {
           currentAcc: prev.currentAcc,
           accounts: this.state.accounts.map((acc) => {
             if (acc.username === forAcc) {
-              return { ...acc, message: message, isBlocked: true };
+              return { ...acc, message: message, isBlocked: !acc.isBlocked };
             }
             return acc;
           }),
@@ -41,15 +41,15 @@ class App extends React.Component {
       return {
         currentAcc: {
           ...prev.currentAcc,
-          movements: prev.currentAcc.movements.concat(-amount),
+          movements: [-amount, ...prev.currentAcc.movements],
         },
 
         accounts: this.state.accounts.map((acc) => {
           if (acc.username === fromAcc) {
-            return { ...acc, movements: acc.movements.concat(-amount) };
+            return { ...acc, movements: [-amount, ...acc.movements] };
           }
           if (acc.username === forAcc) {
-            return { ...acc, movements: acc.movements.concat(amount) };
+            return { ...acc, movements: [amount, ...acc.movements] };
           }
           return acc;
         }),

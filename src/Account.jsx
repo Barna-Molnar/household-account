@@ -32,11 +32,7 @@ class Account extends React.Component {
       <div
         className="main"
         style={
-          this.props.currentAcc === undefined
-            ? { opacity: 0 }
-            : // : this.props.currentAcc.isBlocked === true
-              // ? { opacity: 0.3 }
-              { opacity: 1 }
+          this.props.currentAcc === undefined ? { opacity: 0 } : { opacity: 1 }
         }
       >
         {/* status component */}
@@ -180,74 +176,69 @@ class Account extends React.Component {
                 </div>
               </form>
             </div>
-            <div className="op op--block">
-              <h2>Block account</h2>
-              <form
-                action="#"
-                className="form form--block"
-                style={
-                  this.props.currentAcc === undefined
-                    ? { opacity: 0 }
-                    : this.props.currentAcc.username === "jm" ||
-                      this.props.currentAcc.username === "tm"
-                    ? { opacity: 1 }
-                    : { opacity: 0 }
-                }
-              >
-                <div className="input-flex">
-                  <input
-                    value={this.state.accToBlock}
-                    onChange={(e) => {
-                      this.setState({ accToBlock: e.target.value });
-                      this.blockBtnText();
-                    }}
-                    type="text"
-                    className="form__input form__input--Whoose"
-                  />
+            {this.props.currentAcc !== undefined &&
+            (this.props.currentAcc.username === "jm" ||
+              this.props.currentAcc.username === "tm") ? (
+              <div className="op op--block">
+                <h2>Block account</h2>
+                <form action="#" className="form form--block">
+                  <div className="input-flex">
+                    <input
+                      value={this.state.accToBlock}
+                      onChange={(e) => {
+                        this.setState({ accToBlock: e.target.value });
+                        this.blockBtnText();
+                      }}
+                      type="text"
+                      className="form__input form__input--Whoose"
+                    />
 
-                  <input
-                    value={this.state.message}
-                    onChange={(e) => {
-                      this.setState({ message: e.target.value });
-                    }}
-                    type="text"
-                    className="form__input form__input--Why"
-                  />
-                  <button
-                    className="form__btn form__btn--block"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      this.props.handleBlock(
-                        this.props.currentAcc.username,
-                        this.state.accToBlock,
-                        this.state.message
-                      );
-                      this.setState({
-                        accToBlock: "",
-                        message: "",
-                      });
-                    }}
-                  >
-                    {this.blockBtnText()}
-                  </button>
-                </div>
-                <div className="label-flex">
-                  <div>
-                    <label htmlFor="#" className="form__label">
-                      Whoose Acc
-                    </label>
+                    <input
+                      value={this.state.message}
+                      onChange={(e) => {
+                        this.setState({ message: e.target.value });
+                      }}
+                      type="text"
+                      className="form__input form__input--Why"
+                    />
+                    <button
+                      className="form__btn form__btn--block"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        this.props.handleBlock(
+                          this.props.currentAcc.username,
+                          this.state.accToBlock,
+                          this.state.message
+                        );
+                        this.setState({
+                          accToBlock: "",
+                          message: "",
+                        });
+                      }}
+                    >
+                      {this.blockBtnText()}
+                    </button>
                   </div>
-                  <div>
-                    <label htmlFor="#" className="form__label">
-                      Why
-                    </label>
+                  <div className="label-flex">
+                    <div>
+                      <label htmlFor="#" className="form__label">
+                        Whoose Acc
+                      </label>
+                    </div>
+                    <div>
+                      <label htmlFor="#" className="form__label">
+                        Why
+                      </label>
+                    </div>
                   </div>
-                </div>
-              </form>
-            </div>
+                </form>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
           <div className="mov">
-            {this.props.currentAcc?.movements.reverse().map((mov, i) => {
+            {this.props.currentAcc?.movements.map((mov, i) => {
               return (
                 <Movements i={i} type={mov > 0 ? "dep" : "withD"} mov={mov} />
               );
