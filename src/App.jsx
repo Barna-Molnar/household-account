@@ -15,7 +15,7 @@ class App extends React.Component {
     this.handleLend = this.handleLend.bind(this);
     this.handleBlock = this.handleBlock.bind(this);
   }
-  handleBlock(fromAcc, forAcc, message) {
+  handleBlock(fromAcc, forAcc, message = "") {
     if (fromAcc === "jm" || fromAcc === "tm") {
       this.setState((prev) => {
         return {

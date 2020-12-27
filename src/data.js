@@ -43,10 +43,10 @@ export const calcValue = (accs) => {
 
 calcValue(accounts)
 
-const arr = accounts.find(acc => acc.username === "jm")
-arr.movements.push(-100)
-calcValue(accounts)
-console.log(arr);
+// const arr = accounts.find(acc => acc.username === "jm")
+// arr.movements.push(-100)
+// calcValue(accounts)
+// console.log(arr);
 
 // {this.props.currentAcc !== undefined
 //     ? this.props.currentAcc.movements.map((mov, i) => {

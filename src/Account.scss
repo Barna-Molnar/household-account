@@ -2,12 +2,9 @@
 .main {
     position: relative;
     margin: 5rem auto;
-    background-color: inherit;
-    // to pretend
     max-width: 120rem;
     display: flex;
     flex-direction: column;
-    //to animation
     opacity: 0;
     transition: all 1s;
 }
@@ -171,7 +168,7 @@
             background-image: linear-gradient(to bottom left, #c9e9a0, #10c06e);
         }
         .op--block {
-            background-image: linear-gradient(to bottom left, #e52a5a, #ff585f);
+            background-image: linear-gradient(to bottom right, #ec4a73, #860711);
         }
     }
 }

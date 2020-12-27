@@ -1,7 +1,7 @@
 import React from "react";
 import "./Account.scss";
-import "./data.js";
-import Movements from "./Movements.jsx";
+import "./data";
+import Movements from "./Movements";
 
 class Account extends React.Component {
   constructor(props) {
