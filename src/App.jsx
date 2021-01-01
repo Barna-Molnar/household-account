@@ -42,14 +42,23 @@ class App extends React.Component {
         currentAcc: {
           ...prev.currentAcc,
           movements: [-amount, ...prev.currentAcc.movements],
+          balance: prev.currentAcc.balance - amount,
         },
 
         accounts: this.state.accounts.map((acc) => {
           if (acc.username === fromAcc) {
-            return { ...acc, movements: [-amount, ...acc.movements] };
+            return {
+              ...acc,
+              movements: [-amount, ...acc.movements],
+              balance: acc.balance - amount,
+            };
           }
           if (acc.username === forAcc) {
-            return { ...acc, movements: [amount, ...acc.movements] };
+            return {
+              ...acc,
+              movements: [amount, ...acc.movements],
+              balance: acc.balance + amount,
+            };
           }
           return acc;
         }),

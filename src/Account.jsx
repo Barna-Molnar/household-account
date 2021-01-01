@@ -20,7 +20,6 @@ class Account extends React.Component {
     const acc = this.props.accounts.find((acc) => {
       return acc.username === this.state.accToBlock;
     });
-    console.log(acc);
     if (acc === undefined || acc.isBlocked === false) {
       return "block";
     } else {
@@ -57,14 +56,13 @@ class Account extends React.Component {
           </div>
           <div>
             <p className="status__value">
-              {this.props.currentAcc?.movements.reduce(
+              {this.props.currentAcc?.balance
+                ? this.props.currentAcc?.balance
+                : 0}
+              {/* {this.props.currentAcc?.movements.reduce(
                 (acc, currVale) => acc + currVale,
                 0
-              )}
-              {/* {this.props.currentAcc?.value} */}
-              {/* {this.props.currentAcc !== undefined
-                ? this.props.currentAcc.value
-                : 0} */}
+              )} */}
               €
             </p>
           </div>

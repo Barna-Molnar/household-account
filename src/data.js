@@ -2,26 +2,26 @@
 export const account1 = {
     owner: 'John Miller',
     balance: [10000],
-    movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
+    movements: [-200, -200],
 };
 
 export const account2 = {
     owner: 'Teresa Miller',
     balance: [7000],
-    movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
+    movements: [],
 };
 
 export const account3 = {
     owner: 'Steven Miller',
     balance: [],
-    movements: [200, -200, 340, -300, -20, 50, 400, -460],
+    movements: [200],
     isBlocked: false,
 };
 
 export const account4 = {
     owner: 'Katie Miller',
     balance: [],
-    movements: [430, 1000, 700, 50, 90],
+    movements: [200],
     isBlocked: false,
 
 };
@@ -42,11 +42,12 @@ createUsername(accounts)
 // calc value
 export const calcValue = (accs) => {
     accs.forEach(acc => {
-        acc.value = acc.movements.reduce((acc, currVal) => acc + currVal, 0)
+        acc.balance = Number(acc.balance) + Number(acc.movements.reduce((acc, currVal) => acc + currVal, 0))
     })
 }
 
 calcValue(accounts)
+console.log(accounts);
 
 // const arr = accounts.find(acc => acc.username === "jm")
 // arr.movements.push(-100)
