@@ -1,13 +1,15 @@
 import React from "react";
 import "./Account.scss";
+import "./Account.scss";
 import "./data";
 import Movements from "./Movements";
+import NewOperator from "./NewOperator";
 
 class Account extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentAcc: this.props.currentAcc,
+      currentAcc: this.props.currentAcc, /// <= this is not working
       currentValue: "",
       recepient: "",
       accToBlock: "",
@@ -108,11 +110,13 @@ class Account extends React.Component {
                       this.props.lend(
                         this.props.currentAcc.username,
                         this.state.recepient,
-                        this.state.lendAmount
+                        this.state.lendAmount,
+                        this.state.message
                       );
                       this.setState({
                         recepient: "",
                         lendAmount: "",
+                        message: "",
                       });
                     }}
                   >
@@ -128,6 +132,21 @@ class Account extends React.Component {
                   <div>
                     <label htmlFor="#" className="form__label">
                       Amount
+                    </label>
+                  </div>
+                </div>
+                <input
+                  value={this.state.message}
+                  onChange={(e) => {
+                    this.setState({ message: e.target.value });
+                  }}
+                  type="text"
+                  className="form__input form__input--message"
+                />
+                <div>
+                  <div className="label-flex">
+                    <label htmlFor="#" className="form__label">
+                      Explanation
                     </label>
                   </div>
                 </div>
@@ -236,24 +255,33 @@ class Account extends React.Component {
             )}
           </div>
           <div className="mov">
+            {/* {this.props.currentAcc?.movements.map((mov, i) => {
+              return (
+                <Movements
+                  key={i + 1}
+                  i={i}
+                  type={mov > 0 ? "dep" : "withD"}
+                  mov={mov}
+                  date={this.props.currentAcc?.date}
+                />
+              );
+            })} */}
+            {/* //////////////// */}
+            {/*to test*/}
             {this.props.currentAcc?.movements.map((mov, i) => {
               return (
-                <Movements i={i} type={mov > 0 ? "dep" : "withD"} mov={mov} />
+                <Movements
+                  recepient={mov.recepient}
+                  transactionTyp={mov.transactionTyp}
+                  key={i + 1}
+                  i={i}
+                  type={mov.amount > 0 ? "dep" : "withD"}
+                  mov={mov.amount}
+                  message={mov.message}
+                  date={mov.date}
+                />
               );
             })}
-
-            {/* <div className="mov__row">
-              <div className="mov__type mov__type--dep">2 dep</div>
-              <div className="mov__date">2 days ago</div>
-              <div className="mov__message">For School</div>
-              <div className="mov__value">500$</div>
-            </div>
-            <div className="mov__row">
-              <div className="mov__type mov__type--withD">1 withdraw</div>
-              <div className="mov__date">2 days ago</div>
-              <div className="mov__message">For School</div>
-              <div className="mov__value">500$</div>
-            </div> */}
           </div>
         </div>
         <div className="summeries">
@@ -272,6 +300,8 @@ class Account extends React.Component {
             €
           </p>
         </div>
+
+        <NewOperator />
       </div>
     );
   }

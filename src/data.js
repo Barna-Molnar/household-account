@@ -1,32 +1,72 @@
 // Data
 export const account1 = {
     owner: 'John Miller',
-    balance: [10000],
-    movements: [-200, -200],
+    balance: 10000,
+    movements: [{
+        amount: -200,
+        date: "11-11",
+        transactionTyp: "casual",
+        sender: 'jm',
+        recepient: 'km',
+        message: `i don't know`
+    }],
 };
 
 export const account2 = {
     owner: 'Teresa Miller',
-    balance: [7000],
+    balance: 7000,
     movements: [],
 };
 
 export const account3 = {
     owner: 'Steven Miller',
-    balance: [],
-    movements: [200],
+    balance: 0,
+    movements: [],
     isBlocked: false,
 };
 
 export const account4 = {
     owner: 'Katie Miller',
-    balance: [],
-    movements: [200],
+    balance: 0,
+    movements: [{
+        amount: 200,
+        date: "11-11",
+        transactionTyp: "casual",
+        sender: 'jm',
+        recepient: 'km',
+        message: `i don't know`
+    }],
     isBlocked: false,
 
 };
+export const testAcc = {
+    owner: 'Test Person',
+    username: "tp",
+    balance: [5000],
+    movements: [{
+        amount: -200,
+        time: "11-11",
+        transactionTyp: "lend",
+        sender: 'jm',
+        recepient: 'km',
+        message: `i don't know`
+    }, {
+        amount: 400,
+        time: "12-12",
+        transactionTyp: "borrow",
+        sender: 'tm',
+        recepient: 'sm',
+        message: `football`
+    }],
+}
+
+
 
 export const accounts = [account1, account2, account3, account4];
+
+/// implement actuel Date
+const today = new Date();
+export let date = today.getMonth() + 1 + "-" + today.getDate();
 
 
 // Create username
@@ -39,33 +79,24 @@ const createUsername = function(accs) {
 }
 createUsername(accounts)
 
-// calc value
-export const calcValue = (accs) => {
-    accs.forEach(acc => {
-        acc.balance = Number(acc.balance) + Number(acc.movements.reduce((acc, currVal) => acc + currVal, 0))
-    })
-}
 
-calcValue(accounts)
+
 console.log(accounts);
 
-// const arr = accounts.find(acc => acc.username === "jm")
-// arr.movements.push(-100)
-// calcValue(accounts)
-// console.log(arr);
+///////TO TEST PERSON ????///////////
+///////           ///////////////////
+///////////////////////////////////
+export const testAccArr = [testAcc]
+export const calcTestSumVal = (accs) => {
+    accs.forEach((acc, i, arr) => {
+        console.log(arr)
+        acc.balance = Number(acc.balance) + Number(acc.movements.reduce((acc, mov) => acc + mov.amount, 0))
+    })
+}
+calcTestSumVal(testAccArr)
+console.log(testAcc)
 
-// {this.props.currentAcc !== undefined
-//     ? this.props.currentAcc.movements.map((mov, i) => {
-//         const type = mov > 0 ? "dep" : "withD";
-//         return `
-//       <div className="mov__row">
-//       <div className="mov__type mov__type--${type}">
-//       ${i + 1} ${type}</div>
-//       <div className="mov__date">2 days ago</div>
-//       <div className="mov__message">For School</div>
-//       <div className="mov__value">${mov}</div>
-//     </div>
-
-//       `;
-//       })
-//     : ""}
+// const mess = testAcc.movements.map(mov => {
+//         return `mov.amount: ${mov.amount}, mov.time: ${mov.time}, mov.tt : ${mov.transactionTyp}, `
+//     })
+// console.log(mess)

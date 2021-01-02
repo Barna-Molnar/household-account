@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./Movements.scss";
 
 class Movements extends Component {
   constructor(props) {
@@ -6,14 +7,23 @@ class Movements extends Component {
     this.state = {};
   }
   render() {
+    console.log(this.props);
     ///Message and actuel date is coming....
     return (
-      <div className="mov__row">
+      <div className={`mov__row mov__row--${this.props.type}`}>
         <div className={`mov__type mov__type--${this.props.type}`}>
           {this.props.i + 1} {this.props.type}
         </div>
-        <div className="mov__date">2 days ago</div>
-        <div className="mov__message">For School</div>
+        <div>{this.props.transactionTyp}</div>
+        <div>
+          {this.props.type === "dep" ? "from" : "for"} : {this.props.recepient}
+        </div>
+        <div className="mov__date">
+          {this.props.date ? this.props.date : "unknown"}
+        </div>
+        <div className="mov__message">
+          {this.props.message ? this.props.message : "nothin"}
+        </div>
         <div className="mov__value">{this.props.mov}€</div>
       </div>
     );

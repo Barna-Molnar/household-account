@@ -42,56 +42,6 @@
 .accBody {
     display: flex;
     padding: 4rem;
-    .mov {
-        display: flex;
-        flex-direction: column;
-        height: 50rem;
-        background-color: white;
-        flex: 0 0 60%;
-        padding: 1rem 2rem;
-        border-radius: 2rem;
-        overflow: scroll;
-        &__row {
-            padding: 2.2rem 4rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid #eee;
-        }
-        &__type {
-            font-size: 1.1rem;
-            text-transform: uppercase;
-            font-weight: 500;
-            color: white;
-            padding: .2rem 1rem;
-            border-radius: 5rem;
-            &--dep {
-                background-image: linear-gradient(to top left, #39b385, #9be15d);
-            }
-            &--withD {
-                background-image: linear-gradient(to top left, #e52a5a, #ff585f);
-                margin-right: -1rem;
-            }
-        }
-        &__date {
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            font-weight: 500;
-            color: #777;
-        }
-        &__message {
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            font-weight: 500;
-            color: white;
-            padding: .5rem 1rem;
-            border-radius: 1rem;
-            background-image: linear-gradient(to top left, #756e70, #dbb3b5);
-        }
-        &__value {
-            font-size: 1.7rem;
-        }
-    }
     .ops {
         flex: 0 0 40%;
         display: flex;
@@ -158,6 +108,10 @@
                 &:focus {
                     outline: none;
                     background-color: rgba(255, 255, 255, 0.6)
+                }
+                &--message {
+                    margin-top: 1rem;
+                    margin-bottom: 1rem;
                 }
             }
         }
