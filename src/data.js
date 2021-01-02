@@ -77,26 +77,5 @@ const createUsername = function(accs) {
             .toLowerCase().split(' ').map(item => item[0]).join('')
     });
 }
-createUsername(accounts)
-
-
-
-console.log(accounts);
-
-///////TO TEST PERSON ????///////////
-///////           ///////////////////
-///////////////////////////////////
-export const testAccArr = [testAcc]
-export const calcTestSumVal = (accs) => {
-    accs.forEach((acc, i, arr) => {
-        console.log(arr)
-        acc.balance = Number(acc.balance) + Number(acc.movements.reduce((acc, mov) => acc + mov.amount, 0))
-    })
-}
-calcTestSumVal(testAccArr)
-console.log(testAcc)
-
-// const mess = testAcc.movements.map(mov => {
-//         return `mov.amount: ${mov.amount}, mov.time: ${mov.time}, mov.tt : ${mov.transactionTyp}, `
-//     })
-// console.log(mess)
+createUsername(accounts);
+console.log(accounts)

@@ -2,7 +2,8 @@ import "./App.scss";
 import TopNav from "./TopNav.jsx";
 import Account from "./Account.jsx";
 import React from "react";
-import { accounts, testAccArr, date } from "./data.js";
+import { accounts, date } from "./data.js";
+import { compareAsc, format } from "date-fns";
 
 class App extends React.Component {
   constructor(props) {
@@ -10,7 +11,6 @@ class App extends React.Component {
     this.state = {
       currentAcc: undefined,
       accounts: accounts,
-      testAcc: testAccArr,
       actuelDate: date,
     };
     this.handleLogin = this.handleLogin.bind(this);
@@ -39,64 +39,75 @@ class App extends React.Component {
     });
   }
   handleLend(fromAcc, forAcc, amount, message = "dunno") {
-    const today = new Date();
-    let date = today.getMonth() + 1 + "-" + today.getDate();
-    this.setState((prev) => {
-      return {
-        currentAcc: {
-          ...prev.currentAcc,
-          movements: [
-            {
-              amount: -amount,
-              date: date,
-              transactionTyp: "lend",
-              sender: fromAcc,
-              recepient: forAcc,
-              message: message,
-            },
-            ...prev.currentAcc.movements,
-          ],
-          balance: prev.currentAcc.balance - amount,
-        },
-        accounts: this.state.accounts.map((acc) => {
-          if (acc.username === fromAcc) {
-            return {
-              ...acc,
-              movements: [
-                {
-                  amount: -amount,
-                  date: date,
-                  transactionTyp: "lend",
-                  sender: fromAcc,
-                  recepient: forAcc,
-                  message: message,
-                },
-                ...acc.movements,
-              ],
-              balance: acc.balance - amount,
-            };
-          }
-          if (acc.username === forAcc) {
-            return {
-              ...acc,
-              movements: [
-                {
-                  amount: amount,
-                  date: date,
-                  transactionTyp: "borrow",
-                  sender: fromAcc,
-                  recepient: forAcc,
-                  message: message,
-                },
-                ...acc.movements,
-              ],
-              balance: acc.balance + amount,
-            };
-          }
-          return acc;
-        }),
-      };
-    });
+    const valid = this.state.accounts.find((acc) => acc.username === forAcc);
+
+    let date = format(new Date(), "dd/MM/yy");
+    if (!forAcc && !amount) {
+      console.log("nincsenek adatok");
+    } else if (amount > this.state.currentAcc.balance) {
+      console.log("nincsen eleg zseton");
+    } else if (fromAcc === forAcc) {
+      console.log("magadnak nem tucc kuldeni");
+    } else if (!valid) {
+      console.log("invalid acc");
+    } else {
+      this.setState((prev) => {
+        return {
+          currentAcc: {
+            ...prev.currentAcc,
+            movements: [
+              {
+                amount: -amount,
+                date: date,
+                transactionTyp: "lend",
+                sender: fromAcc,
+                recepient: forAcc,
+                message: message,
+              },
+              ...prev.currentAcc.movements,
+            ],
+            balance: prev.currentAcc.balance - amount,
+          },
+          accounts: this.state.accounts.map((acc) => {
+            if (acc.username === fromAcc) {
+              return {
+                ...acc,
+                movements: [
+                  {
+                    amount: -amount,
+                    date: date,
+                    transactionTyp: "lend",
+                    sender: fromAcc,
+                    recepient: forAcc,
+                    message: message,
+                  },
+                  ...acc.movements,
+                ],
+                balance: acc.balance - amount,
+              };
+            }
+            if (acc.username === forAcc) {
+              return {
+                ...acc,
+                movements: [
+                  {
+                    amount: amount,
+                    date: date,
+                    transactionTyp: "borrow",
+                    sender: fromAcc,
+                    recepient: forAcc,
+                    message: message,
+                  },
+                  ...acc.movements,
+                ],
+                balance: acc.balance + amount,
+              };
+            }
+            return acc;
+          }),
+        };
+      });
+    }
   }
 
   render() {
