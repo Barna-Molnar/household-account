@@ -18,6 +18,21 @@ class App extends React.Component {
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLend = this.handleLend.bind(this);
     this.handleBlock = this.handleBlock.bind(this);
+    this.escFunction = this.escFunction.bind(this);
+  }
+  escFunction(event) {
+    if (event.keyCode === 27) {
+      this.setState({
+        hidden: false,
+      });
+    }
+  }
+
+  componentDidMount() {
+    document.addEventListener("keydown", this.escFunction, false);
+  }
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.escFunction, false);
   }
   handleBlock(fromAcc, forAcc, message = "") {
     if (fromAcc === "jm" || fromAcc === "tm") {
