@@ -20,9 +20,7 @@ class Movements extends Component {
         <div className="mov__date">
           {this.props.date ? this.props.date : "unknown"}
         </div>
-        <div className="mov__message">
-          {this.props.message ? this.props.message : "nothin"}
-        </div>
+        <div className="mov__message">{this.props.message}</div>
         <div className="mov__value">{this.props.mov}€</div>
       </div>
     );

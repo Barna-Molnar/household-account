@@ -107,12 +107,20 @@ class Account extends React.Component {
                     className="form__btn form__btn--lend"
                     onClick={(e) => {
                       e.preventDefault();
-                      this.props.lend(
-                        this.props.currentAcc.username,
-                        this.state.recepient,
-                        this.state.lendAmount,
-                        this.state.message
-                      );
+                      if (this.state.message === "") {
+                        this.props.lend(
+                          this.props.currentAcc.username,
+                          this.state.recepient,
+                          this.state.lendAmount
+                        );
+                      } else {
+                        this.props.lend(
+                          this.props.currentAcc.username,
+                          this.state.recepient,
+                          this.state.lendAmount,
+                          this.state.message
+                        );
+                      }
                       this.setState({
                         recepient: "",
                         lendAmount: "",

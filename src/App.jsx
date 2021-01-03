@@ -12,6 +12,8 @@ class App extends React.Component {
       currentAcc: undefined,
       accounts: accounts,
       actuelDate: date,
+      hidden: false,
+      overlayText: "",
     };
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLend = this.handleLend.bind(this);
@@ -40,16 +42,31 @@ class App extends React.Component {
   }
   handleLend(fromAcc, forAcc, amount, message = "dunno") {
     const valid = this.state.accounts.find((acc) => acc.username === forAcc);
-
     let date = format(new Date(), "dd/MM/yy");
     if (!forAcc && !amount) {
       console.log("nincsenek adatok");
+      this.setState({
+        hidden: true,
+        overlayText: "nincsenek adatok",
+      });
     } else if (amount > this.state.currentAcc.balance) {
       console.log("nincsen eleg zseton");
+      this.setState({
+        hidden: true,
+        overlayText: "nincsen eleg zseton",
+      });
     } else if (fromAcc === forAcc) {
       console.log("magadnak nem tucc kuldeni");
+      this.setState({
+        hidden: true,
+        overlayText: "magadnak nem tucc kuldeni",
+      });
     } else if (!valid) {
       console.log("invalid acc");
+      this.setState({
+        hidden: true,
+        overlayText: "invalid acc",
+      });
     } else {
       this.setState((prev) => {
         return {
@@ -113,6 +130,26 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+        <div
+          className={`overlay ${this.state.hidden === false ? "hidden" : ""}`}
+        >
+          &nbsp;
+        </div>
+        <div
+          class={`overlay-text ${this.state.hidden === false ? "hidden" : ""}`}
+        >
+          <p>{this.state.overlayText}</p>
+          <button
+            className="overlay-btn"
+            onClick={() => {
+              this.setState({
+                hidden: false,
+              });
+            }}
+          >
+            X
+          </button>
+        </div>
         <TopNav currentAcc={this.state.currentAcc} login={this.handleLogin} />
         <Account
           accounts={this.state.accounts}
