@@ -27,7 +27,6 @@ class App extends React.Component {
       });
     }
   }
-
   componentDidMount() {
     document.addEventListener("keydown", this.escFunction, false);
   }

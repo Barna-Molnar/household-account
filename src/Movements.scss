@@ -9,9 +9,13 @@
     overflow: scroll;
     &__row {
         padding: 2.2rem 4rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+        // display: flex;
+        // align-items: center;
+        // justify-content: space-between;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-rows: repeat(2, min-content);
+        grid-row-gap: .5rem;
         border-bottom: 1px solid #eee;
         width: 100%;
         // border-radius: 1rem;
@@ -31,6 +35,8 @@
         color: white;
         padding: .2rem 1rem;
         border-radius: 5rem;
+        align-self: center;
+        justify-self: start;
         &--dep {
             background-image: linear-gradient(to top left, #39b385, #9be15d);
         }
@@ -39,22 +45,41 @@
             margin-right: -1rem;
         }
     }
+    &__transactionTyp {
+        align-self: center;
+        justify-self: center;
+        font-size: 1.3rem;
+        color: #777;
+    }
+    &__direction {
+        align-self: center;
+        justify-self: center;
+        font-size: 1.3rem;
+        color: #777;
+    }
     &__date {
         font-size: 1.2rem;
         text-transform: uppercase;
         font-weight: 500;
         color: #777;
+        align-self: center;
+        justify-self: center;
     }
     &__message {
+        grid-row: 2 / 3;
+        grid-column: 1 / -1;
         font-size: 1.2rem;
+        width: max-content;
         text-transform: uppercase;
         font-weight: 500;
         color: white;
         padding: .5rem 1rem;
         border-radius: 1rem;
-        background-image: linear-gradient(to top left, #756e70, #dbb3b5);
+        background-image: linear-gradient(to right, #82d2e6, #3e5c75);
     }
     &__value {
         font-size: 1.7rem;
+        align-self: center;
+        justify-self: end;
     }
 }

@@ -13,8 +13,8 @@ class Movements extends Component {
         <div className={`mov__type mov__type--${this.props.type}`}>
           {this.props.i + 1} {this.props.type}
         </div>
-        <div>{this.props.transactionTyp}</div>
-        <div>
+        <div className="mov__transactionTyp">{this.props.transactionTyp}</div>
+        <div className="mov__direction">
           {this.props.type === "dep" ? "from" : "for"} : {this.props.recepient}
         </div>
         <div className="mov__date">
