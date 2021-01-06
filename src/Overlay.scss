@@ -1,0 +1,66 @@
+@import './variables.scss';
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.overlay {
+    opacity: 100;
+    position: fixed;
+    /* Sit on top of the page content */
+    // display: none;
+    /* Hidden by default */
+    width: 100%;
+    /* Full width (cover the whole page) */
+    height: 100%;
+    /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Black background with opacity */
+    z-index: 2;
+    transition: all .2s;
+    &-text {
+        display: grid;
+        grid-template-columns: 1fr min-content;
+        background-color: rgba(0, 0, 0, 0.4);
+        /* Black w/opacity/see-through */
+        color: white;
+        font-weight: bold;
+        font-size: 1.6rem;
+        border: 1px solid $color-grey-dark-2;
+        border-radius: 2rem;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        width: 80%;
+        padding: 20px;
+        text-align: center;
+    }
+    &-btn {
+        justify-self: end;
+        border: none;
+        border-radius: .6rem;
+        padding: 3px 8px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all .3s;
+        background-color: $color-grey-dark;
+        color: rgb(224, 224, 224);
+        &:focus,
+        &:active {
+            outline: none;
+        }
+        &:active {
+            transform: translateY(2px);
+        }
+        &:hover {
+            background-color: white;
+            color: black;
+        }
+    }
+}

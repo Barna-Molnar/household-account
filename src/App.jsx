@@ -1,6 +1,7 @@
 import "./App.scss";
 import TopNav from "./TopNav.jsx";
 import Account from "./Account.jsx";
+import Overlay from "./Overlay.jsx";
 import React from "react";
 import { accounts, date } from "./data.js";
 import { compareAsc, format } from "date-fns";
@@ -12,18 +13,24 @@ class App extends React.Component {
       currentAcc: undefined,
       accounts: accounts,
       actuelDate: date,
-      hidden: false,
+      hidden: true,
       overlayText: "",
     };
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLend = this.handleLend.bind(this);
     this.handleBlock = this.handleBlock.bind(this);
     this.escFunction = this.escFunction.bind(this);
+    this.handleCloseOverlay = this.handleCloseOverlay.bind(this);
+  }
+  handleCloseOverlay() {
+    this.setState({
+      hidden: true,
+    });
   }
   escFunction(event) {
     if (event.keyCode === 27) {
       this.setState({
-        hidden: false,
+        hidden: true,
       });
     }
   }
@@ -60,25 +67,25 @@ class App extends React.Component {
     if (!forAcc && !amount) {
       console.log("nincsenek adatok");
       this.setState({
-        hidden: true,
+        hidden: false,
         overlayText: "nincsenek adatok",
       });
     } else if (amount > this.state.currentAcc.balance) {
       console.log("nincsen eleg zseton");
       this.setState({
-        hidden: true,
+        hidden: false,
         overlayText: "nincsen eleg zseton",
       });
     } else if (fromAcc === forAcc) {
       console.log("magadnak nem tucc kuldeni");
       this.setState({
-        hidden: true,
+        hidden: false,
         overlayText: "magadnak nem tucc kuldeni",
       });
     } else if (!valid) {
       console.log("invalid acc");
       this.setState({
-        hidden: true,
+        hidden: false,
         overlayText: "invalid acc",
       });
     } else {
@@ -144,26 +151,11 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <div
-          className={`overlay ${this.state.hidden === false ? "hidden" : ""}`}
-        >
-          &nbsp;
-        </div>
-        <div
-          class={`overlay-text ${this.state.hidden === false ? "hidden" : ""}`}
-        >
-          <p>{this.state.overlayText}</p>
-          <button
-            className="overlay-btn"
-            onClick={() => {
-              this.setState({
-                hidden: false,
-              });
-            }}
-          >
-            X
-          </button>
-        </div>
+        <Overlay
+          overlayText={this.state.overlayText}
+          hidden={this.state.hidden}
+          handleCloseOverlay={this.handleCloseOverlay}
+        />
         <TopNav currentAcc={this.state.currentAcc} login={this.handleLogin} />
         <Account
           accounts={this.state.accounts}
