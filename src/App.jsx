@@ -84,6 +84,11 @@ class App extends React.Component {
         overlayHidden: false,
         overlayText: "invalid acc",
       });
+    } else if (amount <= 0) {
+      this.setState({
+        overlayHidden: false,
+        overlayText: "invalid value",
+      });
     } else {
       this.setState((prev) => {
         return {
@@ -101,6 +106,7 @@ class App extends React.Component {
               ...prev.currentAcc.movements,
             ],
             balance: prev.currentAcc.balance - amount,
+            owed: [{ value: amount, forWho: forAcc }, ...prev.currentAcc.owed],
           },
           accounts: this.state.accounts.map((acc) => {
             if (acc.username === fromAcc) {
@@ -118,6 +124,7 @@ class App extends React.Component {
                   ...acc.movements,
                 ],
                 balance: acc.balance - amount,
+                owed: [{ value: amount, forWho: forAcc }, ...acc.owed],
               };
             }
             if (acc.username === forAcc) {
@@ -135,6 +142,7 @@ class App extends React.Component {
                   ...acc.movements,
                 ],
                 balance: acc.balance + amount,
+                debt: [{ value: amount, to: fromAcc }, ...acc.debt],
               };
             }
             return acc;

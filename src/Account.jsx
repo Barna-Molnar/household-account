@@ -46,12 +46,20 @@ class Account extends React.Component {
             <p className="status__date">{date}</p>
           </div>
           <div className="status__message">
-            <p className="status__message-yourDept">
-              te tarotozol- for: km amount: 1000
-            </p>
-            <p className="status__message-owesForYou">
-              neked tartoznak who : sm amount: 200
-            </p>
+            {this.props.currentAcc?.debt.map((debt) => {
+              return (
+                <p>
+                  I owe {debt.value} to {debt.to}
+                </p>
+              );
+            })}
+            {this.props.currentAcc?.owed.map((owed) => {
+              return (
+                <p>
+                  {owed.forWho} owes you {owed.value}
+                </p>
+              );
+            })}
           </div>
           <div>
             <p className="status__value">
@@ -137,12 +145,13 @@ class Account extends React.Component {
                   </div>
                 </div>
                 <input
+                  className="form__input form__input--message"
+                  maxlength="50"
                   value={this.state.message}
                   onChange={(e) => {
                     this.setState({ message: e.target.value });
                   }}
                   type="text"
-                  className="form__input form__input--message"
                 />
                 <div>
                   <div className="label-flex">

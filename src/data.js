@@ -10,12 +10,18 @@ export const account1 = {
         recepient: 'km',
         message: `i don't know`
     }],
+    debt: [],
+    owed: [],
+
+
 };
 
 export const account2 = {
     owner: 'Teresa Miller',
     balance: 7000,
     movements: [],
+    debt: [],
+    owed: [],
 };
 
 export const account3 = {
@@ -23,6 +29,8 @@ export const account3 = {
     balance: 0,
     movements: [],
     isBlocked: false,
+    debt: [],
+    owed: [],
 };
 
 export const account4 = {
@@ -37,6 +45,8 @@ export const account4 = {
         message: `i don't know`
     }],
     isBlocked: false,
+    debt: [],
+    owed: [],
 
 };
 export const testAcc = {
