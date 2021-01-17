@@ -2,6 +2,7 @@ import React from "react";
 import "./Account.scss";
 import "./Account.scss";
 import "./data";
+import { compareAsc, format } from "date-fns";
 import Movements from "./Movements";
 import NewOperator from "./NewOperator";
 
@@ -28,7 +29,9 @@ class Account extends React.Component {
       return "unblock";
     }
   }
+
   render() {
+    let date = format(new Date(), "dd/MM/yy");
     return (
       <div
         className="main"
@@ -40,20 +43,14 @@ class Account extends React.Component {
         <div className="status">
           <div>
             <p className="status__label">Current Status</p>
-            <p className="status__date">Actuel Date with js...later</p>
+            <p className="status__date">{date}</p>
           </div>
-          <div>
-            <p
-              className="status__message"
-              style={
-                this.props.currentAcc === undefined
-                  ? { opacity: 0 }
-                  : this.props.currentAcc.isBlocked === true
-                  ? { opacity: 100 }
-                  : { opacity: 0 }
-              }
-            >
-              {this.props.currentAcc?.message}
+          <div className="status__message">
+            <p className="status__message-yourDept">
+              te tarotozol- for: km amount: 1000
+            </p>
+            <p className="status__message-owesForYou">
+              neked tartoznak who : sm amount: 200
             </p>
           </div>
           <div>
@@ -61,10 +58,6 @@ class Account extends React.Component {
               {this.props.currentAcc?.balance
                 ? this.props.currentAcc?.balance
                 : 0}
-              {/* {this.props.currentAcc?.movements.reduce(
-                (acc, currVale) => acc + currVale,
-                0
-              )} */}
               €
             </p>
           </div>
@@ -263,19 +256,6 @@ class Account extends React.Component {
             )}
           </div>
           <div className="mov">
-            {/* {this.props.currentAcc?.movements.map((mov, i) => {
-              return (
-                <Movements
-                  key={i + 1}
-                  i={i}
-                  type={mov > 0 ? "dep" : "withD"}
-                  mov={mov}
-                  date={this.props.currentAcc?.date}
-                />
-              );
-            })} */}
-            {/* //////////////// */}
-            {/*to test*/}
             {this.props.currentAcc?.movements.map((mov, i) => {
               return (
                 <Movements
@@ -291,6 +271,16 @@ class Account extends React.Component {
               );
             })}
           </div>
+          {/* <div className messages>
+            <div className="status__message">
+              <p className="status__message-yourDept">
+                te tarotozol- for: km amount: 1000
+              </p>
+              <p className="status__message-owesForYou">
+                neked tartoznak who : sm amount: 200
+              </p>
+            </div>
+          </div> */}
         </div>
         <div className="summeries">
           <p className="summeries__label">in</p>

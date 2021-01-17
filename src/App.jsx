@@ -13,7 +13,7 @@ class App extends React.Component {
       currentAcc: undefined,
       accounts: accounts,
       actuelDate: date,
-      hidden: true,
+      overlayHidden: true,
       overlayText: "",
     };
     this.handleLogin = this.handleLogin.bind(this);
@@ -24,13 +24,13 @@ class App extends React.Component {
   }
   handleCloseOverlay() {
     this.setState({
-      hidden: true,
+      overlayHidden: true,
     });
   }
   escFunction(event) {
     if (event.keyCode === 27) {
       this.setState({
-        hidden: true,
+        overlayHidden: true,
       });
     }
   }
@@ -65,27 +65,23 @@ class App extends React.Component {
     const valid = this.state.accounts.find((acc) => acc.username === forAcc);
     let date = format(new Date(), "dd/MM/yy");
     if (!forAcc && !amount) {
-      console.log("nincsenek adatok");
       this.setState({
-        hidden: false,
+        overlayHidden: false,
         overlayText: "nincsenek adatok",
       });
     } else if (amount > this.state.currentAcc.balance) {
-      console.log("nincsen eleg zseton");
       this.setState({
-        hidden: false,
+        overlayHidden: false,
         overlayText: "nincsen eleg zseton",
       });
     } else if (fromAcc === forAcc) {
-      console.log("magadnak nem tucc kuldeni");
       this.setState({
-        hidden: false,
+        overlayHidden: false,
         overlayText: "magadnak nem tucc kuldeni",
       });
     } else if (!valid) {
-      console.log("invalid acc");
       this.setState({
-        hidden: false,
+        overlayHidden: false,
         overlayText: "invalid acc",
       });
     } else {
@@ -153,7 +149,7 @@ class App extends React.Component {
       <div className="App">
         <Overlay
           overlayText={this.state.overlayText}
-          hidden={this.state.hidden}
+          hidden={this.state.overlayHidden}
           handleCloseOverlay={this.handleCloseOverlay}
         />
         <TopNav currentAcc={this.state.currentAcc} login={this.handleLogin} />

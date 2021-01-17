@@ -27,6 +27,8 @@
         font-weight: 400;
     }
     &__message {
+        height: 100%;
+        width: 30vw;
         font-family: inherit;
         color: inherit;
         font-size: 1.6rem;
@@ -54,6 +56,8 @@
             }
             padding: 3rem 4rem;
             color: #444;
+            color: white;
+            font-weight: 500;
             border-radius: 2rem;
             h2 {
                 margin-bottom: 1.5rem;
@@ -89,13 +93,12 @@
                     &--block {
                         padding: .3rem 1rem;
                         font-size: 1.4rem;
-                        color: inherit;
+                        color: black;
                         ;
                     }
                 }
             }
             .form__input {
-                width: 100%;
                 border: none;
                 background-color: rgba(255, 255, 255, 0.4);
                 font-family: inherit;
@@ -117,10 +120,10 @@
             }
         }
         .op--lend {
-            background-image: linear-gradient(to bottom right, #c8dad3, #595e56);
+            background-image: linear-gradient(to bottom right, #c8dad3, #595e56, #99a5a0);
         }
         .op--borrow {
-            background-image: linear-gradient(to bottom left, #c9e9a0, #10c06e);
+            background-image: linear-gradient(to bottom left, #c1eb8b, #13a561);
         }
         .op--block {
             background-image: linear-gradient(to bottom right, #ec4a73, #860711);

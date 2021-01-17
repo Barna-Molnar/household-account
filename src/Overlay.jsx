@@ -15,7 +15,9 @@ class Overlay extends React.Component {
           &nbsp;
         </div>
         <div
-          class={`overlay-text ${this.props.hidden === true ? "hidden" : ""}`}
+          className={`overlay-text ${
+            this.props.hidden === true ? "hidden" : ""
+          }`}
         >
           <p>{this.props.overlayText}</p>
           <button
