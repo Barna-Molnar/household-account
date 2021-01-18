@@ -1,10 +1,11 @@
 import React from "react";
 import "./Account.scss";
-import "./Account.scss";
+
 import "./data";
 import { compareAsc, format } from "date-fns";
 import Movements from "./Movements";
 import NewOperator from "./NewOperator";
+import Status from "./Status";
 
 class Account extends React.Component {
   constructor(props) {
@@ -39,37 +40,8 @@ class Account extends React.Component {
           this.props.currentAcc === undefined ? { opacity: 0 } : { opacity: 1 }
         }
       >
-        {/* status component */}
-        <div className="status">
-          <div>
-            <p className="status__label">Current Status</p>
-            <p className="status__date">{date}</p>
-          </div>
-          <div className="status__message">
-            {this.props.currentAcc?.debt.map((debt) => {
-              return (
-                <p>
-                  I owe {debt.value} to {debt.to}
-                </p>
-              );
-            })}
-            {this.props.currentAcc?.owed.map((owed) => {
-              return (
-                <p>
-                  {owed.forWho} owes you {owed.value}
-                </p>
-              );
-            })}
-          </div>
-          <div>
-            <p className="status__value">
-              {this.props.currentAcc?.balance
-                ? this.props.currentAcc?.balance
-                : 0}
-              €
-            </p>
-          </div>
-        </div>
+        <Status currentAcc={this.props.currentAcc} date={date} />
+
         {/* account component */}
         <div className="accBody">
           <div className="ops">
@@ -146,7 +118,7 @@ class Account extends React.Component {
                 </div>
                 <input
                   className="form__input form__input--message"
-                  maxlength="50"
+                  maxLength="50"
                   value={this.state.message}
                   onChange={(e) => {
                     this.setState({ message: e.target.value });
@@ -163,7 +135,7 @@ class Account extends React.Component {
               </form>
             </div>
             <div className="op op--borrow">
-              <h2>Borrow money</h2>
+              <h2>Upload money</h2>
               <form
                 action="#"
                 className="form form--borrow"
@@ -192,7 +164,7 @@ class Account extends React.Component {
                 <div className="label-flex">
                   <div>
                     <label htmlFor="#" className="form__label">
-                      From Who
+                      Account
                     </label>
                   </div>
                   <div>
@@ -203,7 +175,7 @@ class Account extends React.Component {
                 </div>
               </form>
             </div>
-            {this.props.currentAcc !== undefined &&
+            {/* {this.props.currentAcc !== undefined &&
             (this.props.currentAcc.username === "jm" ||
               this.props.currentAcc.username === "tm") ? (
               <div className="op op--block">
@@ -262,7 +234,7 @@ class Account extends React.Component {
               </div>
             ) : (
               ""
-            )}
+            )} */}
           </div>
           <div className="mov">
             {this.props.currentAcc?.movements.map((mov, i) => {
