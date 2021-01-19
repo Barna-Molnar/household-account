@@ -40,7 +40,11 @@ class Account extends React.Component {
           this.props.currentAcc === undefined ? { opacity: 0 } : { opacity: 1 }
         }
       >
-        <Status currentAcc={this.props.currentAcc} date={date} />
+        <Status
+          currentAcc={this.props.currentAcc}
+          date={date}
+          accounts={this.props.accounts}
+        />
 
         {/* account component */}
         <div className="accBody">

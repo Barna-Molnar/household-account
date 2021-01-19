@@ -91,6 +91,89 @@ class App extends React.Component {
       });
     } else {
       this.setState((prev) => {
+        //////////debt is not an empty array
+        if (prev.currentAcc.owed.some((item) => item.forWho === forAcc)) {
+          return {
+            currentAcc: {
+              ...prev.currentAcc,
+              movements: [
+                {
+                  amount: -amount,
+                  date: date,
+                  transactionTyp: "lend",
+                  sender: fromAcc,
+                  recepient: forAcc,
+                  message: message,
+                },
+                ...prev.currentAcc.movements,
+              ],
+              balance: prev.currentAcc.balance - amount,
+              owed: prev.currentAcc.owed.map((item) => {
+                if (item.forWho === forAcc) {
+                  return { value: item.value + amount, forWho: forAcc };
+                } else {
+                  return item;
+                }
+              }),
+              // [{ value: amount, forWho: forAcc }, ...prev.currentAcc.owed],
+            },
+            accounts: this.state.accounts.map((acc) => {
+              if (acc.username === fromAcc) {
+                return {
+                  ...acc,
+                  movements: [
+                    {
+                      amount: -amount,
+                      date: date,
+                      transactionTyp: "lend",
+                      sender: fromAcc,
+                      recepient: forAcc,
+                      message: message,
+                    },
+                    ...acc.movements,
+                  ],
+                  balance: acc.balance - amount,
+                  owed: acc.owed.map((item) => {
+                    if (item.forWho === forAcc) {
+                      return { value: item.value + amount, forWho: forAcc };
+                    } else {
+                      return item;
+                    }
+                  }),
+                  // [{ value: amount, forWho: forAcc }, ...acc.owed],
+                };
+              }
+              if (acc.username === forAcc) {
+                return {
+                  ...acc,
+                  movements: [
+                    {
+                      amount: amount,
+                      date: date,
+                      transactionTyp: "borrow",
+                      sender: fromAcc,
+                      recepient: forAcc,
+                      message: message,
+                    },
+                    ...acc.movements,
+                  ],
+                  balance: acc.balance + amount,
+                  debt: acc.debt.map((item) => {
+                    if (item.to === fromAcc) {
+                      return { value: item.value + amount, to: fromAcc };
+                    } else {
+                      return item;
+                    }
+                  }),
+                  // [{ value: amount, to: fromAcc }, ...acc.debt],
+                };
+              }
+              return acc;
+            }),
+          };
+        }
+
+        ///////// debt is an empty array
         return {
           currentAcc: {
             ...prev.currentAcc,
@@ -107,6 +190,8 @@ class App extends React.Component {
             ],
             balance: prev.currentAcc.balance - amount,
             owed: [{ value: amount, forWho: forAcc }, ...prev.currentAcc.owed],
+
+            // [{ value: amount, forWho: forAcc }, ...prev.currentAcc.owed],
           },
           accounts: this.state.accounts.map((acc) => {
             if (acc.username === fromAcc) {

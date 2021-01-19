@@ -14,16 +14,16 @@ class Status extends Component {
           <p className="status__date">{this.props.date}</p>
         </div>
         <div className="status__message">
-          {this.props.currentAcc?.debt.map((debt) => {
+          {this.props.currentAcc?.debt.map((debt, i) => {
             return (
-              <p>
+              <p key={i}>
                 I owe {debt.value} to {debt.to}
               </p>
             );
           })}
-          {this.props.currentAcc?.owed.map((owed) => {
+          {this.props.currentAcc?.owed.map((owed, i) => {
             return (
-              <p>
+              <p key={i}>
                 {owed.forWho} owes you {owed.value}
               </p>
             );
