@@ -17,6 +17,7 @@ class Account extends React.Component {
       accToBlock: "",
       lendAmount: "",
       message: "",
+      amount: "",
     };
     this.blockBtnText = this.blockBtnText.bind(this);
   }
@@ -138,7 +139,7 @@ class Account extends React.Component {
                 </div>
               </form>
             </div>
-            <div className="op op--borrow">
+            <div className="op op--upload">
               <h2>Upload money</h2>
               <form
                 action="#"
@@ -152,25 +153,46 @@ class Account extends React.Component {
                 }
               >
                 <div className="input-flex">
-                  <input
+                  {/* <input
+                    value={this.state.recepient}
+                    onChange={(e) => {
+                      this.setState({ recepient: e.target.value });
+                    }}
                     type="text"
-                    className="form__input form__input--fromWho"
-                  />
+                    className="form__input"
+                  /> */}
 
                   <input
+                    value={this.state.amount}
+                    onChange={(e) => {
+                      this.setState({ amount: Number(e.target.value) });
+                    }}
                     type="number"
-                    className="form__input form__input--amount"
+                    className="form__input"
                   />
-                  <button className="form__btn form__btn--borrow">
+                  <button
+                    className="form__btn form__btn--borrow"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      this.props.uploadMoney(
+                        this.state.currentAcc.username,
+                        this.state.amount
+                      );
+                      this.setState({
+                        recepient: "",
+                        amount: "",
+                      });
+                    }}
+                  >
                     &rarr;
                   </button>
                 </div>
                 <div className="label-flex">
-                  <div>
+                  {/* <div>
                     <label htmlFor="#" className="form__label">
                       Account
                     </label>
-                  </div>
+                  </div> */}
                   <div>
                     <label htmlFor="#" className="form__label">
                       Amount
@@ -256,16 +278,6 @@ class Account extends React.Component {
               );
             })}
           </div>
-          {/* <div className messages>
-            <div className="status__message">
-              <p className="status__message-yourDept">
-                te tarotozol- for: km amount: 1000
-              </p>
-              <p className="status__message-owesForYou">
-                neked tartoznak who : sm amount: 200
-              </p>
-            </div>
-          </div> */}
         </div>
         <div className="summeries">
           <p className="summeries__label">in</p>

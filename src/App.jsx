@@ -19,9 +19,53 @@ class App extends React.Component {
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLend = this.handleLend.bind(this);
     this.handleBlock = this.handleBlock.bind(this);
+    this.handleUploadMoney = this.handleUploadMoney.bind(this);
     this.escFunction = this.escFunction.bind(this);
     this.handleCloseOverlay = this.handleCloseOverlay.bind(this);
   }
+  handleUploadMoney(forAcc, amount, message = "upload") {
+    console.log(forAcc, amount);
+    this.setState((prev) => {
+      return {
+        currentAcc: {
+          ...prev.currentAcc,
+          movements: [
+            {
+              amount: amount,
+              date: date,
+              transactionTyp: "upload",
+              sender: forAcc,
+              recepient: forAcc,
+              message: message,
+            },
+            ...prev.currentAcc.movements,
+          ],
+          balance: prev.currentAcc.balance + amount,
+        },
+        accounts: this.state.accounts.map((acc) => {
+          if (acc.username === forAcc) {
+            return {
+              ...acc,
+              movements: [
+                {
+                  amount: +amount,
+                  date: date,
+                  transactionTyp: "upload",
+                  sender: forAcc,
+                  recepient: forAcc,
+                  message: message,
+                },
+                ...acc.movements,
+              ],
+              balance: acc.balance + amount,
+            };
+          }
+          return acc;
+        }),
+      };
+    });
+  }
+
   handleCloseOverlay() {
     this.setState({
       overlayHidden: true,
@@ -91,7 +135,7 @@ class App extends React.Component {
       });
     } else {
       this.setState((prev) => {
-        //////////debt is not an empty array
+        //////////debt is not an empty array////////////////////
         if (prev.currentAcc.owed.some((item) => item.forWho === forAcc)) {
           return {
             currentAcc: {
@@ -173,7 +217,7 @@ class App extends React.Component {
           };
         }
 
-        ///////// debt is an empty array
+        ///////// debt is an empty array //////////////////
         return {
           currentAcc: {
             ...prev.currentAcc,
@@ -251,6 +295,7 @@ class App extends React.Component {
           currentAcc={this.state.currentAcc}
           handleBlock={this.handleBlock}
           lend={this.handleLend}
+          uploadMoney={this.handleUploadMoney}
         />
       </div>
     );
