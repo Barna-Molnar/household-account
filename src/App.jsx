@@ -2,6 +2,7 @@ import "./App.scss";
 import TopNav from "./TopNav.jsx";
 import Account from "./Account.jsx";
 import Overlay from "./Overlay.jsx";
+import Login from "./Login.jsx";
 import React from "react";
 import { accounts, date } from "./data.js";
 import { compareAsc, format } from "date-fns";
@@ -15,6 +16,7 @@ class App extends React.Component {
       actuelDate: date,
       overlayHidden: true,
       overlayText: "",
+      loginVisibility: true,
     };
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLend = this.handleLend.bind(this);
@@ -22,7 +24,21 @@ class App extends React.Component {
     this.handleUploadMoney = this.handleUploadMoney.bind(this);
     this.escFunction = this.escFunction.bind(this);
     this.handleCloseOverlay = this.handleCloseOverlay.bind(this);
+    this.handleLogOut = this.handleLogOut.bind(this);
   }
+  handleLogOut() {
+    this.setState({
+      loginVisibility: true,
+      currentAcc: undefined,
+    });
+  }
+  handleLogin(username, pin) {
+    this.setState({
+      currentAcc: this.state.accounts.find((acc) => acc.username === username),
+      loginVisibility: false,
+    });
+  }
+
   handleUploadMoney(forAcc, amount, message = "upload") {
     console.log(forAcc, amount);
     this.setState((prev) => {
@@ -100,11 +116,7 @@ class App extends React.Component {
     }
     console.log("you are not allowed use this functionality");
   }
-  handleLogin(username, pin) {
-    this.setState({
-      currentAcc: this.state.accounts.find((acc) => acc.username === username),
-    });
-  }
+
   handleLend(fromAcc, forAcc, amount, message = "dunno") {
     const valid = this.state.accounts.find((acc) => acc.username === forAcc);
     let date = format(new Date(), "dd/MM/yy");
@@ -289,14 +301,26 @@ class App extends React.Component {
           hidden={this.state.overlayHidden}
           handleCloseOverlay={this.handleCloseOverlay}
         />
-        <TopNav currentAcc={this.state.currentAcc} login={this.handleLogin} />
-        <Account
-          accounts={this.state.accounts}
+        <TopNav
           currentAcc={this.state.currentAcc}
-          handleBlock={this.handleBlock}
-          lend={this.handleLend}
-          uploadMoney={this.handleUploadMoney}
+          login={this.handleLogin}
+          logOutBtnVisibility={this.state.loginVisibility}
+          logOut={this.handleLogOut}
         />
+        <div className="animation">
+          <Login
+            currentAcc={this.state.currentAcc}
+            login={this.handleLogin}
+            loginVisibility={this.state.loginVisibility}
+          />
+          <Account
+            accounts={this.state.accounts}
+            currentAcc={this.state.currentAcc}
+            handleBlock={this.handleBlock}
+            lend={this.handleLend}
+            uploadMoney={this.handleUploadMoney}
+          />
+        </div>
       </div>
     );
   }

@@ -18,7 +18,7 @@ class TopNav extends React.Component {
             : `Welcome back ${this.props.currentAcc.owner.split(" ")[0]}`}
         </p>
         <img src="/img/logo.png" alt="" className="logo" />
-        <form className="loginForm" action="">
+        {/* <form className="loginForm" action="">
           <input
             onChange={(e) => {
               this.setState({ username: e.target.value });
@@ -52,7 +52,17 @@ class TopNav extends React.Component {
           >
             LOG IN <span>&rarr;</span>
           </button>
-        </form>
+        </form> */}
+        <button
+          style={{ display: this.props.logOutBtnVisibility ? "none" : "" }}
+          className="loginForm__btn"
+          onClick={(e) => {
+            e.preventDefault();
+            this.props.logOut();
+          }}
+        >
+          LOG OUT<span>&rarr;</span>
+        </button>
       </nav>
     );
   }
