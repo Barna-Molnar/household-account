@@ -12,19 +12,31 @@ class Login extends Component {
   render() {
     return (
       <div
-        className="login-page"
-        style={{ display: this.props.loginVisibility ? "" : "none" }}
+        className={`login-page`}
+        style={{
+          left: this.props.loginVisibility
+            ? "calc(100%/2 - 180px)"
+            : "calc(100%/2 - 1800px)",
+          opacity: this.props.loginVisibility ? 1 : 0,
+        }}
       >
         <div className="login-page__form">
-          <form className="login-form">
-            <input
-              onChange={(e) => {
-                this.setState({ username: e.target.value });
-              }}
-              value={this.state.username}
-              type="text"
-              placeholder="username"
-            />
+          <form className="">
+            <div className="login-page__form__input-group">
+              <input
+                onChange={(e) => {
+                  this.setState({ username: e.target.value });
+                }}
+                value={this.state.username}
+                type="text"
+                placeholder="username"
+                required
+              />
+              <label htmlFor="name" className="login-page__form__label">
+                username
+              </label>
+            </div>
+
             <input
               onChange={(e) => {
                 this.setState({ pin: e.target.value });

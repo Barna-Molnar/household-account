@@ -1,29 +1,69 @@
+@import './variables.scss';
+.movOut {
+    left: calc(100%/2 - 1800px);
+}
+
 .login-page {
     width: 360px;
     padding: 8% 0 0;
     margin: auto;
     display: block;
-    transition: visibility 2s;
-    visibility: visible;
+    transition: all 1s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+    position: absolute;
+    top: 6%;
+    left: calc(100%/2 - 180px);
     &__form {
+        background-image: linear-gradient(150deg, rgba(196, 186, 186, 0.9) 0%, rgba(255, 255, 255, 0.9) 50%, transparent 50%), url(https://images.pexels.com/photos/4386375/pexels-photo-4386375.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260://https://images.pexels.com/photos/4386366/pexels-photo-4386366.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260.pexels.com/photos/3305/numbers-money-calculating-calculation.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
+        background-size: 100%;
         position: relative;
         z-index: 1;
-        background: #FFFFFF;
         max-width: 360px;
         margin: 0 auto 100px;
         padding: 45px;
         text-align: center;
         box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+        &__input-group {
+            position: relative;
+        }
         input {
             font-family: "Roboto", sans-serif;
             outline: 0;
             background: #f2f2f2;
             width: 100%;
             border: 0;
-            margin: 0 0 15px;
+            margin: 0 0 30px;
             padding: 15px;
             box-sizing: border-box;
             font-size: 14px;
+            border-bottom: 3px solid transparent;
+            &:focus {
+                outline: none;
+                box-shadow: 0 1rem 2rem rgba($color-black, .1);
+                border-bottom: 3px solid $color-greenish-dark;
+            }
+            &:focus:invalid {
+                border-bottom: 3px solid $color-orange-dark;
+            }
+        }
+        input:placeholder-shown+&__label {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-4rem);
+        }
+        &__label {
+            font-family: "Roboto", sans-serif;
+            font-size: 12px;
+            position: absolute;
+            top: 5rem;
+            left: 1.6rem;
+            display: block;
+            // position: relative;
+            // top: -12px;
+            // left: -89px;
+            font-weight: 500;
+            margin-top: .7rem;
+            display: block;
+            transition: all .3s;
         }
         button {
             font-family: "Roboto", sans-serif;

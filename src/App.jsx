@@ -33,53 +33,64 @@ class App extends React.Component {
     });
   }
   handleLogin(username, pin) {
-    this.setState({
-      currentAcc: this.state.accounts.find((acc) => acc.username === username),
-      loginVisibility: false,
-    });
+    const valid = this.state.accounts.find((acc) => acc.username === username);
+    if (valid) {
+      this.setState({
+        currentAcc: this.state.accounts.find(
+          (acc) => acc.username === username
+        ),
+        loginVisibility: false,
+      });
+    }
   }
 
   handleUploadMoney(forAcc, amount, message = "upload") {
     console.log(forAcc, amount);
-    this.setState((prev) => {
-      return {
-        currentAcc: {
-          ...prev.currentAcc,
-          movements: [
-            {
-              amount: amount,
-              date: date,
-              transactionTyp: "upload",
-              sender: forAcc,
-              recepient: forAcc,
-              message: message,
-            },
-            ...prev.currentAcc.movements,
-          ],
-          balance: prev.currentAcc.balance + amount,
-        },
-        accounts: this.state.accounts.map((acc) => {
-          if (acc.username === forAcc) {
-            return {
-              ...acc,
-              movements: [
-                {
-                  amount: +amount,
-                  date: date,
-                  transactionTyp: "upload",
-                  sender: forAcc,
-                  recepient: forAcc,
-                  message: message,
-                },
-                ...acc.movements,
-              ],
-              balance: acc.balance + amount,
-            };
-          }
-          return acc;
-        }),
-      };
-    });
+    if (amount <= 0) {
+      this.setState({
+        overlayHidden: false,
+        overlayText: "invalid value",
+      });
+    } else
+      this.setState((prev) => {
+        return {
+          currentAcc: {
+            ...prev.currentAcc,
+            movements: [
+              {
+                amount: amount,
+                date: date,
+                transactionTyp: "upload",
+                sender: forAcc,
+                recepient: forAcc,
+                message: message,
+              },
+              ...prev.currentAcc.movements,
+            ],
+            balance: prev.currentAcc.balance + amount,
+          },
+          accounts: this.state.accounts.map((acc) => {
+            if (acc.username === forAcc) {
+              return {
+                ...acc,
+                movements: [
+                  {
+                    amount: +amount,
+                    date: date,
+                    transactionTyp: "upload",
+                    sender: forAcc,
+                    recepient: forAcc,
+                    message: message,
+                  },
+                  ...acc.movements,
+                ],
+                balance: acc.balance + amount,
+              };
+            }
+            return acc;
+          }),
+        };
+      });
   }
 
   handleCloseOverlay() {

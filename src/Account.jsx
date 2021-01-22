@@ -175,7 +175,7 @@ class Account extends React.Component {
                     onClick={(e) => {
                       e.preventDefault();
                       this.props.uploadMoney(
-                        this.state.currentAcc.username,
+                        this.props.currentAcc.username,
                         this.state.amount
                       );
                       this.setState({
