@@ -4,6 +4,12 @@ import Account from "./Account.jsx";
 import Overlay from "./Overlay.jsx";
 import Login from "./Login.jsx";
 import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import { accounts, date } from "./data.js";
 import { compareAsc, format } from "date-fns";
 
@@ -306,33 +312,41 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
-        <Overlay
-          overlayText={this.state.overlayText}
-          hidden={this.state.overlayHidden}
-          handleCloseOverlay={this.handleCloseOverlay}
-        />
-        <TopNav
-          currentAcc={this.state.currentAcc}
-          login={this.handleLogin}
-          logOutBtnVisibility={this.state.loginVisibility}
-          logOut={this.handleLogOut}
-        />
-        <div className="animation">
-          <Login
+      <Router>
+        <div className="App">
+          <Overlay
+            overlayText={this.state.overlayText}
+            hidden={this.state.overlayHidden}
+            handleCloseOverlay={this.handleCloseOverlay}
+          />
+          <TopNav
             currentAcc={this.state.currentAcc}
             login={this.handleLogin}
-            loginVisibility={this.state.loginVisibility}
+            logOutBtnVisibility={this.state.loginVisibility}
+            logOut={this.handleLogOut}
           />
-          <Account
-            accounts={this.state.accounts}
-            currentAcc={this.state.currentAcc}
-            handleBlock={this.handleBlock}
-            lend={this.handleLend}
-            uploadMoney={this.handleUploadMoney}
-          />
+          <Switch>
+            <Route path="/login">
+              <Login
+                currentAcc={this.state.currentAcc}
+                login={this.handleLogin}
+                loginVisibility={this.state.loginVisibility}
+              />
+              {this.state.currentAcc ? <Redirect to="/" /> : ""}
+            </Route>
+            {this.state.currentAcc ? "" : <Redirect to="/login" />}
+            <Route path="/">
+              <Account
+                accounts={this.state.accounts}
+                currentAcc={this.state.currentAcc}
+                handleBlock={this.handleBlock}
+                lend={this.handleLend}
+                uploadMoney={this.handleUploadMoney}
+              />
+            </Route>
+          </Switch>
         </div>
-      </div>
+      </Router>
     );
   }
 }
