@@ -13,12 +13,12 @@ class Login extends Component {
     return (
       <div
         className={`login-page`}
-        style={{
-          left: this.props.loginVisibility
-            ? "calc(100%/2 - 180px)"
-            : "calc(100%/2 - 1800px)",
-          opacity: this.props.loginVisibility ? 1 : 0,
-        }}
+        // style={{
+        //   left: this.props.loginVisibility
+        //     ? "calc(100%/2 - 180px)"
+        //     : "calc(100%/2 - 1800px)",
+        //   opacity: this.props.loginVisibility ? 1 : 0,
+        // }}
       >
         <div className="login-page__form">
           <form className="">

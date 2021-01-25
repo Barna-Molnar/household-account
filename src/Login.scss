@@ -1,14 +1,10 @@
 @import './variables.scss';
-.movOut {
-    left: calc(100%/2 - 1800px);
-}
-
 .login-page {
     width: 360px;
     padding: 8% 0 0;
     margin: auto;
     display: block;
-    transition: all 1s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+    // transition: all 1s cubic-bezier(0.68, -0.6, 0.32, 1.6);
     position: absolute;
     top: 6%;
     left: calc(100%/2 - 180px);

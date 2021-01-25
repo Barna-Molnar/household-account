@@ -37,9 +37,9 @@ class Account extends React.Component {
     return (
       <div
         className="main"
-        style={
-          this.props.currentAcc === undefined ? { opacity: 0 } : { opacity: 1 }
-        }
+        // style={
+        //   this.props.currentAcc === undefined ? { opacity: 0 } : { opacity: 1 }
+        // }
       >
         <Status
           currentAcc={this.props.currentAcc}

@@ -12,6 +12,7 @@ import {
 } from "react-router-dom";
 import { accounts, date } from "./data.js";
 import { compareAsc, format } from "date-fns";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 class App extends React.Component {
   constructor(props) {
@@ -325,26 +326,38 @@ class App extends React.Component {
             logOutBtnVisibility={this.state.loginVisibility}
             logOut={this.handleLogOut}
           />
-          <Switch>
-            <Route path="/login">
-              <Login
-                currentAcc={this.state.currentAcc}
-                login={this.handleLogin}
-                loginVisibility={this.state.loginVisibility}
-              />
-              {this.state.currentAcc ? <Redirect to="/" /> : ""}
-            </Route>
-            {this.state.currentAcc ? "" : <Redirect to="/login" />}
-            <Route path="/">
-              <Account
-                accounts={this.state.accounts}
-                currentAcc={this.state.currentAcc}
-                handleBlock={this.handleBlock}
-                lend={this.handleLend}
-                uploadMoney={this.handleUploadMoney}
-              />
-            </Route>
-          </Switch>
+          <Route
+            render={({ location }) => (
+              <TransitionGroup>
+                <CSSTransition
+                  classNames="login-transition"
+                  timeout={500}
+                  key={location.key}
+                >
+                  <Switch location={location}>
+                    <Route path="/login">
+                      <Login
+                        currentAcc={this.state.currentAcc}
+                        login={this.handleLogin}
+                        loginVisibility={this.state.loginVisibility}
+                      />
+                      {this.state.currentAcc ? <Redirect to="/" /> : ""}
+                    </Route>
+                    {this.state.currentAcc ? "" : <Redirect to="/login" />}
+                    <Route path="/">
+                      <Account
+                        accounts={this.state.accounts}
+                        currentAcc={this.state.currentAcc}
+                        handleBlock={this.handleBlock}
+                        lend={this.handleLend}
+                        uploadMoney={this.handleUploadMoney}
+                      />
+                    </Route>
+                  </Switch>
+                </CSSTransition>
+              </TransitionGroup>
+            )}
+          />
         </div>
       </Router>
     );
