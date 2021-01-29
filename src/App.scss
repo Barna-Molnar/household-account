@@ -8,27 +8,44 @@
 //     z-index: 1;
 //     transform: translateX(-1000px);
 // }
-.login-transition-enter,
-.login-transition-appear {
+// .login-transition-enter,
+// .login-transition-appear {
+//     opacity: 0;
+//     z-index: 1;
+//     transform: translateX(0px);
+// }
+// .login-transition-appear-active,
+// .login-transition-enter-active.login-transition-enter {
+//     opacity: 1;
+//     transition: opacity 400ms, linear 150ms;
+//     transform: translateX(0px);
+// }
+// .login-transition-exit {
+//     opacity: 1;
+//     transform: translateX(0px);
+// }
+// .login-transition-exit.login-transition-exit-active {
+//     opacity: 0;
+//     transition: opacity 4000ms linear 1500ms;
+//     transform: translateX(-1000px);
+// }
+.login-transition-enter {
     opacity: 0;
-    z-index: 1;
-    transform: translateX(0px);
+    transform: scale(0.9) rotateY(90deg);
 }
 
-.login-transition-appear-active,
-.login-transition-enter-active.login-transition-enter {
+.login-transition-enter-active {
     opacity: 1;
-    transition: opacity 400ms, linear 150ms;
-    transform: translateX(0px);
+    transform: rotateY(0deg);
+    transition: opacity 400ms, transform 600ms;
 }
 
 .login-transition-exit {
     opacity: 1;
-    transform: translateX(0px);
 }
 
-.login-transition-exit.login-transition-exit-active {
+.login-transition-exit-active {
     opacity: 0;
-    transition: opacity 4000ms linear 1500ms;
-    transform: translateX(-1000px);
+    transform: scale(0.9) rotateX(90deg);
+    transition: opacity 300ms, transform 300ms;
 }
