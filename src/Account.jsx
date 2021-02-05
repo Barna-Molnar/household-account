@@ -6,6 +6,7 @@ import { compareAsc, format } from "date-fns";
 import Movements from "./Movements";
 import NewOperator from "./NewOperator";
 import Status from "./Status";
+import Counter from "./Counter";
 
 class Account extends React.Component {
   constructor(props) {
@@ -46,6 +47,7 @@ class Account extends React.Component {
           date={date}
           accounts={this.props.accounts}
         />
+        <Counter />
 
         {/* account component */}
         <div className="accBody">

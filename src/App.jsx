@@ -331,7 +331,7 @@ class App extends React.Component {
               <TransitionGroup>
                 <CSSTransition
                   classNames="login-transition"
-                  timeout={500}
+                  timeout={1000}
                   key={location.key}
                 >
                   <Switch location={location}>
