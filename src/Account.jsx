@@ -19,9 +19,11 @@ class Account extends React.Component {
       lendAmount: "",
       message: "",
       amount: "",
+      color: "red",
     };
     this.blockBtnText = this.blockBtnText.bind(this);
   }
+
   blockBtnText() {
     const acc = this.props.accounts.find((acc) => {
       return acc.username === this.state.accToBlock;
@@ -36,18 +38,12 @@ class Account extends React.Component {
   render() {
     let date = format(new Date(), "dd/MM/yy");
     return (
-      <div
-        className="main"
-        // style={
-        //   this.props.currentAcc === undefined ? { opacity: 0 } : { opacity: 1 }
-        // }
-      >
+      <div className="main">
         <Status
           currentAcc={this.props.currentAcc}
           date={date}
           accounts={this.props.accounts}
         />
-        <Counter />
 
         {/* account component */}
         <div className="accBody">
@@ -203,6 +199,22 @@ class Account extends React.Component {
                 </div>
               </form>
             </div>
+            <div
+              className="test"
+              style={{
+                width: "30px",
+                height: " 30px",
+                backgroundColor: this.state.color,
+                transition: "all .5s",
+              }}
+              onClick={(e) => {
+                return this.setState((prev) => {
+                  return {
+                    color: prev.color === "red" ? "blue" : "red",
+                  };
+                });
+              }}
+            ></div>
             {/* {this.props.currentAcc !== undefined &&
             (this.props.currentAcc.username === "jm" ||
               this.props.currentAcc.username === "tm") ? (

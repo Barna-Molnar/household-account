@@ -49,6 +49,7 @@ class Login extends Component {
             <button
               onClick={(e) => {
                 e.preventDefault();
+
                 this.props.login(this.state.username, this.state.pin);
                 this.setState({
                   username: "",
