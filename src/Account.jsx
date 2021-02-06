@@ -199,22 +199,7 @@ class Account extends React.Component {
                 </div>
               </form>
             </div>
-            <div
-              className="test"
-              style={{
-                width: "30px",
-                height: " 30px",
-                backgroundColor: this.state.color,
-                transition: "all .5s",
-              }}
-              onClick={(e) => {
-                return this.setState((prev) => {
-                  return {
-                    color: prev.color === "red" ? "blue" : "red",
-                  };
-                });
-              }}
-            ></div>
+
             {/* {this.props.currentAcc !== undefined &&
             (this.props.currentAcc.username === "jm" ||
               this.props.currentAcc.username === "tm") ? (
