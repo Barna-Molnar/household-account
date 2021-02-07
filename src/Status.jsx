@@ -15,7 +15,8 @@ class Status extends Component {
         </div>
         <div className="status__message">
           {this.props.currentAcc?.debt.map((debt, i) => {
-            if (debt === []) {
+            console.log(debt);
+            if (debt === "") {
               return "";
             } else {
               return (
@@ -26,7 +27,7 @@ class Status extends Component {
             }
           })}
           {this.props.currentAcc?.owed.map((owed, i) => {
-            if (owed === []) {
+            if (owed === "") {
               return "";
             } else {
               return (

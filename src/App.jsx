@@ -148,12 +148,65 @@ class App extends React.Component {
             }
           }),
         },
-        // accounts: this.state.accounts.map((acc) => {
-        //   if (acc.username === forAcc) {
-        //     return { ...acc, message: message, isBlocked: !acc.isBlocked };
-        //   }
-        //   return acc;
-        // }),
+        accounts: this.state.accounts.map((acc) => {
+          if (acc.username === fromAcc) {
+            return {
+              ...acc,
+              movements: [
+                {
+                  amount: -amount,
+                  date: date,
+                  transactionTyp: "repayment",
+                  sender: fromAcc,
+                  recepient: forAcc,
+                  // message: message,
+                },
+                ...acc.movements,
+              ],
+              balance: acc.balance - amount,
+              debt: prev.currentAcc.debt.map((item, i) => {
+                if (item.to === forAcc) {
+                  if (item.value - amount === 0) {
+                    return prev.currentAcc.debt.splice(1, i);
+                  } else {
+                    return { value: item.value - amount, to: forAcc };
+                  }
+                } else {
+                  return item;
+                }
+              }),
+            };
+          }
+          if (acc.username === forAcc) {
+            return {
+              ...acc,
+              movements: [
+                {
+                  amount: amount,
+                  date: date,
+                  transactionTyp: "repayment",
+                  sender: fromAcc,
+                  recepient: forAcc,
+                  // message: message,
+                },
+                ...acc.movements,
+              ],
+              balance: acc.balance + Number(amount),
+              owed: acc.owed.map((item, i) => {
+                if (item.forWho === fromAcc) {
+                  if (item.value - amount === 0) {
+                    return acc.owed.splice(1, i);
+                  } else {
+                    return { value: item.value - amount, forWho: fromAcc };
+                  }
+                } else {
+                  return item;
+                }
+              }),
+            };
+          }
+          return acc;
+        }),
       };
     });
   }
