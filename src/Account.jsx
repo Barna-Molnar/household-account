@@ -15,8 +15,8 @@ class Account extends React.Component {
       currentAcc: this.props.currentAcc, /// <= this is not working
       currentValue: "",
       recepient: "",
-      accToBlock: "",
       lendAmount: "",
+      repayAmount: "",
       message: "",
       amount: "",
       color: "red",
@@ -200,58 +200,55 @@ class Account extends React.Component {
               </form>
             </div>
 
-            {/* {this.props.currentAcc !== undefined &&
-            (this.props.currentAcc.username === "jm" ||
-              this.props.currentAcc.username === "tm") ? (
-              <div className="op op--block">
-                <h2>Block account</h2>
-                <form action="#" className="form form--block">
+            {this.props.currentAcc !== undefined ? (
+              <div className="op op--repayment">
+                <h2>Repay Debt</h2>
+                <form action="#" className="form form--repayment">
                   <div className="input-flex">
                     <input
-                      value={this.state.accToBlock}
+                      value={this.state.recepient}
                       onChange={(e) => {
-                        this.setState({ accToBlock: e.target.value });
-                        this.blockBtnText();
+                        this.setState({ recepient: e.target.value });
                       }}
                       type="text"
-                      className="form__input form__input--Whoose"
+                      className="form__input form__input--for"
                     />
 
                     <input
-                      value={this.state.message}
+                      value={this.state.repayAmount}
                       onChange={(e) => {
-                        this.setState({ message: e.target.value });
+                        this.setState({ repayAmount: e.target.value });
                       }}
                       type="text"
-                      className="form__input form__input--Why"
+                      className="form__input form__input--amount"
                     />
                     <button
-                      className="form__btn form__btn--block"
+                      className="form__btn form__btn--repayment"
                       onClick={(e) => {
                         e.preventDefault();
-                        this.props.handleBlock(
+                        this.props.handleRepayment(
                           this.props.currentAcc.username,
-                          this.state.accToBlock,
-                          this.state.message
+                          this.state.recepient,
+                          this.state.repayAmount
                         );
                         this.setState({
-                          accToBlock: "",
-                          message: "",
+                          recepient: "",
+                          repayAmount: "",
                         });
                       }}
                     >
-                      {this.blockBtnText()}
+                      &rarr;
                     </button>
                   </div>
                   <div className="label-flex">
                     <div>
                       <label htmlFor="#" className="form__label">
-                        Whoose Acc
+                        For Who
                       </label>
                     </div>
                     <div>
                       <label htmlFor="#" className="form__label">
-                        Why
+                        Amount
                       </label>
                     </div>
                   </div>
@@ -259,7 +256,7 @@ class Account extends React.Component {
               </div>
             ) : (
               ""
-            )} */}
+            )}
           </div>
           <div className="mov">
             {this.props.currentAcc?.movements.map((mov, i) => {
@@ -295,7 +292,7 @@ class Account extends React.Component {
           </p>
         </div>
 
-        <NewOperator />
+        {/* <NewOperator /> */}
       </div>
     );
   }

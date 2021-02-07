@@ -60,12 +60,12 @@
                     font-size: 1.8rem;
                     width: 50%;
                     cursor: pointer;
-                    &--block {
-                        padding: .3rem 1rem;
-                        font-size: 1.4rem;
-                        color: black;
-                        ;
-                    }
+                    // &--repayment {
+                    //     padding: .3rem 1rem;
+                    //     font-size: 1.4rem;
+                    //     color: black;
+                    //     ;
+                    // }
                 }
             }
             .form__input {
@@ -98,8 +98,8 @@
         .op--upload {
             background-image: linear-gradient(to bottom left, #17bde6da, #2464f0);
         }
-        .op--block {
-            background-image: linear-gradient(to bottom right, #ec4a73, #860711);
+        .op--repayment {
+            background-image: linear-gradient(to bottom right, #64e079, #abcab2);
         }
     }
 }

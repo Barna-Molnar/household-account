@@ -28,7 +28,7 @@ class App extends React.Component {
     };
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLend = this.handleLend.bind(this);
-    this.handleBlock = this.handleBlock.bind(this);
+    this.handleRepayment = this.handleRepayment.bind(this);
     this.handleUploadMoney = this.handleUploadMoney.bind(this);
     this.escFunction = this.escFunction.bind(this);
     this.handleCloseOverlay = this.handleCloseOverlay.bind(this);
@@ -120,21 +120,42 @@ class App extends React.Component {
   componentWillUnmount() {
     document.removeEventListener("keydown", this.escFunction, false);
   }
-  handleBlock(fromAcc, forAcc, message = "") {
-    if (fromAcc === "jm" || fromAcc === "tm") {
-      this.setState((prev) => {
-        return {
-          currentAcc: prev.currentAcc,
-          accounts: this.state.accounts.map((acc) => {
-            if (acc.username === forAcc) {
-              return { ...acc, message: message, isBlocked: !acc.isBlocked };
+  handleRepayment(fromAcc, forAcc, amount) {
+    this.setState((prev) => {
+      return {
+        currentAcc: {
+          ...prev.currentAcc,
+          movements: [
+            {
+              amount: -amount,
+              date: date,
+              transactionTyp: "repayment",
+              sender: fromAcc,
+              recepient: forAcc,
+            },
+            ...prev.currentAcc.movements,
+          ],
+          balance: prev.currentAcc.balance - amount,
+          debt: prev.currentAcc.debt.map((item, i) => {
+            if (item.to === forAcc) {
+              if (item.value - amount === 0) {
+                return prev.currentAcc.debt.splice(1, i);
+              } else {
+                return { value: item.value - amount, to: forAcc };
+              }
+            } else {
+              return item;
             }
-            return acc;
           }),
-        };
-      });
-    }
-    console.log("you are not allowed use this functionality");
+        },
+        // accounts: this.state.accounts.map((acc) => {
+        //   if (acc.username === forAcc) {
+        //     return { ...acc, message: message, isBlocked: !acc.isBlocked };
+        //   }
+        //   return acc;
+        // }),
+      };
+    });
   }
 
   handleLend(fromAcc, forAcc, amount, message = "dunno") {
@@ -353,7 +374,7 @@ class App extends React.Component {
                       <Account
                         accounts={this.state.accounts}
                         currentAcc={this.state.currentAcc}
-                        handleBlock={this.handleBlock}
+                        handleRepayment={this.handleRepayment}
                         lend={this.handleLend}
                         uploadMoney={this.handleUploadMoney}
                       />

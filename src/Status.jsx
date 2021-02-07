@@ -15,18 +15,26 @@ class Status extends Component {
         </div>
         <div className="status__message">
           {this.props.currentAcc?.debt.map((debt, i) => {
-            return (
-              <p key={i}>
-                I owe {debt.value} to {debt.to}
-              </p>
-            );
+            if (debt === []) {
+              return "";
+            } else {
+              return (
+                <p key={i}>
+                  I owe {debt.value} to {debt.to}
+                </p>
+              );
+            }
           })}
           {this.props.currentAcc?.owed.map((owed, i) => {
-            return (
-              <p key={i}>
-                {owed.forWho} owes you {owed.value}
-              </p>
-            );
+            if (owed === []) {
+              return "";
+            } else {
+              return (
+                <p key={i}>
+                  {owed.forWho} owes you {owed.value}
+                </p>
+              );
+            }
           })}
         </div>
         <div>
