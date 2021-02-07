@@ -4,10 +4,15 @@ import "./Login.scss";
 class Login extends Component {
   constructor(props) {
     super(props);
+    this.inputRef = React.createRef();
     this.state = {
       username: "",
       pin: "",
     };
+  }
+  componentDidMount() {
+    this.inputRef.current.focus();
+    console.log(this.inputRef);
   }
   render() {
     return (
@@ -31,6 +36,7 @@ class Login extends Component {
                 type="text"
                 placeholder="username"
                 required
+                ref={this.inputRef}
               />
               <label htmlFor="name" className="login-page__form__label">
                 username
@@ -47,9 +53,10 @@ class Login extends Component {
               placeholder="password"
             />
             <button
+              className={"loginButton"}
               onClick={(e) => {
                 e.preventDefault();
-
+                console.log();
                 this.props.login(this.state.username, this.state.pin);
                 this.setState({
                   username: "",

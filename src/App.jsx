@@ -24,6 +24,7 @@ class App extends React.Component {
       overlayHidden: true,
       overlayText: "",
       loginVisibility: true,
+      isAnimationEnded: false,
     };
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLend = this.handleLend.bind(this);
@@ -37,6 +38,7 @@ class App extends React.Component {
     this.setState({
       loginVisibility: true,
       currentAcc: undefined,
+      // isAnimationEnded: false,
     });
   }
   handleLogin(username, pin) {
@@ -333,10 +335,13 @@ class App extends React.Component {
                   classNames="login-transition"
                   timeout={1000}
                   key={location.key}
+                  onExited={() => this.setState({ isAnimationEnded: true })}
+                  onEntered={() => this.setState({ isAnimationEnded: false })}
                 >
                   <Switch location={location}>
                     <Route path="/login">
                       <Login
+                        isAnimationEnded={this.state.isAnimationEnded}
                         currentAcc={this.state.currentAcc}
                         login={this.handleLogin}
                         loginVisibility={this.state.loginVisibility}
