@@ -226,11 +226,20 @@ class Account extends React.Component {
                       className="form__btn form__btn--repayment"
                       onClick={(e) => {
                         e.preventDefault();
-                        this.props.handleRepayment(
-                          this.props.currentAcc.username,
-                          this.state.recepient,
-                          this.state.repayAmount
-                        );
+                        if (this.state.message === "") {
+                          this.props.handleRepayment(
+                            this.props.currentAcc.username,
+                            this.state.recepient,
+                            this.state.repayAmount
+                          );
+                        } else {
+                          this.props.handleRepayment(
+                            this.props.currentAcc.username,
+                            this.state.recepient,
+                            this.state.repayAmount,
+                            this.state.message
+                          );
+                        }
                         this.setState({
                           recepient: "",
                           repayAmount: "",
@@ -249,6 +258,22 @@ class Account extends React.Component {
                     <div>
                       <label htmlFor="#" className="form__label">
                         Amount
+                      </label>
+                    </div>
+                  </div>
+                  <input
+                    className="form__input form__input--message"
+                    maxLength="50"
+                    value={this.state.message}
+                    onChange={(e) => {
+                      this.setState({ message: e.target.value });
+                    }}
+                    type="text"
+                  />
+                  <div>
+                    <div className="label-flex">
+                      <label htmlFor="#" className="form__label">
+                        Explanation
                       </label>
                     </div>
                   </div>

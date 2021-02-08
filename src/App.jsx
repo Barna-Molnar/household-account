@@ -120,7 +120,7 @@ class App extends React.Component {
   componentWillUnmount() {
     document.removeEventListener("keydown", this.escFunction, false);
   }
-  handleRepayment(fromAcc, forAcc, amount) {
+  handleRepayment(fromAcc, forAcc, amount, message = "") {
     this.setState((prev) => {
       return {
         currentAcc: {
@@ -132,6 +132,7 @@ class App extends React.Component {
               transactionTyp: "repayment",
               sender: fromAcc,
               recepient: forAcc,
+              message: message,
             },
             ...prev.currentAcc.movements,
           ],
@@ -159,7 +160,7 @@ class App extends React.Component {
                   transactionTyp: "repayment",
                   sender: fromAcc,
                   recepient: forAcc,
-                  // message: message,
+                  message: message,
                 },
                 ...acc.movements,
               ],
@@ -187,7 +188,7 @@ class App extends React.Component {
                   transactionTyp: "repayment",
                   sender: fromAcc,
                   recepient: forAcc,
-                  // message: message,
+                  message: message,
                 },
                 ...acc.movements,
               ],
