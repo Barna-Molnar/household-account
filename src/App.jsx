@@ -183,7 +183,7 @@ class App extends React.Component {
               ...acc,
               movements: [
                 {
-                  amount: amount,
+                  amount: Number(amount),
                   date: date,
                   transactionTyp: "repayment",
                   sender: fromAcc,

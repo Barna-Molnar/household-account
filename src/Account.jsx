@@ -16,10 +16,11 @@ class Account extends React.Component {
       currentValue: "",
       recepient: "",
       lendAmount: "",
-      repayAmount: "",
       message: "",
       amount: "",
-      color: "red",
+      repayAmount: "",
+      repayMessage: "",
+      repayRecepient: "",
     };
     this.blockBtnText = this.blockBtnText.bind(this);
   }
@@ -206,9 +207,9 @@ class Account extends React.Component {
                 <form action="#" className="form form--repayment">
                   <div className="input-flex">
                     <input
-                      value={this.state.recepient}
+                      value={this.state.repayRecepient}
                       onChange={(e) => {
-                        this.setState({ recepient: e.target.value });
+                        this.setState({ repayRecepient: e.target.value });
                       }}
                       type="text"
                       className="form__input form__input--for"
@@ -229,20 +230,21 @@ class Account extends React.Component {
                         if (this.state.message === "") {
                           this.props.handleRepayment(
                             this.props.currentAcc.username,
-                            this.state.recepient,
+                            this.state.repayRecepient,
                             this.state.repayAmount
                           );
                         } else {
                           this.props.handleRepayment(
                             this.props.currentAcc.username,
-                            this.state.recepient,
+                            this.state.repayRecepient,
                             this.state.repayAmount,
-                            this.state.message
+                            this.state.repayMessage
                           );
                         }
                         this.setState({
-                          recepient: "",
+                          repayRecepient: "",
                           repayAmount: "",
+                          repayMessage: "",
                         });
                       }}
                     >
@@ -264,9 +266,9 @@ class Account extends React.Component {
                   <input
                     className="form__input form__input--message"
                     maxLength="50"
-                    value={this.state.message}
+                    value={this.state.repayMessage}
                     onChange={(e) => {
-                      this.setState({ message: e.target.value });
+                      this.setState({ repayMessage: e.target.value });
                     }}
                     type="text"
                   />
