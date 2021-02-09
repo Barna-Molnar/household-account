@@ -1,5 +1,6 @@
 import React from "react";
 import "./Account.scss";
+import "./variables.scss";
 
 import "./data";
 import { compareAsc, format } from "date-fns";
@@ -325,6 +326,7 @@ class Account extends React.Component {
               .reduce((acc, curr) => acc + curr, 0)} */}
             €
           </p>
+          <p style={{ fontSize: "20px", color: "#777" }}>(Daily)</p>
         </div>
 
         {/* <NewOperator /> */}

@@ -21,7 +21,7 @@
         padding-right: 2rem;
         .op {
             &:not(:last-child) {
-                margin-bottom: 3.9rem;
+                margin-bottom: 1.9rem;
             }
             padding: 3rem 4rem;
             color: #444;
@@ -99,7 +99,7 @@
             background-image: linear-gradient(to bottom left, #17bde6da, #2464f0);
         }
         .op--repayment {
-            background-image: linear-gradient(to bottom right, #64e079, #abcab2);
+            background-image: linear-gradient(to bottom right, #16db37, #abcab2);
         }
     }
 }

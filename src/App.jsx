@@ -259,6 +259,7 @@ class App extends React.Component {
                 ...prev.currentAcc.movements,
               ],
               balance: prev.currentAcc.balance - amount,
+              // owed is an array about lended money
               owed: prev.currentAcc.owed.map((item) => {
                 if (item.forWho === forAcc) {
                   return { value: item.value + amount, forWho: forAcc };
@@ -284,6 +285,7 @@ class App extends React.Component {
                     ...acc.movements,
                   ],
                   balance: acc.balance - amount,
+                  // owed is an array of lended money
                   owed: acc.owed.map((item) => {
                     if (item.forWho === forAcc) {
                       return { value: item.value + amount, forWho: forAcc };
@@ -309,6 +311,7 @@ class App extends React.Component {
                     ...acc.movements,
                   ],
                   balance: acc.balance + amount,
+                  // ddebt is an array about the money that the given account got
                   debt: acc.debt.map((item) => {
                     if (item.to === fromAcc) {
                       return { value: item.value + amount, to: fromAcc };
