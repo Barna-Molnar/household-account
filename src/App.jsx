@@ -267,6 +267,7 @@ class App extends React.Component {
                   return item;
                 }
               }),
+
               // [{ value: amount, forWho: forAcc }, ...prev.currentAcc.owed],
             },
             accounts: this.state.accounts.map((acc) => {
@@ -343,7 +344,26 @@ class App extends React.Component {
               ...prev.currentAcc.movements,
             ],
             balance: prev.currentAcc.balance - amount,
-            owed: [{ value: amount, forWho: forAcc }, ...prev.currentAcc.owed],
+            owed: prev.currentAcc.debt.map((item) => {
+              if (item.to === forAcc && item.value < amount) {
+                return "";
+              } else {
+                return [
+                  { value: amount, forWho: forAcc },
+                  ...prev.currentAcc.owed,
+                ];
+              }
+            }),
+            // owed: [{ value: amount, forWho: forAcc }, ...prev.currentAcc.owed],
+
+            // ha olyannak adsz kolcson aki neked tartozik=> ne keruljon bele owed-ba
+            debt: prev.currentAcc.debt.map((item) => {
+              if (item.to === forAcc) {
+                return { value: item.value - amount, to: forAcc };
+              } else {
+                return item;
+              }
+            }),
 
             // [{ value: amount, forWho: forAcc }, ...prev.currentAcc.owed],
           },
