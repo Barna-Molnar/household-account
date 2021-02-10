@@ -107,7 +107,8 @@
 .summeries {
     display: flex;
     align-items: baseline;
-    width: 50%;
+    justify-content: space-around;
+    width: 55%;
     margin-left: 40%;
     padding: 0 4rem;
     &__label {
@@ -125,5 +126,9 @@
         &--out {
             color: #f5465d;
         }
+    }
+    .timer {
+        font-size: 1.6rem;
+        // margin-left: auto;
     }
 }

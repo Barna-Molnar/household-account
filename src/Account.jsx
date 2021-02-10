@@ -327,6 +327,7 @@ class Account extends React.Component {
             €
           </p>
           <p style={{ fontSize: "20px", color: "#777" }}>(Daily)</p>
+          <p className="timer">5:00</p>
         </div>
 
         {/* <NewOperator /> */}
