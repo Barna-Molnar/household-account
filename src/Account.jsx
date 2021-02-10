@@ -13,7 +13,7 @@ class Account extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentAcc: this.props.currentAcc, /// <= this is not working
+      currentAcc: "", /// <= this is not working
       currentValue: "",
       recepient: "",
       lendAmount: "",

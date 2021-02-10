@@ -213,6 +213,8 @@ class App extends React.Component {
   }
 
   handleLend(fromAcc, forAcc, amount, message = "dunno") {
+    fromAcc = fromAcc.trim();
+    forAcc = forAcc.trim();
     const valid = this.state.accounts.find((acc) => acc.username === forAcc);
     let date = format(new Date(), "dd/MM/yy");
     if (!forAcc && !amount) {
@@ -242,7 +244,7 @@ class App extends React.Component {
       });
     } else {
       this.setState((prev) => {
-        //////////debt is not an empty array////////////////////
+        //////////owed array contain the acc who you are lending to ////////////////////
         if (prev.currentAcc.owed.some((item) => item.forWho === forAcc)) {
           return {
             currentAcc: {
@@ -267,7 +269,6 @@ class App extends React.Component {
                   return item;
                 }
               }),
-
               // [{ value: amount, forWho: forAcc }, ...prev.currentAcc.owed],
             },
             accounts: this.state.accounts.map((acc) => {
@@ -328,7 +329,7 @@ class App extends React.Component {
           };
         }
 
-        ///////// debt is an empty array //////////////////
+        /////////owed array doesn't contain the acc who you are lending to //////////////////
         return {
           currentAcc: {
             ...prev.currentAcc,
@@ -344,19 +345,20 @@ class App extends React.Component {
               ...prev.currentAcc.movements,
             ],
             balance: prev.currentAcc.balance - amount,
-            owed: prev.currentAcc.debt.map((item) => {
-              if (item.to === forAcc && item.value < amount) {
-                return "";
-              } else {
-                return [
-                  { value: amount, forWho: forAcc },
-                  ...prev.currentAcc.owed,
-                ];
-              }
-            }),
+            owed: [{ value: amount, forWho: forAcc }, ...prev.currentAcc.owed],
+            // owed: prev.currentAcc.debt.map((item) => {
+            //   if (item.to === forAcc && item.value < amount) {
+            //     return "";
+            //   } else {
+            //     return [
+            //       { value: amount, forWho: forAcc },
+            //       ...prev.currentAcc.owed,
+            //     ];
+            //   }
+            // }),
             // owed: [{ value: amount, forWho: forAcc }, ...prev.currentAcc.owed],
-
             // ha olyannak adsz kolcson aki neked tartozik=> ne keruljon bele owed-ba
+
             debt: prev.currentAcc.debt.map((item) => {
               if (item.to === forAcc) {
                 return { value: item.value - amount, to: forAcc };
