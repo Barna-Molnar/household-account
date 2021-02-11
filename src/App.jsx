@@ -11,6 +11,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import { accounts, date } from "./data.js";
+import { updateCurrAcc } from "./updateCurrAcc.js";
 import { compareAsc, format } from "date-fns";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
@@ -120,35 +121,18 @@ class App extends React.Component {
   componentWillUnmount() {
     document.removeEventListener("keydown", this.escFunction, false);
   }
+
   handleRepayment(fromAcc, forAcc, amount, message = "") {
     this.setState((prev) => {
       return {
-        currentAcc: {
-          ...prev.currentAcc,
-          movements: [
-            {
-              amount: -amount,
-              date: date,
-              transactionTyp: "repayment",
-              sender: fromAcc,
-              recepient: forAcc,
-              message: message,
-            },
-            ...prev.currentAcc.movements,
-          ],
-          balance: prev.currentAcc.balance - amount,
-          debt: prev.currentAcc.debt.map((item, i) => {
-            if (item.to === forAcc) {
-              if (item.value - amount === 0) {
-                return prev.currentAcc.debt.splice(1, i);
-              } else {
-                return { value: item.value - amount, to: forAcc };
-              }
-            } else {
-              return item;
-            }
-          }),
-        },
+        currentAcc: updateCurrAcc(
+          forAcc,
+          "repayment",
+          amount,
+          message,
+          prev,
+          date
+        ),
         accounts: this.state.accounts.map((acc) => {
           if (acc.username === fromAcc) {
             return {
@@ -247,30 +231,14 @@ class App extends React.Component {
         //////////owed array contain the acc who you are lending to ////////////////////
         if (prev.currentAcc.owed.some((item) => item.forWho === forAcc)) {
           return {
-            currentAcc: {
-              ...prev.currentAcc,
-              movements: [
-                {
-                  amount: -amount,
-                  date: date,
-                  transactionTyp: "lend",
-                  sender: fromAcc,
-                  recepient: forAcc,
-                  message: message,
-                },
-                ...prev.currentAcc.movements,
-              ],
-              balance: prev.currentAcc.balance - amount,
-              // owed is an array about lended money
-              owed: prev.currentAcc.owed.map((item) => {
-                if (item.forWho === forAcc) {
-                  return { value: item.value + amount, forWho: forAcc };
-                } else {
-                  return item;
-                }
-              }),
-              // [{ value: amount, forWho: forAcc }, ...prev.currentAcc.owed],
-            },
+            currentAcc: updateCurrAcc(
+              forAcc,
+              "lend",
+              amount,
+              message,
+              prev,
+              date
+            ),
             accounts: this.state.accounts.map((acc) => {
               if (acc.username === fromAcc) {
                 return {
@@ -346,17 +314,7 @@ class App extends React.Component {
             ],
             balance: prev.currentAcc.balance - amount,
             owed: [{ value: amount, forWho: forAcc }, ...prev.currentAcc.owed],
-            // owed: prev.currentAcc.debt.map((item) => {
-            //   if (item.to === forAcc && item.value < amount) {
-            //     return "";
-            //   } else {
-            //     return [
-            //       { value: amount, forWho: forAcc },
-            //       ...prev.currentAcc.owed,
-            //     ];
-            //   }
-            // }),
-            // owed: [{ value: amount, forWho: forAcc }, ...prev.currentAcc.owed],
+
             // ha olyannak adsz kolcson aki neked tartozik=> ne keruljon bele owed-ba
 
             debt: prev.currentAcc.debt.map((item) => {
@@ -366,8 +324,6 @@ class App extends React.Component {
                 return item;
               }
             }),
-
-            // [{ value: amount, forWho: forAcc }, ...prev.currentAcc.owed],
           },
           accounts: this.state.accounts.map((acc) => {
             if (acc.username === fromAcc) {
