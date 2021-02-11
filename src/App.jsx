@@ -456,6 +456,7 @@ class App extends React.Component {
                         handleRepayment={this.handleRepayment}
                         lend={this.handleLend}
                         uploadMoney={this.handleUploadMoney}
+                        logOut={this.handleLogOut}
                       />
                     </Route>
                   </Switch>

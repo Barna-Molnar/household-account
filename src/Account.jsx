@@ -5,15 +5,16 @@ import "./variables.scss";
 import "./data";
 import { compareAsc, format } from "date-fns";
 import Movements from "./Movements";
-import NewOperator from "./NewOperator";
 import Status from "./Status";
-import Counter from "./Counter";
+// import NewOperator from "./NewOperator";
+// import Counter from "./Counter";
+let timer;
 
 class Account extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentAcc: "", /// <= this is not working
+      currentAcc: this.props.currentAcc === undefined ? false : true, /// <= this is not working
       currentValue: "",
       recepient: "",
       lendAmount: "",
@@ -22,8 +23,10 @@ class Account extends React.Component {
       repayAmount: "",
       repayMessage: "",
       repayRecepient: "",
+      time: 10,
     };
     this.blockBtnText = this.blockBtnText.bind(this);
+    this.logoutTimer = this.logoutTimer.bind(this);
   }
 
   blockBtnText() {
@@ -36,9 +39,27 @@ class Account extends React.Component {
       return "unblock";
     }
   }
+  logoutTimer() {
+    if (this.state.time === 0) {
+      clearInterval(timer);
+      console.log("vege");
+      this.props.logOut();
+    }
+    this.setState({
+      time: this.state.time - 1,
+    });
+  }
+  componentDidMount() {
+    timer = setInterval(this.logoutTimer, 1000);
+  }
+  componentWillUnmount() {
+    clearInterval(this.logoutTimer);
+  }
 
   render() {
     let date = format(new Date(), "dd/MM/yy");
+    const min = String(Math.trunc(this.state.time / 60)).padStart(2, 0);
+    const sec = String(this.state.time % 60).padStart(2, 0);
     return (
       <div className="main">
         <Status
@@ -327,7 +348,9 @@ class Account extends React.Component {
             €
           </p>
           <p style={{ fontSize: "20px", color: "#777" }}>(Daily)</p>
-          <p className="timer">5:00</p>
+          <p className="timer">
+            {min}:{sec}
+          </p>
         </div>
 
         {/* <NewOperator /> */}

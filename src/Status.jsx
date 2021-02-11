@@ -16,7 +16,6 @@ class Status extends Component {
           <p className="status__date">{this.props.date}</p>
         </div>
         <div className={`status__message ${this.state.hidden ? "hidden" : ""}`}>
-          {console.log(this.state.currentAcc)}
           {this.props.currentAcc?.debt.map((debt, i) => {
             console.log(debt.length);
             if (debt.length === 0) {
