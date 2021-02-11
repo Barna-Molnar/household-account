@@ -153,7 +153,7 @@ class Account extends React.Component {
                 />
                 <div>
                   <div className="label-flex">
-                    <label htmlFor="#" className="form__label">
+                    <label htmlFor="#" className="form__label explanation">
                       Explanation
                     </label>
                   </div>
@@ -222,90 +222,85 @@ class Account extends React.Component {
                 </div>
               </form>
             </div>
-
-            {this.props.currentAcc !== undefined ? (
-              <div className="op op--repayment">
-                <h2>Repay Debt</h2>
-                <form action="#" className="form form--repayment">
-                  <div className="input-flex">
-                    <input
-                      value={this.state.repayRecepient}
-                      onChange={(e) => {
-                        this.setState({ repayRecepient: e.target.value });
-                      }}
-                      type="text"
-                      className="form__input form__input--for"
-                    />
-
-                    <input
-                      value={this.state.repayAmount}
-                      onChange={(e) => {
-                        this.setState({ repayAmount: e.target.value });
-                      }}
-                      type="text"
-                      className="form__input form__input--amount"
-                    />
-                    <button
-                      className="form__btn form__btn--repayment"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        if (this.state.message === "") {
-                          this.props.handleRepayment(
-                            this.props.currentAcc.username,
-                            this.state.repayRecepient,
-                            this.state.repayAmount
-                          );
-                        } else {
-                          this.props.handleRepayment(
-                            this.props.currentAcc.username,
-                            this.state.repayRecepient,
-                            this.state.repayAmount,
-                            this.state.repayMessage
-                          );
-                        }
-                        this.setState({
-                          repayRecepient: "",
-                          repayAmount: "",
-                          repayMessage: "",
-                        });
-                      }}
-                    >
-                      &rarr;
-                    </button>
-                  </div>
-                  <div className="label-flex">
-                    <div>
-                      <label htmlFor="#" className="form__label">
-                        For Who
-                      </label>
-                    </div>
-                    <div>
-                      <label htmlFor="#" className="form__label">
-                        Amount
-                      </label>
-                    </div>
-                  </div>
+            <div className="op op--repayment">
+              <h2>Repay Debt</h2>
+              <form action="#" className="form form--repayment">
+                <div className="input-flex">
                   <input
-                    className="form__input form__input--message"
-                    maxLength="50"
-                    value={this.state.repayMessage}
+                    value={this.state.repayRecepient}
                     onChange={(e) => {
-                      this.setState({ repayMessage: e.target.value });
+                      this.setState({ repayRecepient: e.target.value });
                     }}
                     type="text"
+                    className="form__input form__input--for"
                   />
+
+                  <input
+                    value={this.state.repayAmount}
+                    onChange={(e) => {
+                      this.setState({ repayAmount: e.target.value });
+                    }}
+                    type="text"
+                    className="form__input form__input--amount"
+                  />
+                  <button
+                    className="form__btn form__btn--repayment"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (this.state.message === "") {
+                        this.props.handleRepayment(
+                          this.props.currentAcc.username,
+                          this.state.repayRecepient,
+                          this.state.repayAmount
+                        );
+                      } else {
+                        this.props.handleRepayment(
+                          this.props.currentAcc.username,
+                          this.state.repayRecepient,
+                          this.state.repayAmount,
+                          this.state.repayMessage
+                        );
+                      }
+                      this.setState({
+                        repayRecepient: "",
+                        repayAmount: "",
+                        repayMessage: "",
+                      });
+                    }}
+                  >
+                    &rarr;
+                  </button>
+                </div>
+                <div className="label-flex">
                   <div>
-                    <div className="label-flex">
-                      <label htmlFor="#" className="form__label">
-                        Explanation
-                      </label>
-                    </div>
+                    <label htmlFor="#" className="form__label">
+                      For Who
+                    </label>
                   </div>
-                </form>
-              </div>
-            ) : (
-              ""
-            )}
+                  <div>
+                    <label htmlFor="#" className="form__label">
+                      Amount
+                    </label>
+                  </div>
+                </div>
+                <input
+                  className="form__input form__input--message"
+                  maxLength="50"
+                  value={this.state.repayMessage}
+                  onChange={(e) => {
+                    this.setState({ repayMessage: e.target.value });
+                  }}
+                  type="text"
+                />
+                <div>
+                  <div className="label-flex">
+                    <label htmlFor="#" className="form__label">
+                      Explanation
+                    </label>
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
           <div className="mov">
             {this.props.currentAcc?.movements.map((mov, i) => {
