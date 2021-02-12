@@ -11,8 +11,14 @@ import {
   Redirect,
 } from "react-router-dom";
 import { accounts, date } from "./data.js";
-import { updateCurrAcc } from "./updateCurrAcc.js";
-import { compareAsc, format } from "date-fns";
+import {
+  updateCurrAcc,
+  addToData,
+  returnMovOut,
+  returnMovIn,
+  subtractFromData,
+} from "./updateFunctions.js";
+import { updateAccsRepay } from "./updateAccsRepay.js";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 class App extends React.Component {
@@ -34,7 +40,48 @@ class App extends React.Component {
     this.escFunction = this.escFunction.bind(this);
     this.handleCloseOverlay = this.handleCloseOverlay.bind(this);
     this.handleLogOut = this.handleLogOut.bind(this);
+    this.validationForTransaction = this.validationForTransaction.bind(this);
   }
+  validationForTransaction(state, fromAcc, forAcc, amount, currentAcc) {
+    // - WhiteSpace
+    fromAcc = fromAcc.trim();
+    forAcc = forAcc.trim();
+    // creating "valid" variable to validationForTransaction
+    const valid = state.accounts.find((acc) => acc.username === forAcc);
+    if (!forAcc && !amount) {
+      this.setState({
+        overlayHidden: false,
+        overlayText: "Missed dates",
+      });
+      return false;
+    } else if (amount > state.currentAcc.balance) {
+      this.setState({
+        overlayHidden: false,
+        overlayText: "You don't have enough money!",
+      });
+      return false;
+    } else if (fromAcc === forAcc) {
+      this.setState({
+        overlayHidden: false,
+        overlayText: "You can't sent money for Yourself!",
+      });
+      return false;
+    } else if (!valid) {
+      this.setState({
+        overlayHidden: false,
+        overlayText: "Invalid userName",
+      });
+      return false;
+    } else if (amount <= 0) {
+      this.setState({
+        overlayHidden: false,
+        overlayText: "Invalid value",
+      });
+      return false;
+    }
+    return true;
+  }
+
   handleLogOut() {
     this.setState({
       loginVisibility: true,
@@ -123,113 +170,49 @@ class App extends React.Component {
   }
 
   handleRepayment(fromAcc, forAcc, amount, message = "") {
-    this.setState((prev) => {
-      return {
-        currentAcc: updateCurrAcc(
-          forAcc,
-          "repayment",
-          amount,
-          message,
-          prev,
-          date
-        ),
-        accounts: this.state.accounts.map((acc) => {
-          if (acc.username === fromAcc) {
-            return {
-              ...acc,
-              movements: [
-                {
-                  amount: -amount,
-                  date: date,
-                  transactionTyp: "repayment",
-                  sender: fromAcc,
-                  recepient: forAcc,
-                  message: message,
-                },
-                ...acc.movements,
-              ],
-              balance: acc.balance - amount,
-              debt: prev.currentAcc.debt.map((item, i) => {
-                if (item.to === forAcc) {
-                  if (item.value - amount === 0) {
-                    return prev.currentAcc.debt.splice(1, i);
-                  } else {
-                    return { value: item.value - amount, to: forAcc };
-                  }
-                } else {
-                  return item;
-                }
-              }),
-            };
-          }
-          if (acc.username === forAcc) {
-            return {
-              ...acc,
-              movements: [
-                {
-                  amount: Number(amount),
-                  date: date,
-                  transactionTyp: "repayment",
-                  sender: fromAcc,
-                  recepient: forAcc,
-                  message: message,
-                },
-                ...acc.movements,
-              ],
-              balance: acc.balance + Number(amount),
-              owed: acc.owed.map((item, i) => {
-                if (item.forWho === fromAcc) {
-                  if (item.value - amount === 0) {
-                    return acc.owed.splice(1, i);
-                  } else {
-                    return { value: item.value - amount, forWho: fromAcc };
-                  }
-                } else {
-                  return item;
-                }
-              }),
-            };
-          }
-          return acc;
-        }),
-      };
-    });
+    const isValid = this.validationForTransaction(
+      this.state,
+      fromAcc,
+      forAcc,
+      amount
+    );
+    if (isValid)
+      this.setState((prev) => {
+        return {
+          currentAcc: updateCurrAcc(
+            forAcc,
+            "repayment",
+            amount,
+            message,
+            prev,
+            date
+          ),
+          accounts: updateAccsRepay(
+            fromAcc,
+            forAcc,
+            "repayment",
+            amount,
+            message,
+            this.state,
+            prev,
+            date
+          ),
+        };
+      });
   }
 
   handleLend(fromAcc, forAcc, amount, message = "dunno") {
-    fromAcc = fromAcc.trim();
-    forAcc = forAcc.trim();
-    const valid = this.state.accounts.find((acc) => acc.username === forAcc);
-    let date = format(new Date(), "dd/MM/yy");
-    if (!forAcc && !amount) {
-      this.setState({
-        overlayHidden: false,
-        overlayText: "nincsenek adatok",
-      });
-    } else if (amount > this.state.currentAcc.balance) {
-      this.setState({
-        overlayHidden: false,
-        overlayText: "nincsen eleg zseton",
-      });
-    } else if (fromAcc === forAcc) {
-      this.setState({
-        overlayHidden: false,
-        overlayText: "magadnak nem tucc kuldeni",
-      });
-    } else if (!valid) {
-      this.setState({
-        overlayHidden: false,
-        overlayText: "invalid acc",
-      });
-    } else if (amount <= 0) {
-      this.setState({
-        overlayHidden: false,
-        overlayText: "invalid value",
-      });
-    } else {
+    // validationForTransaction
+    const isValid = this.validationForTransaction(
+      this.state,
+      fromAcc,
+      forAcc,
+      amount
+    );
+    if (isValid) {
       this.setState((prev) => {
-        //////////owed array contain the acc who you are lending to ////////////////////
-        if (prev.currentAcc.owed.some((item) => item.forWho === forAcc)) {
+        //////////lended array contain the acc who you are lending to /////////////
+        if (prev.currentAcc.lended.some((item) => item.to === forAcc)) {
           return {
             currentAcc: updateCurrAcc(
               forAcc,
@@ -243,121 +226,87 @@ class App extends React.Component {
               if (acc.username === fromAcc) {
                 return {
                   ...acc,
-                  movements: [
-                    {
-                      amount: -amount,
-                      date: date,
-                      transactionTyp: "lend",
-                      sender: fromAcc,
-                      recepient: forAcc,
-                      message: message,
-                    },
-                    ...acc.movements,
-                  ],
+                  movements: returnMovOut(
+                    fromAcc,
+                    forAcc,
+                    amount,
+                    "lend",
+                    message,
+                    date,
+                    acc
+                  ),
                   balance: acc.balance - amount,
-                  // owed is an array of lended money
-                  owed: acc.owed.map((item) => {
-                    if (item.forWho === forAcc) {
-                      return { value: item.value + amount, forWho: forAcc };
-                    } else {
-                      return item;
-                    }
-                  }),
-                  // [{ value: amount, forWho: forAcc }, ...acc.owed],
+                  // lended is an array of lended money
+                  lended: addToData(acc.lended, forAcc, amount),
                 };
               }
               if (acc.username === forAcc) {
                 return {
                   ...acc,
-                  movements: [
-                    {
-                      amount: amount,
-                      date: date,
-                      transactionTyp: "borrow",
-                      sender: fromAcc,
-                      recepient: forAcc,
-                      message: message,
-                    },
-                    ...acc.movements,
-                  ],
+                  movements: returnMovIn(
+                    fromAcc,
+                    forAcc,
+                    amount,
+                    "borrow",
+                    message,
+                    date,
+                    acc
+                  ),
                   balance: acc.balance + amount,
-                  // ddebt is an array about the money that the given account got
-                  debt: acc.debt.map((item) => {
-                    if (item.to === fromAcc) {
-                      return { value: item.value + amount, to: fromAcc };
-                    } else {
-                      return item;
-                    }
-                  }),
-                  // [{ value: amount, to: fromAcc }, ...acc.debt],
+                  // debt is an array about the money that the given account got
+                  debt: addToData(acc.debt, fromAcc, amount),
                 };
               }
               return acc;
             }),
           };
         }
-
-        /////////owed array doesn't contain the acc who you are lending to //////////////////
+        /////////lended array doesn't contain the acc who you are lending to ///////
         return {
           currentAcc: {
             ...prev.currentAcc,
-            movements: [
-              {
-                amount: -amount,
-                date: date,
-                transactionTyp: "lend",
-                sender: fromAcc,
-                recepient: forAcc,
-                message: message,
-              },
-              ...prev.currentAcc.movements,
-            ],
+            movements: returnMovOut(
+              fromAcc,
+              forAcc,
+              amount,
+              "lend",
+              message,
+              date,
+              prev.currentAcc
+            ),
             balance: prev.currentAcc.balance - amount,
-            owed: [{ value: amount, forWho: forAcc }, ...prev.currentAcc.owed],
-
-            // ha olyannak adsz kolcson aki neked tartozik=> ne keruljon bele owed-ba
-
-            debt: prev.currentAcc.debt.map((item) => {
-              if (item.to === forAcc) {
-                return { value: item.value - amount, to: forAcc };
-              } else {
-                return item;
-              }
-            }),
+            lended: [{ value: amount, to: forAcc }, ...prev.currentAcc.lended],
+            debt: subtractFromData(prev.currentAcc.debt, forAcc, amount),
           },
           accounts: this.state.accounts.map((acc) => {
             if (acc.username === fromAcc) {
               return {
                 ...acc,
-                movements: [
-                  {
-                    amount: -amount,
-                    date: date,
-                    transactionTyp: "lend",
-                    sender: fromAcc,
-                    recepient: forAcc,
-                    message: message,
-                  },
-                  ...acc.movements,
-                ],
+                movements: returnMovOut(
+                  fromAcc,
+                  forAcc,
+                  amount,
+                  "lend",
+                  message,
+                  date,
+                  acc
+                ),
                 balance: acc.balance - amount,
-                owed: [{ value: amount, forWho: forAcc }, ...acc.owed],
+                lended: [{ value: amount, to: forAcc }, ...acc.lended],
               };
             }
             if (acc.username === forAcc) {
               return {
                 ...acc,
-                movements: [
-                  {
-                    amount: amount,
-                    date: date,
-                    transactionTyp: "borrow",
-                    sender: fromAcc,
-                    recepient: forAcc,
-                    message: message,
-                  },
-                  ...acc.movements,
-                ],
+                movements: returnMovIn(
+                  fromAcc,
+                  forAcc,
+                  amount,
+                  "borrow",
+                  message,
+                  date,
+                  acc
+                ),
                 balance: acc.balance + amount,
                 debt: [{ value: amount, to: fromAcc }, ...acc.debt],
               };
@@ -391,8 +340,6 @@ class App extends React.Component {
                   classNames="login-transition"
                   timeout={1000}
                   key={location.key}
-                  onExited={() => this.setState({ isAnimationEnded: true })}
-                  onEntered={() => this.setState({ isAnimationEnded: false })}
                 >
                   <Switch location={location}>
                     <Route path="/login">

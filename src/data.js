@@ -1,17 +1,25 @@
+import { compareAsc, format } from "date-fns";
+
+/// implement actuel Date
+// Date formatting with date-fns
+export let date = format(new Date(), "dd/MM/yy");
+// const today = new Date();
+// export let date = today.getMonth() + 1 + "-" + today.getDate();
+//////////////////
 // Data
 export const account1 = {
     owner: 'John Miller',
     balance: 10000,
     movements: [{
         amount: -200,
-        date: "11-11",
+        date: date,
         transactionTyp: "casual",
         sender: 'jm',
         recepient: 'km',
         message: `i don't know`
     }],
     debt: [],
-    owed: [],
+    lended: [],
 
 
 };
@@ -21,7 +29,7 @@ export const account2 = {
     balance: 7000,
     movements: [],
     debt: [],
-    owed: [],
+    lended: [],
 };
 
 export const account3 = {
@@ -30,7 +38,7 @@ export const account3 = {
     movements: [],
     isBlocked: false,
     debt: [],
-    owed: [],
+    lended: [],
 };
 
 export const account4 = {
@@ -38,7 +46,7 @@ export const account4 = {
     balance: 0,
     movements: [{
         amount: 200,
-        date: "11-11",
+        date: date,
         transactionTyp: "casual",
         sender: 'jm',
         recepient: 'km',
@@ -46,7 +54,7 @@ export const account4 = {
     }],
     isBlocked: false,
     debt: [],
-    owed: [],
+    lended: [],
 
 };
 export const testAcc = {
@@ -55,7 +63,7 @@ export const testAcc = {
     balance: [5000],
     movements: [{
         amount: -200,
-        time: "11-11",
+        time: "date",
         transactionTyp: "lend",
         sender: 'jm',
         recepient: 'km',
@@ -73,12 +81,6 @@ export const testAcc = {
 
 
 export const accounts = [account1, account2, account3, account4];
-
-/// implement actuel Date
-const today = new Date();
-export let date = today.getMonth() + 1 + "-" + today.getDate();
-
-
 // Create username
 
 const createUsername = function(accs) {

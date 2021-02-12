@@ -17,7 +17,6 @@ class Status extends Component {
         </div>
         <div className={`status__message ${this.state.hidden ? "hidden" : ""}`}>
           {this.props.currentAcc?.debt.map((debt, i) => {
-            console.log(debt.length);
             if (debt.length === 0) {
               return "";
             } else {
@@ -28,13 +27,13 @@ class Status extends Component {
               );
             }
           })}
-          {this.props.currentAcc?.owed.map((owed, i) => {
-            if (owed.length === 0) {
+          {this.props.currentAcc?.lended.map((lended, i) => {
+            if (lended.length === 0) {
               return "";
             } else {
               return (
                 <p key={i}>
-                  {owed.forWho} owes you {owed.value}
+                  {lended.to} owes you {lended.value}
                 </p>
               );
             }

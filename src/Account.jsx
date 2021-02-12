@@ -307,6 +307,7 @@ class Account extends React.Component {
               return (
                 <Movements
                   recepient={mov.recepient}
+                  sender={mov.sender}
                   transactionTyp={mov.transactionTyp}
                   key={i + 1}
                   i={i}

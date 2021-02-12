@@ -15,7 +15,9 @@ class Movements extends Component {
         </div>
         <div className="mov__transactionTyp">{this.props.transactionTyp}</div>
         <div className="mov__direction">
-          {this.props.type === "dep" ? "from" : "for"} : {this.props.recepient}
+          {this.props.type === "dep"
+            ? `from: ${this.props.sender}`
+            : ` for ${this.props.recepient}`}
         </div>
         <div className="mov__date">
           {this.props.date ? this.props.date : "unknown"}
@@ -28,21 +30,3 @@ class Movements extends Component {
 }
 
 export default Movements;
-
-// {
-//   this.props.currentAcc !== undefined
-//     ? this.props.currentAcc.movements.map((mov, i) => {
-//         const type = mov > 0 ? "dep" : "withD";
-//         return `
-//       <div className="mov__row">
-//       <div className="mov__type mov__type--${type}">
-//       ${i + 1} ${type}</div>
-//       <div className="mov__date">2 days ago</div>
-//       <div className="mov__message">For School</div>
-//       <div className="mov__value">${mov}</div>
-//     </div>
-
-//       `;
-//       })
-//     : "";
-// }
