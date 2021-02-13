@@ -2,7 +2,7 @@ export const updateCurrAcc = (otherAcc, transactionTyp, amount, message, prev, d
 
     return {
         ...prev.currentAcc,
-        movements: returnMovOut(
+        movements: addMovement(
             prev.currentAcc.username,
             otherAcc,
             amount,
@@ -16,12 +16,12 @@ export const updateCurrAcc = (otherAcc, transactionTyp, amount, message, prev, d
         debt: transactionTyp === "repayment" ?
             deleteOrSubtractData(prev.currentAcc.debt, otherAcc, amount) : prev.currentAcc.debt,
         lended: transactionTyp === "repayment" ?
-            prev.currentAcc.lended : addToData(prev.currentAcc.lended, otherAcc, amount)
+            prev.currentAcc.lended : updateData(prev.currentAcc.lended, otherAcc, amount)
 
     };
 }
 
-export const addToData = (where, otherAcc, amount) => {
+export const updateData = (where, otherAcc, amount) => {
     return where.map((item) => {
         if (item.to === otherAcc) {
             return { value: item.value + amount, to: otherAcc }
@@ -31,16 +31,9 @@ export const addToData = (where, otherAcc, amount) => {
     })
 }
 
-export const subtractFromData = (where, otherAcc, amount) => {
-    return where.map((item) => {
-        if (item.to === otherAcc) {
-            return { value: item.value - amount, to: otherAcc }
-        } else {
-            return item;
-        }
-    })
-}
 
+
+// findeindex kereses
 export const deleteOrSubtractData = (where, otherAcc, amount) => {
     return where.map((item, i) => {
         if (item.to === otherAcc) {
@@ -55,10 +48,12 @@ export const deleteOrSubtractData = (where, otherAcc, amount) => {
     })
 }
 
+// addmovement es legyen egy funkcio //
 
-export const returnMovOut = (fromAcc, forAcc, amount, transactionTyp, message, date, acc) => {
+
+export const addMovement = (fromAcc, forAcc, amount, transactionTyp, message, date, acc) => {
     return [{
-        amount: -Number(amount),
+        amount: Number(amount),
         date: date,
         transactionTyp: transactionTyp,
         sender: fromAcc,
@@ -81,7 +76,7 @@ export const returnMovIn = (fromAcc, forAcc, amount, transactionTyp, message, da
 export const updateFromAccLend = (acc, fromAcc, forAcc, amount, message, date, ) => {
     return {
         ...acc,
-        movements: returnMovOut(
+        movements: addMovement(
             fromAcc,
             forAcc,
             amount,
@@ -93,7 +88,7 @@ export const updateFromAccLend = (acc, fromAcc, forAcc, amount, message, date, )
 
         balance: acc.balance - Number(amount),
         // lended is an array of lended money
-        lended: addToData(acc.lended, forAcc, amount),
+        lended: updateData(acc.lended, forAcc, amount),
 
     }
 }
@@ -102,7 +97,7 @@ export const updateFromAccLend = (acc, fromAcc, forAcc, amount, message, date, )
 export const updateForAccLend = (acc, fromAcc, forAcc, amount, message, date, ) => {
     return {
         ...acc,
-        movements: returnMovIn(
+        movements: addMovement(
             fromAcc,
             forAcc,
             amount,
@@ -114,7 +109,7 @@ export const updateForAccLend = (acc, fromAcc, forAcc, amount, message, date, ) 
 
         balance: acc.balance + Number(amount),
         // lended is an array of lended money
-        debt: addToData(acc.debt, fromAcc, amount),
+        debt: updateData(acc.debt, fromAcc, amount),
 
     }
 }

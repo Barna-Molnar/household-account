@@ -11,13 +11,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import { accounts, date } from "./data.js";
-import {
-  updateCurrAcc,
-  addToData,
-  returnMovOut,
-  returnMovIn,
-  subtractFromData,
-} from "./updateFunctions.js";
+import { updateCurrAcc, updateData, addMovement } from "./updateFunctions.js";
 import { updateAccsRepay } from "./updateAccsRepay.js";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
@@ -226,10 +220,10 @@ class App extends React.Component {
               if (acc.username === fromAcc) {
                 return {
                   ...acc,
-                  movements: returnMovOut(
+                  movements: addMovement(
                     fromAcc,
                     forAcc,
-                    amount,
+                    -amount,
                     "lend",
                     message,
                     date,
@@ -237,13 +231,13 @@ class App extends React.Component {
                   ),
                   balance: acc.balance - amount,
                   // lended is an array of lended money
-                  lended: addToData(acc.lended, forAcc, amount),
+                  lended: updateData(acc.lended, forAcc, -amount),
                 };
               }
               if (acc.username === forAcc) {
                 return {
                   ...acc,
-                  movements: returnMovIn(
+                  movements: addMovement(
                     fromAcc,
                     forAcc,
                     amount,
@@ -254,7 +248,7 @@ class App extends React.Component {
                   ),
                   balance: acc.balance + amount,
                   // debt is an array about the money that the given account got
-                  debt: addToData(acc.debt, fromAcc, amount),
+                  debt: updateData(acc.debt, fromAcc, amount),
                 };
               }
               return acc;
@@ -265,10 +259,10 @@ class App extends React.Component {
         return {
           currentAcc: {
             ...prev.currentAcc,
-            movements: returnMovOut(
+            movements: addMovement(
               fromAcc,
               forAcc,
-              amount,
+              -amount,
               "lend",
               message,
               date,
@@ -276,16 +270,16 @@ class App extends React.Component {
             ),
             balance: prev.currentAcc.balance - amount,
             lended: [{ value: amount, to: forAcc }, ...prev.currentAcc.lended],
-            debt: subtractFromData(prev.currentAcc.debt, forAcc, amount),
+            debt: updateData(prev.currentAcc.debt, forAcc, -amount),
           },
           accounts: this.state.accounts.map((acc) => {
             if (acc.username === fromAcc) {
               return {
                 ...acc,
-                movements: returnMovOut(
+                movements: addMovement(
                   fromAcc,
                   forAcc,
-                  amount,
+                  -amount,
                   "lend",
                   message,
                   date,
@@ -298,7 +292,7 @@ class App extends React.Component {
             if (acc.username === forAcc) {
               return {
                 ...acc,
-                movements: returnMovIn(
+                movements: addMovement(
                   fromAcc,
                   forAcc,
                   amount,
