@@ -247,7 +247,7 @@ class Account extends React.Component {
                     className="form__btn form__btn--repayment"
                     onClick={(e) => {
                       e.preventDefault();
-                      if (this.state.message === "") {
+                      if (this.state.repayMessage === "") {
                         this.props.handleRepayment(
                           this.props.currentAcc.username,
                           this.state.repayRecepient,

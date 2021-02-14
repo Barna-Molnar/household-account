@@ -1,4 +1,4 @@
-import { deleteOrDecreaseDate } from './updateFunctions'
+import { deleteOrDecreaseDate, findDeleteOrDecrease } from './updateFunctions'
 export const updateAccsRepay = (fromAcc, forAcc, transactionTyp, amount, message, state, prev, date) => {
     return state.accounts.map((acc) => {
         if (acc.username === fromAcc) {
@@ -15,7 +15,12 @@ export const updateAccsRepay = (fromAcc, forAcc, transactionTyp, amount, message
                     ...acc.movements,
                 ],
                 balance: acc.balance - amount,
-                debt: prev.currentAcc.debt.map((item, i) => {
+                debt:
+
+                // findDeleteOrDecrease(prev.currentAcc.debt, forAcc, amount)
+
+
+                    prev.currentAcc.debt.map((item, i) => {
                     if (item.to === forAcc) {
                         if (item.value - amount === 0) {
                             return prev.currentAcc.debt.splice(1, i);

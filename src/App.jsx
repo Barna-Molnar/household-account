@@ -13,9 +13,7 @@ import {
 import { accounts, date } from "./data.js";
 import {
   updateCurrAcc,
-  updateData,
   deleteOrDecreaseDate,
-  addMovement,
   updateAccsLend,
 } from "./updateFunctions.js";
 import { updateAccsRepay } from "./updateAccsRepay.js";
@@ -169,7 +167,7 @@ class App extends React.Component {
     document.removeEventListener("keydown", this.escFunction, false);
   }
 
-  handleRepayment(fromAcc, forAcc, amount, message = "") {
+  handleRepayment(fromAcc, forAcc, amount, message = "repayment") {
     const isValid = this.validationForTransaction(
       this.state,
       fromAcc,

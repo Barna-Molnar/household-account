@@ -4,11 +4,11 @@ export const updateCurrAcc = (otherAcc, transactionTyp, amount, message, prev, d
     if (transactionTyp === "repayment") {
         debt = deleteOrDecreaseDate(prev.currentAcc.debt, otherAcc, amount)
         lend = prev.currentAcc.lended
-    }
-    if (transactionTyp === "lend" && isAccExistsInLended) {
+        amount = -amount
+    } else if (transactionTyp === "lend" && isAccExistsInLended) {
         debt = prev.currentAcc.debt
         lend = updateData(prev.currentAcc.lended, otherAcc, -amount)
-    } else {
+    } else if (transactionTyp === "lend" && !isAccExistsInLended) {
         debt = prev.currentAcc.debt
         lend = [{ value: -amount, to: otherAcc }, ...prev.currentAcc.lended]
     }
@@ -57,6 +57,14 @@ export const deleteOrDecreaseDate = (where, otherAcc, amount) => {
         }
     })
 }
+
+
+export const findDeleteOrDecrease = (where, otherAcc, amount) => {
+    const result = where.find((item) => item.to === otherAcc)
+    console.log(result)
+}
+
+
 
 // addmovement es legyen egy funkcio //
 
