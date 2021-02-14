@@ -1,4 +1,4 @@
-import { deleteOrSubtractData } from './updateFunctions'
+import { deleteOrDecreaseDate } from './updateFunctions'
 export const updateAccsRepay = (fromAcc, forAcc, transactionTyp, amount, message, state, prev, date) => {
     return state.accounts.map((acc) => {
         if (acc.username === fromAcc) {

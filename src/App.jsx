@@ -11,7 +11,13 @@ import {
   Redirect,
 } from "react-router-dom";
 import { accounts, date } from "./data.js";
-import { updateCurrAcc, updateData, addMovement } from "./updateFunctions.js";
+import {
+  updateCurrAcc,
+  updateData,
+  deleteOrDecreaseDate,
+  addMovement,
+  updateAccsLend,
+} from "./updateFunctions.js";
 import { updateAccsRepay } from "./updateAccsRepay.js";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
@@ -221,43 +227,15 @@ class App extends React.Component {
               date,
               isAccExistsInLended
             ),
-            accounts: this.state.accounts.map((acc) => {
-              if (acc.username === fromAcc) {
-                return {
-                  ...acc,
-                  movements: addMovement(
-                    fromAcc,
-                    forAcc,
-                    -amount,
-                    "lend",
-                    message,
-                    date,
-                    acc
-                  ),
-                  balance: acc.balance - amount,
-                  // lended is an array of lended money
-                  lended: updateData(acc.lended, forAcc, amount),
-                };
-              }
-              if (acc.username === forAcc) {
-                return {
-                  ...acc,
-                  movements: addMovement(
-                    fromAcc,
-                    forAcc,
-                    amount,
-                    "borrow",
-                    message,
-                    date,
-                    acc
-                  ),
-                  balance: acc.balance + amount,
-                  // debt is an array about the money that the given account got
-                  debt: updateData(acc.debt, fromAcc, amount),
-                };
-              }
-              return acc;
-            }),
+            accounts: updateAccsLend(
+              this.state.accounts,
+              fromAcc,
+              forAcc,
+              amount,
+              message,
+              date,
+              isAccExistsInLended
+            ),
           };
         }
         /////////lended array doesn't contain the acc who you are lending to ///////
@@ -271,42 +249,15 @@ class App extends React.Component {
             date,
             isAccExistsInLended
           ),
-
-          accounts: this.state.accounts.map((acc) => {
-            if (acc.username === fromAcc) {
-              return {
-                ...acc,
-                movements: addMovement(
-                  fromAcc,
-                  forAcc,
-                  -amount,
-                  "lend",
-                  message,
-                  date,
-                  acc
-                ),
-                balance: acc.balance - amount,
-                lended: [{ value: amount, to: forAcc }, ...acc.lended],
-              };
-            }
-            if (acc.username === forAcc) {
-              return {
-                ...acc,
-                movements: addMovement(
-                  fromAcc,
-                  forAcc,
-                  amount,
-                  "borrow",
-                  message,
-                  date,
-                  acc
-                ),
-                balance: acc.balance + amount,
-                debt: [{ value: amount, to: fromAcc }, ...acc.debt],
-              };
-            }
-            return acc;
-          }),
+          accounts: updateAccsLend(
+            this.state.accounts,
+            fromAcc,
+            forAcc,
+            amount,
+            message,
+            date,
+            isAccExistsInLended
+          ),
         };
       });
     }

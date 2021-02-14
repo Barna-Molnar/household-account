@@ -2,7 +2,7 @@ export const updateCurrAcc = (otherAcc, transactionTyp, amount, message, prev, d
     let debt, lend
 
     if (transactionTyp === "repayment") {
-        debt = deleteOrSubtractData(prev.currentAcc.debt, otherAcc, amount)
+        debt = deleteOrDecreaseDate(prev.currentAcc.debt, otherAcc, amount)
         lend = prev.currentAcc.lended
     }
     if (transactionTyp === "lend" && isAccExistsInLended) {
@@ -43,10 +43,8 @@ export const updateData = (where, otherAcc, amount) => {
     })
 }
 
-
-
 // findeindex kereses
-export const deleteOrSubtractData = (where, otherAcc, amount) => {
+export const deleteOrDecreaseDate = (where, otherAcc, amount) => {
     return where.map((item, i) => {
         if (item.to === otherAcc) {
             if (item.value - amount === 0) {
@@ -75,43 +73,51 @@ export const addMovement = (fromAcc, forAcc, amount, transactionTyp, message, da
 
 
 
-export const updateFromAccLend = (acc, fromAcc, forAcc, amount, message, date, ) => {
-    return {
-        ...acc,
-        movements: addMovement(
-            fromAcc,
-            forAcc,
-            amount,
-            "lend",
-            message,
-            date,
-            acc
-        ),
+export const updateAccsLend = (accs, fromAcc, forAcc, amount, message, date, isAccExistsInLended) => {
+    let lend, debt
 
-        balance: acc.balance - Number(amount),
-        // lended is an array of lended money
-        lended: updateData(acc.lended, forAcc, amount),
-
-    }
-}
-
-
-export const updateForAccLend = (acc, fromAcc, forAcc, amount, message, date, ) => {
-    return {
-        ...acc,
-        movements: addMovement(
-            fromAcc,
-            forAcc,
-            amount,
-            "lend",
-            message,
-            date,
-            acc
-        ),
-
-        balance: acc.balance + Number(amount),
-        // lended is an array of lended money
-        debt: updateData(acc.debt, fromAcc, amount),
-
-    }
+    return accs.map(acc => {
+        // decision how to update lend and debt 
+        if (isAccExistsInLended) {
+            lend = updateData(acc.lended, forAcc, amount);
+            debt = updateData(acc.debt, fromAcc, amount);
+        } else {
+            lend = [{ value: amount, to: forAcc }, ...acc.lended]
+            debt = [{ value: amount, to: fromAcc }, ...acc.debt]
+        }
+        if (acc.username === fromAcc) {
+            return {
+                ...acc,
+                movements: addMovement(
+                    fromAcc,
+                    forAcc, -amount,
+                    "lend",
+                    message,
+                    date,
+                    acc
+                ),
+                balance: acc.balance - amount,
+                // lended is an array of lended money
+                lended: lend,
+            };
+        }
+        if (acc.username === forAcc) {
+            return {
+                ...acc,
+                movements: addMovement(
+                    fromAcc,
+                    forAcc,
+                    amount,
+                    "borrow",
+                    message,
+                    date,
+                    acc
+                ),
+                balance: acc.balance + amount,
+                // debt is an array about the money that the given account got
+                debt: debt
+            }
+        }
+        return acc
+    })
 }
