@@ -206,15 +206,20 @@ class App extends React.Component {
     if (isValid) {
       this.setState((prev) => {
         //////////lended array contain the acc who you are lending to /////////////
-        if (prev.currentAcc.lended.some((item) => item.to === forAcc)) {
+        const isAccExistsInLended = prev.currentAcc.lended.some(
+          (item) => item.to === forAcc
+        );
+        console.log(isAccExistsInLended);
+        if (isAccExistsInLended) {
           return {
             currentAcc: updateCurrAcc(
               forAcc,
               "lend",
-              amount,
+              -amount,
               message,
               prev,
-              date
+              date,
+              isAccExistsInLended
             ),
             accounts: this.state.accounts.map((acc) => {
               if (acc.username === fromAcc) {
@@ -231,7 +236,7 @@ class App extends React.Component {
                   ),
                   balance: acc.balance - amount,
                   // lended is an array of lended money
-                  lended: updateData(acc.lended, forAcc, -amount),
+                  lended: updateData(acc.lended, forAcc, amount),
                 };
               }
               if (acc.username === forAcc) {
@@ -257,21 +262,16 @@ class App extends React.Component {
         }
         /////////lended array doesn't contain the acc who you are lending to ///////
         return {
-          currentAcc: {
-            ...prev.currentAcc,
-            movements: addMovement(
-              fromAcc,
-              forAcc,
-              -amount,
-              "lend",
-              message,
-              date,
-              prev.currentAcc
-            ),
-            balance: prev.currentAcc.balance - amount,
-            lended: [{ value: amount, to: forAcc }, ...prev.currentAcc.lended],
-            debt: updateData(prev.currentAcc.debt, forAcc, -amount),
-          },
+          currentAcc: updateCurrAcc(
+            forAcc,
+            "lend",
+            -amount,
+            message,
+            prev,
+            date,
+            isAccExistsInLended
+          ),
+
           accounts: this.state.accounts.map((acc) => {
             if (acc.username === fromAcc) {
               return {
