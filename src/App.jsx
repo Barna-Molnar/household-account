@@ -11,13 +11,9 @@ import {
   Redirect,
 } from "react-router-dom";
 import { accounts, date } from "./data.js";
-import {
-  updateCurrAcc,
-  deleteOrDecreaseDate,
-  updateAccsLend,
-} from "./updateFunctions.js";
-import { updateAccsRepay } from "./updateAccsRepay.js";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { updateCurrAcc, updateAccsLend } from "./updateFunctions.js";
+import { updateAccsRepay } from "./updateAccsRepay.js";
 
 class App extends React.Component {
   constructor(props) {
@@ -40,13 +36,30 @@ class App extends React.Component {
     this.handleLogOut = this.handleLogOut.bind(this);
     this.validationForTransaction = this.validationForTransaction.bind(this);
   }
-  validationForTransaction(state, fromAcc, forAcc, amount, currentAcc) {
+  validationForTransaction(state, fromAcc, forAcc, amount, transactionTyp) {
     // - WhiteSpace
     fromAcc = fromAcc.trim();
     forAcc = forAcc.trim();
+
     // creating "valid" variable to validationForTransaction
     const valid = state.accounts.find((acc) => acc.username === forAcc);
-    if (!forAcc && !amount) {
+    const doIHaveDebt = state.currentAcc.debt.find(
+      (item) => item.to === forAcc
+    );
+    console.log(doIHaveDebt);
+    if (doIHaveDebt === undefined && transactionTyp !== "lend") {
+      this.setState({
+        overlayHidden: false,
+        overlayText: `You don't have any debt for ${forAcc.toUpperCase()}`,
+      });
+      return false;
+    } else if (doIHaveDebt?.value - amount <= 0) {
+      this.setState({
+        overlayHidden: false,
+        overlayText: `You have to check first your debts`,
+      });
+      return false;
+    } else if (!forAcc && !amount) {
       this.setState({
         overlayHidden: false,
         overlayText: "Missed dates",
@@ -205,7 +218,8 @@ class App extends React.Component {
       this.state,
       fromAcc,
       forAcc,
-      amount
+      amount,
+      "lend"
     );
     if (isValid) {
       this.setState((prev) => {

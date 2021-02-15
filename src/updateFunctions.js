@@ -25,7 +25,6 @@ export const updateCurrAcc = (otherAcc, transactionTyp, amount, message, prev, d
             prev.currentAcc
         ),
         balance: prev.currentAcc.balance + amount,
-
         debt: debt,
         lended: lend
 
@@ -77,7 +76,7 @@ export const addMovement = (fromAcc, forAcc, amount, transactionTyp, message, da
 
 
 
-export const updateAccsLend = (accs, fromAcc, forAcc, amount, message, date, isAccExistsInLended) => {
+export const updateAccsLend = (accs, fromAcc, forAcc, amount, message, date, isAccExistsInLended, transactionTyp) => {
     let lend, debt
 
     return accs.map(acc => {
