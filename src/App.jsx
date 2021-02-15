@@ -36,6 +36,7 @@ class App extends React.Component {
     this.handleLogOut = this.handleLogOut.bind(this);
     this.validationForTransaction = this.validationForTransaction.bind(this);
   }
+
   validationForTransaction(state, fromAcc, forAcc, amount, transactionTyp) {
     // - WhiteSpace
     fromAcc = fromAcc.trim();
@@ -46,51 +47,30 @@ class App extends React.Component {
     const doIHaveDebt = state.currentAcc.debt.find(
       (item) => item.to === forAcc
     );
-    console.log(doIHaveDebt);
-    if (doIHaveDebt === undefined && transactionTyp !== "lend") {
-      this.setState({
-        overlayHidden: false,
-        overlayText: `You don't have any debt for ${forAcc.toUpperCase()}`,
-      });
-      return false;
-    } else if (doIHaveDebt?.value - amount <= 0) {
-      this.setState({
-        overlayHidden: false,
-        overlayText: `You have to check first your debts`,
-      });
-      return false;
-    } else if (!forAcc && !amount) {
-      this.setState({
-        overlayHidden: false,
-        overlayText: "Missed dates",
-      });
-      return false;
-    } else if (amount > state.currentAcc.balance) {
-      this.setState({
-        overlayHidden: false,
-        overlayText: "You don't have enough money!",
-      });
-      return false;
+    console.log(valid);
+    const obj = { overlayHidden: false, overlayText: "" };
+    if (!valid) {
+      obj.overlayText = "Invalid userName";
     } else if (fromAcc === forAcc) {
-      this.setState({
-        overlayHidden: false,
-        overlayText: "You can't sent money for Yourself!",
-      });
-      return false;
-    } else if (!valid) {
-      this.setState({
-        overlayHidden: false,
-        overlayText: "Invalid userName",
-      });
-      return false;
+      obj.overlayText = "You can't send money for Yourself!";
+    } else if (doIHaveDebt === undefined && transactionTyp !== "lend") {
+      obj.overlayText = `You don't have any debt for ${forAcc.toUpperCase()}`;
+    } else if (doIHaveDebt?.value - amount <= 0) {
+      obj.overlayText = `You have to check first your debts`;
+    } else if (!forAcc && !amount) {
+      obj.overlayText = "Missed dates";
+    } else if (amount > state.currentAcc.balance) {
+      obj.overlayText = "You don't have enough money!";
     } else if (amount <= 0) {
-      this.setState({
-        overlayHidden: false,
-        overlayText: "Invalid value",
-      });
-      return false;
+      obj.overlayText = "Invalid value";
     }
-    return true;
+
+    if (obj.overlayText !== "") {
+      this.setState(obj);
+      return false;
+    } else {
+      return true;
+    }
   }
 
   handleLogOut() {
