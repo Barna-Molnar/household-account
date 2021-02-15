@@ -42,7 +42,6 @@ export const updateData = (where, otherAcc, amount) => {
     })
 }
 
-
 export const findDeleteOrDecrease = (where, otherAcc, amount) => {
     const result = where.find((item) => item.to === otherAcc && item.value - amount !== 0)
     console.log(result)
@@ -59,10 +58,6 @@ export const findDeleteOrDecrease = (where, otherAcc, amount) => {
     }
 }
 
-
-
-// addmovement es legyen egy funkcio //
-
 export const addMovement = (fromAcc, forAcc, amount, transactionTyp, message, date, acc) => {
     return [{
         amount: Number(amount),
@@ -74,9 +69,7 @@ export const addMovement = (fromAcc, forAcc, amount, transactionTyp, message, da
     }, ...acc.movements]
 }
 
-
-
-export const updateAccsLend = (accs, fromAcc, forAcc, amount, message, date, isAccExistsInLended, transactionTyp) => {
+export const updateAccsLend = (accs, fromAcc, forAcc, amount, message, date, isAccExistsInLended) => {
     let lend, debt
 
     return accs.map(acc => {
@@ -100,7 +93,6 @@ export const updateAccsLend = (accs, fromAcc, forAcc, amount, message, date, isA
                     acc
                 ),
                 balance: acc.balance - amount,
-                // lended is an array of lended money
                 lended: lend,
             };
         }
@@ -117,7 +109,6 @@ export const updateAccsLend = (accs, fromAcc, forAcc, amount, message, date, isA
                     acc
                 ),
                 balance: acc.balance + amount,
-                // debt is an array about the money that the given account got
                 debt: debt
             }
         }

@@ -25,7 +25,6 @@ class App extends React.Component {
       overlayHidden: true,
       overlayText: "",
       loginVisibility: true,
-      isAnimationEnded: false,
     };
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLend = this.handleLend.bind(this);
@@ -42,12 +41,13 @@ class App extends React.Component {
     fromAcc = fromAcc.trim();
     forAcc = forAcc.trim();
 
-    // creating "valid" variable to validationForTransaction
+    // creating "valid" variable to validationForTransaction checking acc
     const valid = state.accounts.find((acc) => acc.username === forAcc);
+    //checking whether there is a debt or not
     const doIHaveDebt = state.currentAcc.debt.find(
       (item) => item.to === forAcc
     );
-    console.log(valid);
+    /// creating obj variable to update the state if the certain conditions meet
     const obj = { overlayHidden: false, overlayText: "" };
     if (!valid) {
       obj.overlayText = "Invalid userName";
@@ -77,7 +77,6 @@ class App extends React.Component {
     this.setState({
       loginVisibility: true,
       currentAcc: undefined,
-      // isAnimationEnded: false,
     });
   }
   handleLogin(username, pin) {
@@ -117,6 +116,7 @@ class App extends React.Component {
             ],
             balance: prev.currentAcc.balance + amount,
           },
+
           accounts: this.state.accounts.map((acc) => {
             if (acc.username === forAcc) {
               return {

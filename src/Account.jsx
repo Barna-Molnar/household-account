@@ -324,7 +324,6 @@ class Account extends React.Component {
         <div className="summeries">
           <p className="summeries__label">in</p>
           <p className="summeries__value summeries__value--in">
-            {/* {this.props.currentAcc?.balance} */}
             {this.props.currentAcc?.movements
               .map((mov) => {
                 return mov.amount > 0 ? mov.amount : 0;
@@ -339,9 +338,6 @@ class Account extends React.Component {
                 return mov.amount < 0 ? mov.amount : 0;
               })
               .reduce((acc, curr) => acc + curr, 0)}
-            {/* {this.props.currentAcc?.movements
-              .filter((mov) => mov < 0)
-              .reduce((acc, curr) => acc + curr, 0)} */}
             €
           </p>
           <p style={{ fontSize: "20px", color: "#777" }}>(Daily)</p>
