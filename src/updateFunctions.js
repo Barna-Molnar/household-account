@@ -2,7 +2,7 @@ export const updateCurrAcc = (otherAcc, transactionTyp, amount, message, prev, d
     let debt, lend
 
     if (transactionTyp === "repayment") {
-        debt = deleteOrDecreaseDate(prev.currentAcc.debt, otherAcc, amount)
+        debt = findDeleteOrDecrease(prev.currentAcc.debt, otherAcc, amount)
         lend = prev.currentAcc.lended
         amount = -amount
     } else if (transactionTyp === "lend" && isAccExistsInLended) {
@@ -43,25 +43,21 @@ export const updateData = (where, otherAcc, amount) => {
     })
 }
 
-// findeindex kereses
-export const deleteOrDecreaseDate = (where, otherAcc, amount) => {
-    return where.map((item, i) => {
-        if (item.to === otherAcc) {
-            if (item.value - amount === 0) {
-                return where.splice(1, i)
-            } else {
-                return { value: item.value - amount, to: otherAcc }
-            }
-        } else {
-            return item
-        }
-    })
-}
-
 
 export const findDeleteOrDecrease = (where, otherAcc, amount) => {
-    const result = where.find((item) => item.to === otherAcc)
+    const result = where.find((item) => item.to === otherAcc && item.value - amount !== 0)
     console.log(result)
+    if (!result) {
+        return where.filter(item => item.to !== otherAcc)
+    } else {
+        return where.map((item, i) => {
+            if (item.to === otherAcc) {
+                return { value: item.value - amount, to: otherAcc }
+            } else {
+                return item
+            }
+        })
+    }
 }
 
 

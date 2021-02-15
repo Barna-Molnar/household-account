@@ -42,9 +42,10 @@ class Account extends React.Component {
   logoutTimer() {
     if (this.state.time === 0) {
       clearInterval(timer);
-      console.log("vege");
       this.props.logOut();
     }
+
+    // maybe we should do it from prevState?
     this.setState({
       time: this.state.time - 1,
     });
