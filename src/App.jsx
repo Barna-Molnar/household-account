@@ -55,7 +55,7 @@ class App extends React.Component {
       obj.overlayText = "You can't send money for Yourself!";
     } else if (doIHaveDebt === undefined && transactionTyp !== "lend") {
       obj.overlayText = `You don't have any debt for ${forAcc.toUpperCase()}`;
-    } else if (doIHaveDebt?.value - amount <= 0) {
+    } else if (doIHaveDebt?.value - amount < 0) {
       obj.overlayText = `You have to check first your debts`;
     } else if (!forAcc && !amount) {
       obj.overlayText = "Missed dates";
