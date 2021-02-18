@@ -63,14 +63,9 @@
 .login-transition-enter-active {
     opacity: 1;
     transform: translateX(0%);
-    // transition: opacity 800ms, transform 800ms ease-in-out;
     transition: all 800ms ease-in-out 0.25s;
 }
 
-// .login-transition-enter-done {
-//     opacity: 1;
-//     transform: translateX(0%);
-// }
 .login-transition-exit {
     opacity: 1;
     transform: translateX(0%);

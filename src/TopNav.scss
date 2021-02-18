@@ -1,3 +1,4 @@
+@import './mixins.scss';
 nav {
     display: flex;
     justify-content: space-between;
@@ -56,6 +57,9 @@ nav {
     cursor: pointer;
     color: rgb(116, 107, 107);
     transition: all .3s;
+    @include respond(tab-port) {
+        font-size: 1.4rem; // 1rem == 8px 8/16 = 50%
+    }
     span {
         margin-left: .5rem;
         transition: all .5s;
