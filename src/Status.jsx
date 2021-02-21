@@ -4,7 +4,9 @@ import "./Status.scss";
 class Status extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      hidden: false,
+    };
   }
   render() {
     return (
@@ -13,20 +15,32 @@ class Status extends Component {
           <p className="status__label">Current Status</p>
           <p className="status__date">{this.props.date}</p>
         </div>
-        <div className="status__message">
+        <div
+          className={`status__message ${
+            this.props.currentAcc?.debt.length === 0 ? "hidden" : ""
+          }`}
+        >
           {this.props.currentAcc?.debt.map((debt, i) => {
-            return (
-              <p key={i}>
-                I owe {debt.value} to {debt.to}
-              </p>
-            );
+            if (debt.length === 0) {
+              return "";
+            } else {
+              return (
+                <p key={i}>
+                  I owe {debt.value} to {debt.to}
+                </p>
+              );
+            }
           })}
-          {this.props.currentAcc?.owed.map((owed, i) => {
-            return (
-              <p key={i}>
-                {owed.forWho} owes you {owed.value}
-              </p>
-            );
+          {this.props.currentAcc?.lended.map((lended, i) => {
+            if (lended.length === 0) {
+              return "";
+            } else {
+              return (
+                <p key={i}>
+                  {lended.to} owes you {lended.value}
+                </p>
+              );
+            }
           })}
         </div>
         <div>

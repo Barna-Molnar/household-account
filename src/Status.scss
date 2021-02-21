@@ -29,3 +29,8 @@
         box-shadow: 0 1rem 4rem rgba(0, 0, 0, .2);
     }
 }
+
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
