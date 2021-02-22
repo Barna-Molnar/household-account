@@ -23,7 +23,7 @@ class Account extends React.Component {
       repayAmount: "",
       repayMessage: "",
       repayRecepient: "",
-      time: 300,
+      time: 3000,
     };
     this.blockBtnText = this.blockBtnText.bind(this);
     this.logoutTimer = this.logoutTimer.bind(this);

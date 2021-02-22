@@ -4,6 +4,7 @@ import Account from "./Account.jsx";
 import Overlay from "./Overlay.jsx";
 import Login from "./Login.jsx";
 import React from "react";
+import NewOperator from "./NewOperator.jsx";
 import {
   BrowserRouter as Router,
   Switch,
@@ -206,7 +207,8 @@ class App extends React.Component {
         //////////lended array contain the acc who you are lending to /////////////
         const isAccExistsInLended = prev.currentAcc.lended.some(
           (item) => item.to === forAcc
-        );
+        ); /// lepassolni az indexet
+
         console.log(isAccExistsInLended);
         if (isAccExistsInLended) {
           return {
