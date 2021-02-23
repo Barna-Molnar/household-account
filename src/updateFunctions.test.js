@@ -4,11 +4,10 @@ import { accounts, date } from './data';
 
 /// 23.02.2021 Working on tests
 ////////// Testing updateCurrentAcc()
-// I'm using there the addMovement() as a subfunction , I'd already tested (see below)
+// I'm using here the addMovement() as a subfunction , I'd already tested it...(see below)
 describe("updateCurrAcc()", () => {
     const currentAcc = {
         owner: 'Test Acc',
-
         balance: 10000,
         movements: [{
             amount: -200,
@@ -22,8 +21,9 @@ describe("updateCurrAcc()", () => {
         lended: [],
     };
     const accs = { currentAcc }
-    test(`update Acc by repayment`, () => {
+    test(`update CurrentAcc by repayment`, () => {
         const result = updateCurrAcc("km", "repayment", 1000, "nothing", accs, date, false)
+            // Assertion 
 
         expect(result).toEqual({
             owner: 'Test Acc',
@@ -36,7 +36,7 @@ describe("updateCurrAcc()", () => {
 
     });
 
-    test(`update Acc by lend when acc exists in lended array`, () => {
+    test(`update CurrentAcc by lend when acc exists in lended array`, () => {
         const currentAcc = {
             owner: 'Test Acc',
             balance: 9000,
@@ -68,7 +68,7 @@ describe("updateCurrAcc()", () => {
 
     });
 
-    test(`update Acc by lend when acc doesn't exist in lended array`, () => {
+    test(`update CurrentAcc by lend when acc doesn't exist in lended array`, () => {
         const currentAcc = {
             owner: 'Test Acc',
             balance: 9000,
@@ -85,6 +85,7 @@ describe("updateCurrAcc()", () => {
         };
         const accs = { currentAcc }
         const result = updateCurrAcc("km", "lend", -1000, "nothing", accs, date, false)
+            // Assertion 
 
         expect(result).toEqual({
             owner: 'Test Acc',
@@ -110,12 +111,14 @@ describe("findDeleteOrDecrease()", () => {
     test(`repayment with the half of the value of the first debt("jm")`, () => {
         const result = findDeleteOrDecrease(testDebtArr.debt, "jm", 1000)
 
+        // Assertion 
 
         expect(result).toEqual([{ to: "jm", value: 1000 }, { to: "km", value: 1000 }])
     });
     test(`repayment with the whole value of the first debt`, () => {
         const result = findDeleteOrDecrease(testDebtArr.debt, "jm", 2000)
 
+        // Assertion 
 
         expect(result).toEqual([{ to: "km", value: 1000 }])
     });
