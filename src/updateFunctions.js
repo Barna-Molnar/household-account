@@ -44,7 +44,6 @@ export const updateData = (where, otherAcc, amount) => {
 
 export const findDeleteOrDecrease = (where, otherAcc, amount) => {
     const result = where.find((item) => item.to === otherAcc && item.value - amount !== 0)
-    console.log(result)
     if (!result) {
         return where.filter(item => item.to !== otherAcc)
     } else {

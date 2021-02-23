@@ -1,9 +1,105 @@
-import { updateData, addMovement, findDeleteOrDecrease } from './updateFunctions';
+import { updateData, addMovement, findDeleteOrDecrease, updateCurrAcc } from './updateFunctions';
 
 import { accounts, date } from './data';
 
+/// 23.02.2021 Working on tests
+////////// Testing updateCurrentAcc()
+// I'm using there the addMovement() as a subfunction , I'd already tested (see below)
+describe("updateCurrAcc()", () => {
+    const currentAcc = {
+        owner: 'Test Acc',
 
-/// 22.02.2021 Working on tests 
+        balance: 10000,
+        movements: [{
+            amount: -200,
+            date: date,
+            transactionTyp: "casual",
+            sender: 'ta',
+            recepient: 'km',
+            message: `i don't know`
+        }],
+        debt: [{ to: "km", value: 1000 }],
+        lended: [],
+    };
+    const accs = { currentAcc }
+    test(`update Acc by repayment`, () => {
+        const result = updateCurrAcc("km", "repayment", 1000, "nothing", accs, date, false)
+
+        expect(result).toEqual({
+            owner: 'Test Acc',
+            balance: 9000,
+            movements: addMovement(accs.currentAcc.username, "km", -1000, "repayment", "nothing", date, accs.currentAcc),
+            debt: [],
+            lended: [],
+
+        })
+
+    });
+
+    test(`update Acc by lend when acc exists in lended array`, () => {
+        const currentAcc = {
+            owner: 'Test Acc',
+            balance: 9000,
+            movements: [{
+                amount: -200,
+                date: date,
+                transactionTyp: "casual",
+                sender: 'ta',
+                recepient: 'km',
+                message: `i don't know`
+            }],
+            debt: [],
+            lended: [{ to: "km", value: 1000 }],
+        };
+        const accs = { currentAcc }
+
+        const result = updateCurrAcc("km", "lend", -1000, "nothing", accs, date, true)
+
+        // Assertion 
+
+        expect(result).toEqual({
+            owner: 'Test Acc',
+            balance: 8000,
+            movements: addMovement(accs.currentAcc.username, "km", -1000, "lend", "nothing", date, accs.currentAcc),
+            debt: [],
+            lended: [{ to: "km", value: 2000 }],
+
+        })
+
+    });
+
+    test(`update Acc by lend when acc doesn't exist in lended array`, () => {
+        const currentAcc = {
+            owner: 'Test Acc',
+            balance: 9000,
+            movements: [{
+                amount: -200,
+                date: date,
+                transactionTyp: "casual",
+                sender: 'ta',
+                recepient: 'km',
+                message: `i don't know`
+            }],
+            debt: [],
+            lended: [],
+        };
+        const accs = { currentAcc }
+        const result = updateCurrAcc("km", "lend", -1000, "nothing", accs, date, false)
+
+        expect(result).toEqual({
+            owner: 'Test Acc',
+            balance: 8000,
+            movements: addMovement(accs.currentAcc.username, "km", -1000, "lend", "nothing", date, accs.currentAcc),
+            debt: [],
+            lended: [{ to: "km", value: 1000 }],
+
+        })
+    })
+});
+
+
+
+
 /// Testing findDeleteOrDecrease()
 describe("findDeleteOrDecrease()", () => {
     const testDebtArr = {
@@ -11,7 +107,7 @@ describe("findDeleteOrDecrease()", () => {
 
     };
 
-    test(`repayment with the half of the value of the first debt`, () => {
+    test(`repayment with the half of the value of the first debt("jm")`, () => {
         const result = findDeleteOrDecrease(testDebtArr.debt, "jm", 1000)
 
 
@@ -28,7 +124,7 @@ describe("findDeleteOrDecrease()", () => {
 
 
 
-/// Testing updateData()
+/// Testing addMovement()
 describe('addMovement()', () => {
     const accWithEmptyMov = { movements: [] }
     const accWithMov = {
@@ -104,23 +200,6 @@ describe('addMovement()', () => {
 
         ])
     });
-
-    // why i get 1 returned from true 
-    // test(`add movement with invalid amount(falsy value) when  acc movements array is empty`, () => {
-    //     const result = addMovement("jm", "km", true, "lend", "nothing", date, accWithEmptyMov);
-
-    //     //Assertion 
-    //     expect(result).toEqual([{
-    //             amount: 0,
-    //             date: date,
-    //             transactionTyp: "lend",
-    //             sender: "jm",
-    //             recepient: "km",
-    //             message: "nothing",
-    //         },
-
-    //     ])
-    // });
 
     test(`add movement with positive when acc movements array is not empty`, () => {
         const result = addMovement("jm", "km", 100, "lend", "nothing", date, accWithMov);
