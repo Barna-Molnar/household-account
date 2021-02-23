@@ -1,8 +1,121 @@
-import { updateData, addMovement, findDeleteOrDecrease, updateCurrAcc } from './updateFunctions';
+import { updateData, addMovement, findDeleteOrDecrease, updateCurrAcc, updateAccsLend } from './updateFunctions';
 
 import { accounts, date } from './data';
 
 /// 23.02.2021 Working on tests
+/////////// Testing updateAccsLend()
+
+describe("updateAccsLend()", () => {
+    const acc1 = {
+        owner: 'Acc1',
+        username: "a1",
+        balance: 10000,
+        movements: [{
+                amount: -2000,
+                date: date,
+                transactionTyp: "lend",
+                sender: 'a1',
+                recepient: 'a2',
+                message: `i don't know`
+            },
+            {
+                amount: 1000,
+                date: date,
+                transactionTyp: "borrow",
+                sender: 'a3',
+                recepient: 'a1',
+                message: `i don't know`
+            }
+        ],
+        debt: [{ to: "a3", value: 1000 }],
+        lended: [{ to: "a2", value: 2000 }],
+    };
+    const acc2 = {
+        owner: 'Acc2',
+        username: "a2",
+        balance: 2000,
+        movements: [{
+            amount: 2000,
+            date: date,
+            transactionTyp: "borrow",
+            sender: 'a1',
+            recepient: 'a2',
+            message: `i don't know`
+        }],
+        debt: [{ to: "a1", value: 2000 }],
+        lended: [],
+    };
+    const acc3 = {
+        owner: 'Acc3',
+        username: "a3",
+        balance: 6000,
+        movements: [{
+            amount: -1000,
+            date: date,
+            transactionTyp: "lend",
+            sender: 'a3',
+            recepient: 'a1',
+            message: `i don't know`
+        }],
+        debt: [],
+        lended: [{ to: "a1", value: 1000 }],
+    };
+
+    const accs = [acc1, acc2, acc3]
+    test(`update accs by lend when acc doesn't exist in lended array`, () => {
+        const result = updateAccsLend(accs, "a3", "a2", 1000, 'nothing', date, false)
+
+
+        //Assertion
+        expect(result).toEqual([acc1, {
+            owner: 'Acc2',
+            username: "a2",
+            balance: 3000,
+            movements: [{
+                amount: 1000,
+                date: date,
+                transactionTyp: "borrow",
+                sender: 'a3',
+                recepient: 'a2',
+                message: `nothing`
+            }, {
+                amount: 2000,
+                date: date,
+                transactionTyp: "borrow",
+                sender: 'a1',
+                recepient: 'a2',
+                message: `i don't know`
+            }],
+            debt: [{ to: "a3", value: 1000 }, { to: "a1", value: 2000 }],
+            lended: [],
+        }, {
+            owner: 'Acc3',
+            username: "a3",
+            balance: 5000,
+            movements: [{
+                amount: -1000,
+                date: date,
+                transactionTyp: "lend",
+                sender: 'a3',
+                recepient: 'a2',
+                message: `nothing`
+            }, {
+                amount: -1000,
+                date: date,
+                transactionTyp: "lend",
+                sender: 'a3',
+                recepient: 'a1',
+                message: `i don't know`
+            }],
+            debt: [],
+            lended: [{ to: "a2", value: 1000 }, { to: "a1", value: 1000 }],
+        }]);
+    });
+});
+
+
+
+
 ////////// Testing updateCurrentAcc()
 // I'm using here the addMovement() as a subfunction , I'd already tested it...(see below)
 describe("updateCurrAcc()", () => {
