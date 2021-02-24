@@ -1,10 +1,136 @@
 import { updateData, addMovement, findDeleteOrDecrease, updateCurrAcc, updateAccsLend } from './updateFunctions';
-
 import { accounts, date } from './data';
+import { updateAccsRepay } from './updateAccsRepay';
 
-/// 23.02.2021 Working on tests
+/// 24.02.2021 Working on tests
+////////// Testing updateAccsRepay()
+
+describe("updateAccsRepay()", () => {
+    const acc1 = {
+        owner: 'Acc1',
+        username: "a1",
+        balance: 10000,
+        movements: [{
+                amount: -2000,
+                date: date,
+                transactionTyp: "lend",
+                sender: 'a1',
+                recepient: 'a2',
+                message: `i don't know`
+            },
+            {
+                amount: 1000,
+                date: date,
+                transactionTyp: "borrow",
+                sender: 'a3',
+                recepient: 'a1',
+                message: `i don't know`
+            }
+        ],
+        debt: [{ to: "a3", value: 1000 }],
+        lended: [{ to: "a2", value: 2000 }],
+    };
+    const acc2 = {
+        owner: 'Acc2',
+        username: "a2",
+        balance: 2000,
+        movements: [{
+            amount: 2000,
+            date: date,
+            transactionTyp: "borrow",
+            sender: 'a1',
+            recepient: 'a2',
+            message: `i don't know`
+        }],
+        debt: [{ to: "a1", value: 2000 }],
+        lended: [],
+    };
+    const acc3 = {
+        owner: 'Acc3',
+        username: "a3",
+        balance: 6000,
+        movements: [{
+            amount: -1000,
+            date: date,
+            transactionTyp: "lend",
+            sender: 'a3',
+            recepient: 'a1',
+            message: `i don't know`
+        }],
+        debt: [],
+        lended: [{ to: "a1", value: 1000 }],
+    };
+
+    const accounts = [acc1, acc2, acc3];
+    let currentAcc
+    currentAcc = acc2
+    const prev = { currentAcc }
+    let state = { accounts }
+
+
+    test(`update Accounts by repayment`, () => {
+        const result = updateAccsRepay("a2", "a1", "repayment", 2000, "nothing", state, prev, date)
+
+        //Assertion 
+
+        expect(result).toEqual([{
+            owner: 'Acc1',
+            username: "a1",
+            balance: 12000,
+            movements: [{
+                    amount: 2000,
+                    date: date,
+                    transactionTyp: "repayment",
+                    sender: 'a2',
+                    recepient: 'a1',
+                    message: `nothing`
+                }, {
+                    amount: -2000,
+                    date: date,
+                    transactionTyp: "lend",
+                    sender: 'a1',
+                    recepient: 'a2',
+                    message: `i don't know`
+                },
+                {
+                    amount: 1000,
+                    date: date,
+                    transactionTyp: "borrow",
+                    sender: 'a3',
+                    recepient: 'a1',
+                    message: `i don't know`
+                }
+            ],
+            debt: [{ to: "a3", value: 1000 }],
+            lended: [],
+        }, {
+            owner: 'Acc2',
+            username: "a2",
+            balance: 0,
+            movements: [{
+                amount: -2000,
+                date: date,
+                transactionTyp: "repayment",
+                sender: 'a2',
+                recepient: 'a1',
+                message: `nothing`
+            }, {
+                amount: 2000,
+                date: date,
+                transactionTyp: "borrow",
+                sender: 'a1',
+                recepient: 'a2',
+                message: `i don't know`
+            }],
+            debt: findDeleteOrDecrease(prev.currentAcc.debt, "a1", 2000),
+            lended: [],
+        }, acc3])
+
+    });
+
+})
+
 /////////// Testing updateAccsLend()
-
 describe("updateAccsLend()", () => {
     const acc1 = {
         owner: 'Acc1',
@@ -172,9 +298,6 @@ describe("updateAccsLend()", () => {
     })
 });
 
-
-
-
 ////////// Testing updateCurrentAcc()
 // I'm using here the addMovement() as a subfunction , I'd already tested it...(see below)
 describe("updateCurrAcc()", () => {
@@ -270,9 +393,6 @@ describe("updateCurrAcc()", () => {
     })
 });
 
-
-
-
 /// Testing findDeleteOrDecrease()
 describe("findDeleteOrDecrease()", () => {
     const testDebtArr = {
@@ -295,9 +415,6 @@ describe("findDeleteOrDecrease()", () => {
         expect(result).toEqual([{ to: "km", value: 1000 }])
     });
 });
-
-
-
 
 /// Testing addMovement()
 describe('addMovement()', () => {
