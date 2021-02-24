@@ -111,6 +111,65 @@ describe("updateAccsLend()", () => {
             lended: [{ to: "a2", value: 1000 }, { to: "a1", value: 1000 }],
         }]);
     });
+
+    test(`update accs by lend when acc does exists in lended array`, () => {
+        const result = updateAccsLend(accs, "a3", "a1", 1000, 'nothing', date, true);
+
+        expect(result).toEqual([{
+                owner: 'Acc1',
+                username: "a1",
+                balance: 11000,
+                movements: [{
+                        amount: 1000,
+                        date: date,
+                        transactionTyp: "borrow",
+                        sender: 'a3',
+                        recepient: 'a1',
+                        message: `nothing`
+                    }, {
+                        amount: -2000,
+                        date: date,
+                        transactionTyp: "lend",
+                        sender: 'a1',
+                        recepient: 'a2',
+                        message: `i don't know`
+                    },
+                    {
+                        amount: 1000,
+                        date: date,
+                        transactionTyp: "borrow",
+                        sender: 'a3',
+                        recepient: 'a1',
+                        message: `i don't know`
+                    }
+                ],
+                debt: [{ to: "a3", value: 2000 }],
+                lended: [{ to: "a2", value: 2000 }],
+            }, acc2,
+            {
+                owner: 'Acc3',
+                username: "a3",
+                balance: 5000,
+                movements: [{
+                    amount: -1000,
+                    date: date,
+                    transactionTyp: "lend",
+                    sender: 'a3',
+                    recepient: 'a1',
+                    message: `nothing`
+                }, {
+                    amount: -1000,
+                    date: date,
+                    transactionTyp: "lend",
+                    sender: 'a3',
+                    recepient: 'a1',
+                    message: `i don't know`
+                }],
+                debt: [],
+                lended: [{ to: "a1", value: 2000 }],
+            }
+        ])
+    })
 });
 
 
