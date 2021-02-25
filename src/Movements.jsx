@@ -7,7 +7,6 @@ class Movements extends Component {
     this.state = {};
   }
   render() {
-    ///Message and actuel date is coming....
     return (
       <div className={`mov__row mov__row--${this.props.type}`}>
         <div className={`mov__type mov__type--${this.props.type}`}>

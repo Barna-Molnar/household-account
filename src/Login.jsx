@@ -15,15 +15,7 @@ class Login extends Component {
   }
   render() {
     return (
-      <div
-        className={`login-page`}
-        // style={{
-        //   left: this.props.loginVisibility
-        //     ? "calc(100%/2 - 180px)"
-        //     : "calc(100%/2 - 1800px)",
-        //   opacity: this.props.loginVisibility ? 1 : 0,
-        // }}
-      >
+      <div className={`login-page`}>
         <div className="login-page__form">
           <form className="">
             <div className="login-page__form__input-group">

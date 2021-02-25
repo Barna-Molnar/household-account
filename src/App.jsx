@@ -4,7 +4,6 @@ import Account from "./Account.jsx";
 import Overlay from "./Overlay.jsx";
 import Login from "./Login.jsx";
 import React from "react";
-import NewOperator from "./NewOperator.jsx";
 import {
   BrowserRouter as Router,
   Switch,

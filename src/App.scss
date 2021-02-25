@@ -3,58 +3,6 @@
     position: relative;
 }
 
-// .login-transition-enter {
-//     opacity: 0;
-//     z-index: 1;
-//     transform: translateX(-1000px);
-// }
-// .login-transition-enter,
-// .login-transition-appear {
-//     opacity: 0;
-//     z-index: 1;
-//     transform: translateX(0px);
-// }
-// .login-transition-appear-active,
-// .login-transition-enter-active.login-transition-enter {
-//     opacity: 1;
-//     transition: opacity 400ms, linear 150ms;
-//     transform: translateX(0px);
-// }
-// .login-transition-exit {
-//     opacity: 1;
-//     transform: translateX(0px);
-// }
-// .login-transition-exit.login-transition-exit-active {
-//     opacity: 0;
-//     transition: opacity 4000ms linear 1500ms;
-//     transform: translateX(-1000px);
-// }
-// .login-transition-enter {
-//     opacity: 0.5;
-//     transform: scale(0.9) rotateY(70deg);
-// }
-// .login-transition-enter-active {
-//     opacity: .5;
-//     transform: scale(0.9) rotateY(30deg);
-//     transition: opacity 800ms, transform 800ms;
-// }
-// .login-transition-enter-done {
-//     opacity: 1;
-//     transform: scale(1) rotateY(0deg) // transition: opacity 500ms ease 1s, transform 500ms ease 1s;
-// }
-// .login-transition-exit {
-//     opacity: 1;
-//     transform: scale(1)
-// }
-// .login-transition-exit-active {
-//     opacity: 0.5;
-//     transform: scale(0.9) rotateX(90deg);
-//     transition: opacity 300ms, transform 300ms;
-// }
-// .login-transition-exit-done {
-//     opacity: 0;
-//     transform: scale(0.9) rotateX(90deg);
-// }
 .login-transition-enter {
     opacity: 0;
     transform: translateX(-100%);
