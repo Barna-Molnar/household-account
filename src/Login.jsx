@@ -15,7 +15,7 @@ class Login extends Component {
   }
   render() {
     return (
-      <div className={`login-page`}>
+      <div className="login-page">
         <div className="login-page__form">
           <form className="">
             <div className="login-page__form__input-group">
@@ -44,7 +44,7 @@ class Login extends Component {
               placeholder="password"
             />
             <button
-              className={"loginButton"}
+              className="loginButton"
               onClick={(e) => {
                 e.preventDefault();
                 console.log();

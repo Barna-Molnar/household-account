@@ -22,7 +22,7 @@ class Account extends React.Component {
       repayAmount: "",
       repayMessage: "",
       repayRecepient: "",
-      logooutTime: 3000, // it is related to to logoutTimer()
+      logOutTime: 3000, // it is related to to logoutTimer()
     };
     this.blockBtnText = this.blockBtnText.bind(this);
     this.logoutTimer = this.logoutTimer.bind(this);
@@ -39,14 +39,14 @@ class Account extends React.Component {
     }
   }
   logoutTimer() {
-    if (this.state.logooutTime === 0) {
+    if (this.state.logOutTime === 0) {
       clearInterval(timer);
       this.props.logOut();
     }
 
     // maybe we should do it from prevState?
     this.setState({
-      logooutTime: this.state.logooutTime - 1,
+      logOutTime: this.state.logOutTime - 1,
     });
   }
   componentDidMount() {
@@ -58,8 +58,8 @@ class Account extends React.Component {
 
   render() {
     let date = format(new Date(), "dd/MM/yy");
-    const min = String(Math.trunc(this.state.logooutTime / 60)).padStart(2, 0);
-    const sec = String(this.state.logooutTime % 60).padStart(2, 0);
+    const min = String(Math.trunc(this.state.logOutTime / 60)).padStart(2, 0);
+    const sec = String(this.state.logOutTime % 60).padStart(2, 0);
     return (
       <div className="main">
         <Status
