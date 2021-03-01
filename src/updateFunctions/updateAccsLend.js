@@ -6,13 +6,13 @@ export const updateAccsLend = (accs, fromAcc, forAcc, amount, message, date, isA
 
     return accs.map(acc => {
         // decision how to update lend and debt 
-        if (isAccExistsInLended) {
-            lend = updateData(acc.lended, forAcc, amount);
-            debt = updateData(acc.debt, fromAcc, amount);
-        } else {
-            lend = [{ value: amount, to: forAcc }, ...acc.lended]
-            debt = [{ value: amount, to: fromAcc }, ...acc.debt]
-        }
+        // if (isAccExistsInLended) {
+        //     lend = updateData(acc.lended, forAcc, amount);
+        //     debt = updateData(acc.debt, fromAcc, amount);
+        // } else {
+        //     lend = [{ value: amount, to: forAcc }, ...acc.lended]
+        //     debt = [{ value: amount, to: fromAcc }, ...acc.debt]
+        // }
         if (acc.username === fromAcc) {
             return {
                 ...acc,
@@ -25,7 +25,9 @@ export const updateAccsLend = (accs, fromAcc, forAcc, amount, message, date, isA
                     acc
                 ),
                 balance: acc.balance - amount,
-                lended: lend,
+                lended: isAccExistsInLended ?
+                    updateData(acc.lended, forAcc, amount) :
+                    [{ value: amount, to: forAcc }, ...acc.lended]
             };
         }
         if (acc.username === forAcc) {
@@ -41,7 +43,9 @@ export const updateAccsLend = (accs, fromAcc, forAcc, amount, message, date, isA
                     acc
                 ),
                 balance: acc.balance + amount,
-                debt: debt
+                debt: isAccExistsInLended ?
+                    updateData(acc.debt, fromAcc, amount) :
+                    [{ value: amount, to: fromAcc }, ...acc.debt]
             }
         }
         return acc

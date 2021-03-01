@@ -1,4 +1,6 @@
 import { findDeleteOrDecrease } from "./findDeleteOrDecrease";
+
+
 export const updateAccsRepay = (fromAcc, forAcc, transactionTyp, amount, message, state, prev, date) => {
     return state.accounts.map((acc) => {
         if (acc.username === fromAcc) {
