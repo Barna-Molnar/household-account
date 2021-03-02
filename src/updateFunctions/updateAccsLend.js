@@ -2,7 +2,7 @@ import { addMovement } from "./addMovement";
 import { updateData } from "./updateData";
 
 export const updateAccsLend = (accs, fromAcc, forAcc, amount, message, date, isAccExistsInLended) => {
-    let lend, debt
+    // let lend, debt
 
     return accs.map(acc => {
         // decision how to update lend and debt 
@@ -26,8 +26,7 @@ export const updateAccsLend = (accs, fromAcc, forAcc, amount, message, date, isA
                 ),
                 balance: acc.balance - amount,
                 lended: isAccExistsInLended ?
-                    updateData(acc.lended, forAcc, amount) :
-                    [{ value: amount, to: forAcc }, ...acc.lended]
+                    updateData(acc.lended, forAcc, amount) : [{ value: amount, to: forAcc }, ...acc.lended]
             };
         }
         if (acc.username === forAcc) {
@@ -44,8 +43,7 @@ export const updateAccsLend = (accs, fromAcc, forAcc, amount, message, date, isA
                 ),
                 balance: acc.balance + amount,
                 debt: isAccExistsInLended ?
-                    updateData(acc.debt, fromAcc, amount) :
-                    [{ value: amount, to: fromAcc }, ...acc.debt]
+                    updateData(acc.debt, fromAcc, amount) : [{ value: amount, to: fromAcc }, ...acc.debt]
             }
         }
         return acc
