@@ -206,7 +206,8 @@ class App extends React.Component {
         //////////lended array contain the acc who you are lending to /////////////
         const isAccExistsInLended = prev.currentAcc.lended.some(
           (item) => item.to === forAcc
-        );
+        ); /// lepassolni az indexet
+
         console.log(isAccExistsInLended);
         if (isAccExistsInLended) {
           return {

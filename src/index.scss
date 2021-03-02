@@ -1,4 +1,5 @@
 @import '~normalize.css';
+@import './mixins.scss';
 * {
     margin: 0;
     padding: 0;
@@ -8,6 +9,12 @@
 html {
     font-size: 10px;
     box-sizing: border-box;
+    @include respond(tab-land) {
+        font-size: 56.25%; // 1rem == 9px 9/16 = 56.25%
+    }
+    @include respond(tab-port) {
+        font-size: 50%; // 1rem == 8px 8/16 = 50%
+    }
 }
 
 body {

@@ -60,7 +60,7 @@ export const account4 = {
 export const testAcc = {
     owner: 'Test Person',
     username: "tp",
-    balance: [5000],
+    balance: 5000,
     movements: [{
         amount: -200,
         time: "date",
@@ -90,4 +90,3 @@ const createUsername = function(accs) {
     });
 }
 createUsername(accounts);
-console.log(accounts)

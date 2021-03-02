@@ -1,4 +1,6 @@
-import { findDeleteOrDecrease } from './updateFunctions'
+import { findDeleteOrDecrease } from "./findDeleteOrDecrease";
+
+
 export const updateAccsRepay = (fromAcc, forAcc, transactionTyp, amount, message, state, prev, date) => {
     return state.accounts.map((acc) => {
         if (acc.username === fromAcc) {
@@ -24,7 +26,7 @@ export const updateAccsRepay = (fromAcc, forAcc, transactionTyp, amount, message
                 movements: [{
                         amount: Number(amount),
                         date: date,
-                        transactionTyp: "transactionTyp",
+                        transactionTyp: transactionTyp,
                         sender: fromAcc,
                         recepient: forAcc,
                         message: message,
