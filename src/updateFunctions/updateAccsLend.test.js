@@ -89,8 +89,8 @@ describe("updateAccsLend()", () => {
 
         //Assertion
         expect(addMovement).toHaveBeenCalledTimes(2);
-        expect(addMovement).toHaveBeenCalledWith("a3", "a2", 1000, "borrow", "nothing", "02/03/21", acc2)
-        expect(addMovement).toHaveBeenCalledWith("a3", "a2", -1000, "lend", "nothing", "02/03/21", acc3)
+        expect(addMovement).toHaveBeenCalledWith("a3", "a2", 1000, "borrow", "nothing", date, acc2)
+        expect(addMovement).toHaveBeenCalledWith("a3", "a2", -1000, "lend", "nothing", date, acc3)
 
 
         expect(result).toEqual([acc1, {
@@ -126,8 +126,8 @@ describe("updateAccsLend()", () => {
         expect(updateData).toHaveBeenCalledWith([{ to: "a1", value: 1000 }], "a1", 1000)
             // addMovement()
         expect(addMovement).toHaveBeenCalledTimes(2);
-        expect(addMovement).toHaveBeenCalledWith("a3", "a1", 1000, "borrow", "nothing", "02/03/21", acc1)
-        expect(addMovement).toHaveBeenCalledWith("a3", "a1", -1000, "lend", "nothing", "02/03/21", acc3)
+        expect(addMovement).toHaveBeenCalledWith("a3", "a1", 1000, "borrow", "nothing", date, acc1)
+        expect(addMovement).toHaveBeenCalledWith("a3", "a1", -1000, "lend", "nothing", date, acc3)
 
         expect(result).toEqual([{
                 owner: 'Acc1',
