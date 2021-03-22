@@ -59,12 +59,12 @@ class Status extends Component {
               );
             }
           })}
-          <Calendar
+          {/* <Calendar
             onChange={this.onChange}
             value={this.state.date}
             activeStartDate={new Date()}
             defaultView={'year'}
-          />
+          /> */}
         </div>
         {/* <div>
           <p className="status__value">
