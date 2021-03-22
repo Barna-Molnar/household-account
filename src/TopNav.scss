@@ -3,7 +3,7 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 2rem;
+    padding: 2rem 4rem 0rem 4rem;
 }
 
 .welcome {
@@ -29,10 +29,10 @@ nav {
     margin-right: 2rem;
     border-radius: 2rem;
     width: 15rem;
-    padding: .5rem 2rem;
+    padding: 0.5rem 2rem;
     border: none;
     border: 1px solid #fff;
-    transition: all .2s;
+    transition: all 0.2s;
 }
 
 .loginForm__input:focus {
@@ -52,22 +52,24 @@ nav {
     font-size: 1.6rem;
     font-family: inherit;
     border: none;
-    padding: .5rem 2rem;
+    padding: 0.5rem 2rem;
     border-radius: 5rem;
+    background-color: #ced1d8;
     cursor: pointer;
-    color: rgb(116, 107, 107);
-    transition: all .3s;
+    color: rgb(70, 66, 66);
+    transition: all 0.5s;
     @include respond(tab-port) {
         font-size: 1.4rem; // 1rem == 8px 8/16 = 50%
     }
     span {
-        margin-left: .5rem;
-        transition: all .5s;
+        margin-left: 0.5rem;
+        transition: all 0.5s;
     }
     &:hover,
     &:focus {
         outline: none;
-        color: black;
+        background-color: white;
+        color: rgb(107, 101, 101);
         // border: 1px solid #ccc;
     }
 }

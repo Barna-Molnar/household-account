@@ -24,3 +24,14 @@
     transform: translateX(200%);
     transition: opacity 250ms, transform 800ms cubic-bezier(0, 1.03, 0, 1.02);
 }
+
+.App {
+    max-height: 96vh;
+}
+
+.app-container {
+    background-color: #e7e8ec;
+    border-radius: 2rem;
+    min-height: 96vh;
+    overflow: hidden;
+}

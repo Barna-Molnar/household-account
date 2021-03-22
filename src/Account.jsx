@@ -1,11 +1,11 @@
-import React from "react";
-import "./Account.scss";
-import "./variables.scss";
+import React from 'react';
+import './Account.scss';
+import './variables.scss';
 
-import "./data";
-import { compareAsc, format } from "date-fns";
-import Movements from "./Movements";
-import Status from "./Status";
+import './data';
+import { compareAsc, format } from 'date-fns';
+import Movements from './Movements';
+import Status from './Status';
 
 let timer;
 
@@ -14,14 +14,14 @@ class Account extends React.Component {
     super(props);
     this.state = {
       currentAcc: this.props.currentAcc === undefined ? false : true, /// <= this is not working
-      currentValue: "",
-      recepient: "",
-      lendAmount: "",
-      message: "",
-      amount: "",
-      repayAmount: "",
-      repayMessage: "",
-      repayRecepient: "",
+      currentValue: '',
+      recepient: '',
+      lendAmount: '',
+      message: '',
+      amount: '',
+      repayAmount: '',
+      repayMessage: '',
+      repayRecepient: '',
       logOutTime: 3000, // it is related to to logoutTimer()
     };
     this.blockBtnText = this.blockBtnText.bind(this);
@@ -33,9 +33,9 @@ class Account extends React.Component {
       return acc.username === this.state.accToBlock;
     });
     if (acc === undefined || acc.isBlocked === false) {
-      return "block";
+      return 'block';
     } else {
-      return "unblock";
+      return 'unblock';
     }
   }
   logoutTimer() {
@@ -57,7 +57,7 @@ class Account extends React.Component {
   }
 
   render() {
-    let date = format(new Date(), "dd/MM/yy");
+    let date = format(new Date(), 'dd/MM/yy');
     const min = String(Math.trunc(this.state.logOutTime / 60)).padStart(2, 0);
     const sec = String(this.state.logOutTime % 60).padStart(2, 0);
     return (
@@ -70,6 +70,24 @@ class Account extends React.Component {
 
         {/* account component */}
         <div className="accBody">
+          <div className="mov">
+            {this.props.currentAcc?.movements.map((mov, i) => {
+              return (
+                <Movements
+                  recepient={mov.recepient}
+                  sender={mov.sender}
+                  transactionTyp={mov.transactionTyp}
+                  key={i + 1}
+                  i={i}
+                  type={mov.amount > 0 ? 'dep' : 'withD'}
+                  mov={mov.amount}
+                  message={mov.message}
+                  date={mov.date}
+                />
+              );
+            })}
+          </div>
+
           <div className="ops">
             <div className="op op--lend">
               <h2>Lend money</h2>
@@ -106,7 +124,7 @@ class Account extends React.Component {
                     className="form__btn form__btn--lend"
                     onClick={(e) => {
                       e.preventDefault();
-                      if (this.state.message === "") {
+                      if (this.state.message === '') {
                         this.props.lend(
                           this.props.currentAcc.username,
                           this.state.recepient,
@@ -121,9 +139,9 @@ class Account extends React.Component {
                         );
                       }
                       this.setState({
-                        recepient: "",
-                        lendAmount: "",
-                        message: "",
+                        recepient: '',
+                        lendAmount: '',
+                        message: '',
                       });
                     }}
                   >
@@ -200,8 +218,8 @@ class Account extends React.Component {
                         this.state.amount
                       );
                       this.setState({
-                        recepient: "",
-                        amount: "",
+                        recepient: '',
+                        amount: '',
                       });
                     }}
                   >
@@ -247,7 +265,7 @@ class Account extends React.Component {
                     className="form__btn form__btn--repayment"
                     onClick={(e) => {
                       e.preventDefault();
-                      if (this.state.repayMessage === "") {
+                      if (this.state.repayMessage === '') {
                         this.props.handleRepayment(
                           this.props.currentAcc.username,
                           this.state.repayRecepient,
@@ -262,9 +280,9 @@ class Account extends React.Component {
                         );
                       }
                       this.setState({
-                        repayRecepient: "",
-                        repayAmount: "",
-                        repayMessage: "",
+                        repayRecepient: '',
+                        repayAmount: '',
+                        repayMessage: '',
                       });
                     }}
                   >
@@ -302,50 +320,33 @@ class Account extends React.Component {
               </form>
             </div>
           </div>
-          <div className="mov">
-            {this.props.currentAcc?.movements.map((mov, i) => {
-              return (
-                <Movements
-                  recepient={mov.recepient}
-                  sender={mov.sender}
-                  transactionTyp={mov.transactionTyp}
-                  key={i + 1}
-                  i={i}
-                  type={mov.amount > 0 ? "dep" : "withD"}
-                  mov={mov.amount}
-                  message={mov.message}
-                  date={mov.date}
-                />
-              );
-            })}
+          <div className="summeries">
+            <p className="summeries__label">in</p>
+            <p className="summeries__value summeries__value--in">
+              {this.props.currentAcc?.movements
+                .map((mov) => {
+                  return mov.amount > 0 ? mov.amount : 0;
+                })
+                .reduce((acc, curr) => acc + curr, 0)}
+              €
+            </p>
+            <p className="summeries__label">out</p>
+            <p className="summeries__value summeries__value--out">
+              {this.props.currentAcc?.movements
+                .map((mov) => {
+                  return mov.amount < 0 ? mov.amount : 0;
+                })
+                .reduce((acc, curr) => acc + curr, 0)}
+              €
+            </p>
+            <p style={{ fontSize: '20px', color: '#777' }}>(Daily)</p>
+            <p className="timer">
+              {min}:{sec}
+            </p>
           </div>
-        </div>
-        <div className="summeries">
-          <p className="summeries__label">in</p>
-          <p className="summeries__value summeries__value--in">
-            {this.props.currentAcc?.movements
-              .map((mov) => {
-                return mov.amount > 0 ? mov.amount : 0;
-              })
-              .reduce((acc, curr) => acc + curr, 0)}
-            €
-          </p>
-          <p className="summeries__label">out</p>
-          <p className="summeries__value summeries__value--out">
-            {this.props.currentAcc?.movements
-              .map((mov) => {
-                return mov.amount < 0 ? mov.amount : 0;
-              })
-              .reduce((acc, curr) => acc + curr, 0)}
-            €
-          </p>
-          <p style={{ fontSize: "20px", color: "#777" }}>(Daily)</p>
-          <p className="timer">
-            {min}:{sec}
-          </p>
-        </div>
 
-        {/* <NewOperator /> */}
+          {/* <NewOperator /> */}
+        </div>
       </div>
     );
   }

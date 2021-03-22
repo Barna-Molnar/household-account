@@ -1,13 +1,14 @@
 .mov {
     display: flex;
     flex-direction: column;
-    height: 56rem;
+    height: 40vh;
     background-color: white;
-    // flex: 0 0 60%;
     width: 100%;
     padding: 1rem 2rem;
-    border-radius: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 1rem 4rem rgba(0, 0, 0, 0.2);
     overflow: scroll;
+    grid-column: 1/4;
     &__row {
         padding: 2.2rem 4rem;
         // display: flex;
@@ -16,7 +17,7 @@
         display: grid;
         grid-template-columns: repeat(5, 1fr);
         grid-template-rows: repeat(2, min-content);
-        grid-row-gap: .5rem;
+        grid-row-gap: 0.5rem;
         border-bottom: 1px solid #eee;
         width: 100%;
         // border-radius: 1rem;
@@ -34,7 +35,7 @@
         text-transform: uppercase;
         font-weight: 500;
         color: white;
-        padding: .2rem 1rem;
+        padding: 0.2rem 1rem;
         border-radius: 5rem;
         align-self: center;
         justify-self: start;
@@ -74,9 +75,9 @@
         text-transform: uppercase;
         font-weight: 500;
         color: white;
-        padding: .5rem 1rem;
+        padding: 0.5rem 1rem;
         border-radius: 1rem;
-        background-image: linear-gradient(to right, #82d2e6, #62a5d8, #4678b3, #82d2e6);
+        background-image: linear-gradient( to right, #82d2e6, #62a5d8, #4678b3, #82d2e6);
     }
     &__value {
         font-size: 1.7rem;
