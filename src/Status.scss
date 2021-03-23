@@ -1,3 +1,20 @@
+@mixin basicCardStyle {
+    background: white;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    width: 5vw;
+    box-shadow: 1px 4px 10px 4px rgba(0, 0, 0, 0.5);
+    transition: 0.3s;
+    &:not(:first-child) {
+        margin-left: -3rem;
+    }
+    &:hover,
+    &:focus-within {
+        transform: translateY(-0.5rem);
+        // z-index: 2;
+    }
+}
+
 .status {
     // display: flex;
     // justify-content: space-between;
@@ -64,13 +81,40 @@
         grid-row: 1/2;
         font-family: inherit;
         color: inherit;
-        font-size: 1.6rem;
+        font-size: 1.2rem;
         font-weight: 400;
-        border: 1px solid #fff;
-        padding: 0.5rem 1rem;
+        border: 1px solid rgb(202, 202, 202);
+        padding: 1.5rem 3rem;
         border-radius: 1rem;
         background-color: #fff;
+        background-color: #f7f7f7;
         box-shadow: 0 1rem 4rem rgba(0, 0, 0, 0.2);
+        // developig cards
+        display: grid;
+        &--label {
+            height: fit-content;
+            font-size: 2.2rem;
+            font-weight: 500;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+            margin-bottom: 0.5rem;
+        }
+        .cards {
+            display: flex;
+            .card {
+                @include basicCardStyle();
+            }
+            .lended {
+                background-image: linear-gradient(to bottom right, #00c6ff, #0072ff);
+                color: rgb(219, 219, 219);
+            }
+            .borrowed {
+                background-image: linear-gradient(to top right, #ff4e50, #f9d423);
+            }
+            .card:hover~.card,
+            .card:focus-within~.card {
+                transform: translateX(3rem);
+            }
+        }
     }
 }
 

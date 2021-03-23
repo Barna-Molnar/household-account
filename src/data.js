@@ -10,7 +10,7 @@ export let date = format(new Date(), "dd/MM/yy");
 export const account1 = {
     owner: 'John Miller',
     balance: 10000,
-    accNum: '** **** **** **** **** 1234',
+    accNum: 'DE **** **** **** **** 1234',
     movements: [{
         amount: -200,
         date: date,
@@ -27,7 +27,7 @@ export const account1 = {
 
 export const account2 = {
     owner: 'Teresa Miller',
-    accNum: '** **** **** **** **** 1234',
+    accNum: 'DE **** **** **** **** 4444',
     balance: 7000,
     movements: [],
     debt: [],
@@ -36,7 +36,7 @@ export const account2 = {
 
 export const account3 = {
     owner: 'Steven Miller',
-    accNum: '** **** **** **** **** 1234',
+    accNum: 'DE **** **** **** **** 5678',
     balance: 0,
     movements: [],
     isBlocked: false,
@@ -47,7 +47,7 @@ export const account3 = {
 export const account4 = {
     owner: 'Katie Miller',
     balance: 0,
-    accNum: '** **** **** **** **** 1234',
+    accNum: 'DE **** **** **** **** 9999',
     movements: [{
         amount: 200,
         date: date,

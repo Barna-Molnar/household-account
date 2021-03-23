@@ -1,6 +1,5 @@
+import { getQueriesForElement } from '@testing-library/dom';
 import React, { Component } from 'react';
-import Calendar from 'react-calendar';
-
 import './Status.scss';
 
 class Status extends Component {
@@ -8,7 +7,6 @@ class Status extends Component {
     super(props);
     this.state = {
       hidden: false,
-      date: new Date(),
     };
   }
   onChange = (date) => this.setState({ date });
@@ -31,34 +29,56 @@ class Status extends Component {
             <span className="status__value--euro">€</span>
           </p>
         </div>
-        <div
-          className={`status__message 
-          ${this.props.currentAcc?.debt.length === 0 ? '0' : ''} 
-          
-          `} /// develop fase string 0 === "hidden"
-        >
-          {this.props.currentAcc?.debt.map((debt, i) => {
-            if (debt.length === 0) {
-              return '';
-            } else {
-              return (
-                <p key={i}>
-                  I owe {debt.value} to {debt.to}
-                </p>
-              );
-            }
-          })}
-          {this.props.currentAcc?.lended.map((lended, i) => {
-            if (lended.length === 0) {
-              return '';
-            } else {
-              return (
-                <p key={i}>
-                  {lended.to} owes you {lended.value}
-                </p>
-              );
-            }
-          })}
+        <div className="status__message">
+          {/* /// develop fase string 0 === "hidden"  ${this.props.currentAcc?.debt.length === 0 ? '0' : ''} */}
+          <div className="status__message--label">
+            <p>Transactions list</p>
+          </div>
+
+          <div className="cards">
+            {this.props.currentAcc?.lended.map((lended, i) => {
+              if (lended.length === 0) {
+                return '';
+              } else {
+                return (
+                  <div className="card lended" key={i}>
+                    <h3>{lended.to}</h3>
+                    <p>owes you</p>
+                    <p>{lended.value}€</p>
+                  </div>
+                );
+              }
+            })}
+            {this.props.currentAcc?.debt.map((debt, i) => {
+              if (debt.length === 0) {
+                return '';
+              } else {
+                return (
+                  <div className="card borrowed" key={i}>
+                    <h3> I owe</h3>
+                    <p>{debt.value}€</p>to
+                    <h3>{debt.to}</h3>
+                  </div>
+                );
+              }
+            })}
+
+            {/* <div className="card">
+              <h3>Katie</h3>
+              <p>borrowed</p>
+              <p>value €</p>
+            </div>
+            <div className="card">
+              <h3>Katie</h3>
+              <p>borrowed</p>
+              <p>value €</p>
+            </div>
+            <div className="card">
+              <h3>Katie</h3>
+              <p>borrowed</p>
+              <p>value €</p>
+            </div> */}
+          </div>
           {/* <Calendar
             onChange={this.onChange}
             value={this.state.date}
@@ -66,14 +86,6 @@ class Status extends Component {
             defaultView={'year'}
           /> */}
         </div>
-        {/* <div>
-          <p className="status__value">
-            {this.props.currentAcc?.balance
-              ? this.props.currentAcc?.balance
-              : 0}
-            €
-          </p>
-        </div> */}
       </div>
     );
   }
