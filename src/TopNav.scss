@@ -58,8 +58,11 @@ nav {
     transition: all 0.5s;
     display: grid;
     border: 1px solid rgba(0, 0, 0, 0.08);
-    @include respond(tab-port) {
-        font-size: 1.4rem; // 1rem == 8px 8/16 = 50%
+    @include respond(phone) {
+        font-size: 2.5rem; // 1rem == 8px 8/16 = 50%
+    }
+    @include respond(phone-mini) {
+        font-size: 2rem; // 1rem == 8px 8/16 = 50%
     }
     span {
         display: grid;

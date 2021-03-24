@@ -1,14 +1,10 @@
 @import './variables.scss';
 @import './Login.scss';
+@import './mixins.scss';
 .main {
     position: relative;
     margin: 0rem auto;
     max-width: 120rem;
-    // display: flex;
-    // flex-direction: column;
-    // justify-content: center;
-    // opacity: 0;
-    // transition: all 1.3s;
     display: grid;
     grid-template-columns: 4fr 3fr;
     grid-template-rows: auto repeat(3, 15rem) auto;
@@ -16,14 +12,15 @@
 }
 
 .accBody {
-    display: flex;
-    // padding: 4rem;
     grid-column: 1/3;
     grid-row: 2/6;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: 1fr minmax(350px, min-content) 1fr;
     grid-gap: 2rem;
+    @include respond(phone) {
+        grid-template-rows: 1fr min-content 1fr;
+    }
     .ops {
         color: #333;
         grid-column: 1/-1;
@@ -31,6 +28,10 @@
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         grid-gap: 2rem;
+        @include respond(phone-mini) {
+            display: flex;
+            flex-direction: column;
+        }
         .op {
             padding: 1rem 2rem;
             color: white;
@@ -46,6 +47,12 @@
                 font-weight: 600;
                 color: #333;
             }
+            @include respond(phone) {
+                padding: 2rem 2rem;
+            }
+            @include respond(phone-mini) {
+                padding: 2rem 4rem;
+            }
             .form {
                 display: flex;
                 flex-direction: column;
@@ -55,7 +62,14 @@
                     justify-content: space-between;
                     align-items: center;
                     margin-bottom: 1rem;
-                    // width: max-content;
+                    @include respond(phone) {
+                        display: grid;
+                        grid-gap: 1rem;
+                        justify-items: center;
+                    }
+                    @include respond(phone-mini) {
+                        display: flex;
+                    }
                 }
                 .label-flex {
                     display: flex;
@@ -64,6 +78,12 @@
                     padding-left: 1rem;
                     div {
                         flex: 0 0 45%;
+                    }
+                    @include respond(phone) {
+                        display: none;
+                    }
+                    @include respond(phone-mini) {
+                        display: flex;
                     }
                 }
                 &__btn {
@@ -79,6 +99,12 @@
                     //     color: black;
                     //     ;
                     // }
+                    @include respond(phone) {
+                        width: 75%;
+                    }
+                    @include respond(phone-mini) {
+                        width: 30%;
+                    }
                 }
             }
             .form__input {
@@ -93,14 +119,37 @@
                 border-radius: 0.7rem;
                 transition: all 0.3s;
                 margin-right: 2rem;
+                &::placeholder {
+                    color: white;
+                    text-align: left;
+                    font-size: 1.2rem;
+                }
                 &:focus {
                     outline: none;
                     background-color: rgba(255, 255, 255, 0.6);
+                }
+                @include respond(phone) {
+                    width: 75%;
+                    margin-right: 0;
+                }
+                @include respond(phone-mini) {
+                    width: 50%;
+                    margin-right: 2rem;
                 }
                 &--message {
                     margin-top: 1rem;
                     margin-bottom: 1rem;
                     width: 100%;
+                    @include respond(phone) {
+                        margin-top: 0;
+                        width: 75%;
+                        margin: auto;
+                    }
+                    @include respond(phone-mini) {
+                        margin-top: 1rem;
+                        margin-bottom: 1rem;
+                        width: 100%;
+                    }
                 }
             }
         }
@@ -131,6 +180,11 @@
     grid-column: 4/-1;
     grid-row: 2/3;
     box-shadow: 0 1rem 4rem rgba(0, 0, 0, 0.2);
+    @include respond(phone) {
+        grid-column: 1/-1;
+        grid-row: 3/4;
+        height: fit-content;
+    }
     &__header {
         color: #444;
         font-weight: 600;

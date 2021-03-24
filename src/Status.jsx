@@ -14,14 +14,14 @@ class Status extends Component {
     return (
       <div className="status">
         <div className="status__current-container">
-          <p className="status__label">{this.props.currentAcc.owner}</p>
+          <p className="status__name">{this.props.currentAcc.owner}</p>
 
           <p className="status__accNum">
             {this.props.currentAcc.accNum}{' '}
             <span className="status__accNum--arr">&rarr;</span>
           </p>
           <p className="status__date">{this.props.date}</p>
-          <p className="status__label--value">Available funds</p>
+          <p className="status__label">Available funds</p>
           <p className="status__value">
             {this.props.currentAcc?.balance
               ? this.props.currentAcc?.balance

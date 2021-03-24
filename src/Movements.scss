@@ -1,3 +1,4 @@
+@import './mixins.scss';
 .mov {
     display: flex;
     flex-direction: column;
@@ -9,6 +10,11 @@
     box-shadow: 0 1rem 4rem rgba(0, 0, 0, 0.2);
     overflow: scroll;
     grid-column: 1/4;
+    @include respond(phone) {
+        grid-column: 1/-1;
+        grid-row: 2/3;
+        max-height: 25vh;
+    }
     &__headline {
         color: #444;
         font-weight: 600;

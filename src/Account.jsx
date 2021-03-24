@@ -119,6 +119,7 @@ class Account extends React.Component {
                     }}
                     type="text"
                     className="form__input form__input--forWho"
+                    placeholder="Acc"
                   />
 
                   <input
@@ -129,6 +130,7 @@ class Account extends React.Component {
                     type="number"
                     className="form__input form__input--amount"
                     min="1"
+                    placeholder="Amount"
                   />
                   <button
                     className="form__btn form__btn--lend"
@@ -178,6 +180,7 @@ class Account extends React.Component {
                     this.setState({ message: e.target.value });
                   }}
                   type="text"
+                  placeholder="Explanation"
                 />
                 <div>
                   <div className="label-flex">
@@ -199,6 +202,7 @@ class Account extends React.Component {
                     }}
                     type="text"
                     className="form__input form__input--for"
+                    placeholder="Acc"
                   />
 
                   <input
@@ -209,6 +213,7 @@ class Account extends React.Component {
                     type="number"
                     className="form__input form__input--amount"
                     min="1"
+                    placeholder="Amount"
                   />
                   <button
                     className="form__btn form__btn--repayment"
@@ -258,6 +263,7 @@ class Account extends React.Component {
                     this.setState({ repayMessage: e.target.value });
                   }}
                   type="text"
+                  placeholder="Explanation"
                 />
                 <div>
                   <div className="label-flex">
@@ -282,15 +288,6 @@ class Account extends React.Component {
                 }
               >
                 <div className="input-flex">
-                  {/* <input
-                    value={this.state.recepient}
-                    onChange={(e) => {
-                      this.setState({ recepient: e.target.value });
-                    }}
-                    type="text"
-                    className="form__input"
-                  /> */}
-
                   <input
                     value={this.state.amount}
                     onChange={(e) => {
@@ -299,6 +296,7 @@ class Account extends React.Component {
                     type="number"
                     className="form__input"
                     min="1"
+                    placeholder="Amount"
                   />
                   <button
                     className="form__btn form__btn--borrow"
