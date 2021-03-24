@@ -1,19 +1,20 @@
-import "./App.scss";
-import TopNav from "./TopNav.jsx";
-import Account from "./Account.jsx";
-import Overlay from "./Overlay.jsx";
-import Login from "./Login.jsx";
-import React from "react";
+import './App.scss';
+import TopNav from './TopNav.jsx';
+import Account from './Account.jsx';
+import Overlay from './Overlay.jsx';
+import Login from './Login.jsx';
+import React from 'react';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
-} from "react-router-dom";
-import { accounts, date } from "./data.js";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
-import { updateCurrAcc, updateAccsLend } from "./updateFunctions.js";
-import { updateAccsRepay } from "./updateAccsRepay.js";
+} from 'react-router-dom';
+import { accounts, date } from './data.js';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { updateAccsLend } from './updateFunctions/updateAccsLend';
+import { updateCurrAcc } from './updateFunctions/updateCurrAcc';
+import { updateAccsRepay } from './updateFunctions/updateAccsRepay';
 
 class App extends React.Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class App extends React.Component {
       accounts: accounts,
       actuelDate: date,
       overlayHidden: true,
-      overlayText: "",
+      overlayText: '',
       loginVisibility: true,
     };
     this.handleLogin = this.handleLogin.bind(this);
@@ -48,24 +49,24 @@ class App extends React.Component {
       (item) => item.to === forAcc
     );
     /// creating obj variable to update the state if the certain conditions meet
-    const obj = { overlayHidden: false, overlayText: "" };
+    const obj = { overlayHidden: false, overlayText: '' };
     if (!valid) {
-      obj.overlayText = "Invalid userName";
+      obj.overlayText = 'Invalid userName';
     } else if (fromAcc === forAcc) {
       obj.overlayText = "You can't send money for Yourself!";
-    } else if (doIHaveDebt === undefined && transactionTyp !== "lend") {
+    } else if (doIHaveDebt === undefined && transactionTyp !== 'lend') {
       obj.overlayText = `You don't have any debt for ${forAcc.toUpperCase()}`;
     } else if (doIHaveDebt?.value - amount < 0) {
       obj.overlayText = `You have to check first your debts`;
     } else if (!forAcc && !amount) {
-      obj.overlayText = "Missed dates";
+      obj.overlayText = 'Missed dates';
     } else if (amount > state.currentAcc.balance) {
       obj.overlayText = "You don't have enough money!";
     } else if (amount <= 0) {
-      obj.overlayText = "Invalid value";
+      obj.overlayText = 'Invalid value';
     }
 
-    if (obj.overlayText !== "") {
+    if (obj.overlayText !== '') {
       this.setState(obj);
       return false;
     } else {
@@ -91,12 +92,12 @@ class App extends React.Component {
     }
   }
 
-  handleUploadMoney(forAcc, amount, message = "upload") {
+  handleUploadMoney(forAcc, amount, message = 'upload') {
     console.log(forAcc, amount);
     if (amount <= 0) {
       this.setState({
         overlayHidden: false,
-        overlayText: "invalid value",
+        overlayText: 'invalid value',
       });
     } else
       this.setState((prev) => {
@@ -107,7 +108,7 @@ class App extends React.Component {
               {
                 amount: amount,
                 date: date,
-                transactionTyp: "upload",
+                transactionTyp: 'upload',
                 sender: forAcc,
                 recepient: forAcc,
                 message: message,
@@ -125,7 +126,7 @@ class App extends React.Component {
                   {
                     amount: +amount,
                     date: date,
-                    transactionTyp: "upload",
+                    transactionTyp: 'upload',
                     sender: forAcc,
                     recepient: forAcc,
                     message: message,
@@ -154,13 +155,13 @@ class App extends React.Component {
     }
   }
   componentDidMount() {
-    document.addEventListener("keydown", this.escFunction, false);
+    document.addEventListener('keydown', this.escFunction, false);
   }
   componentWillUnmount() {
-    document.removeEventListener("keydown", this.escFunction, false);
+    document.removeEventListener('keydown', this.escFunction, false);
   }
 
-  handleRepayment(fromAcc, forAcc, amount, message = "repayment") {
+  handleRepayment(fromAcc, forAcc, amount, message = 'repayment') {
     const isValid = this.validationForTransaction(
       this.state,
       fromAcc,
@@ -172,7 +173,7 @@ class App extends React.Component {
         return {
           currentAcc: updateCurrAcc(
             forAcc,
-            "repayment",
+            'repayment',
             amount,
             message,
             prev,
@@ -181,7 +182,7 @@ class App extends React.Component {
           accounts: updateAccsRepay(
             fromAcc,
             forAcc,
-            "repayment",
+            'repayment',
             amount,
             message,
             this.state,
@@ -192,14 +193,14 @@ class App extends React.Component {
       });
   }
 
-  handleLend(fromAcc, forAcc, amount, message = "dunno") {
+  handleLend(fromAcc, forAcc, amount, message = 'dunno') {
     // validationForTransaction
     const isValid = this.validationForTransaction(
       this.state,
       fromAcc,
       forAcc,
       amount,
-      "lend"
+      'lend'
     );
     if (isValid) {
       this.setState((prev) => {
@@ -213,7 +214,7 @@ class App extends React.Component {
           return {
             currentAcc: updateCurrAcc(
               forAcc,
-              "lend",
+              'lend',
               -amount,
               message,
               prev,
@@ -235,7 +236,7 @@ class App extends React.Component {
         return {
           currentAcc: updateCurrAcc(
             forAcc,
-            "lend",
+            'lend',
             -amount,
             message,
             prev,
@@ -260,51 +261,53 @@ class App extends React.Component {
     return (
       <Router>
         <div className="App">
-          <Overlay
-            overlayText={this.state.overlayText}
-            hidden={this.state.overlayHidden}
-            handleCloseOverlay={this.handleCloseOverlay}
-          />
-          <TopNav
-            currentAcc={this.state.currentAcc}
-            login={this.handleLogin}
-            logOutBtnVisibility={this.state.loginVisibility}
-            logOut={this.handleLogOut}
-          />
-          <Route
-            render={({ location }) => (
-              <TransitionGroup>
-                <CSSTransition
-                  classNames="login-transition"
-                  timeout={1000}
-                  key={location.key}
-                >
-                  <Switch location={location}>
-                    <Route path="/login">
-                      <Login
-                        isAnimationEnded={this.state.isAnimationEnded}
-                        currentAcc={this.state.currentAcc}
-                        login={this.handleLogin}
-                        loginVisibility={this.state.loginVisibility}
-                      />
-                      {this.state.currentAcc ? <Redirect to="/" /> : ""}
-                    </Route>
-                    {this.state.currentAcc ? "" : <Redirect to="/login" />}
-                    <Route path="/">
-                      <Account
-                        accounts={this.state.accounts}
-                        currentAcc={this.state.currentAcc}
-                        handleRepayment={this.handleRepayment}
-                        lend={this.handleLend}
-                        uploadMoney={this.handleUploadMoney}
-                        logOut={this.handleLogOut}
-                      />
-                    </Route>
-                  </Switch>
-                </CSSTransition>
-              </TransitionGroup>
-            )}
-          />
+          <div className="app-container">
+            <Overlay
+              overlayText={this.state.overlayText}
+              hidden={this.state.overlayHidden}
+              handleCloseOverlay={this.handleCloseOverlay}
+            />
+            <TopNav
+              currentAcc={this.state.currentAcc}
+              login={this.handleLogin}
+              logOutBtnVisibility={this.state.loginVisibility}
+              logOut={this.handleLogOut}
+            />
+            <Route
+              render={({ location }) => (
+                <TransitionGroup>
+                  <CSSTransition
+                    classNames="login-transition"
+                    timeout={1000}
+                    key={location.key}
+                  >
+                    <Switch location={location}>
+                      <Route path="/login">
+                        <Login
+                          isAnimationEnded={this.state.isAnimationEnded}
+                          currentAcc={this.state.currentAcc}
+                          login={this.handleLogin}
+                          loginVisibility={this.state.loginVisibility}
+                        />
+                        {this.state.currentAcc ? <Redirect to="/" /> : ''}
+                      </Route>
+                      {this.state.currentAcc ? '' : <Redirect to="/login" />}
+                      <Route path="/">
+                        <Account
+                          accounts={this.state.accounts}
+                          currentAcc={this.state.currentAcc}
+                          handleRepayment={this.handleRepayment}
+                          lend={this.handleLend}
+                          uploadMoney={this.handleUploadMoney}
+                          logOut={this.handleLogOut}
+                        />
+                      </Route>
+                    </Switch>
+                  </CSSTransition>
+                </TransitionGroup>
+              )}
+            />
+          </div>
         </div>
       </Router>
     );

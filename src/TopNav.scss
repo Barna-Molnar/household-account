@@ -3,7 +3,7 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 2rem;
+    padding: 2rem 4rem 0rem 4rem;
 }
 
 .welcome {
@@ -29,10 +29,10 @@ nav {
     margin-right: 2rem;
     border-radius: 2rem;
     width: 15rem;
-    padding: .5rem 2rem;
+    padding: 0.5rem 2rem;
     border: none;
     border: 1px solid #fff;
-    transition: all .2s;
+    transition: all 0.2s;
 }
 
 .loginForm__input:focus {
@@ -45,29 +45,35 @@ nav {
 }
 
 .loginForm__btn {
-    width: 13rem;
-    display: flex;
+    width: 5rem;
     justify-content: center;
     align-self: center;
-    font-size: 1.6rem;
-    font-family: inherit;
     border: none;
-    padding: .5rem 2rem;
-    border-radius: 5rem;
+    padding: 1rem 2rem;
+    border-radius: 10rem;
+    background-color: transparent;
     cursor: pointer;
-    color: rgb(116, 107, 107);
-    transition: all .3s;
-    @include respond(tab-port) {
-        font-size: 1.4rem; // 1rem == 8px 8/16 = 50%
+    color: #2f976c;
+    font-size: 3rem;
+    transition: all 0.5s;
+    display: grid;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    @include respond(phone) {
+        font-size: 2.5rem; // 1rem == 8px 8/16 = 50%
+    }
+    @include respond(phone-mini) {
+        font-size: 2rem; // 1rem == 8px 8/16 = 50%
     }
     span {
-        margin-left: .5rem;
-        transition: all .5s;
+        display: grid;
+        transition: all 0.5s;
     }
     &:hover,
     &:focus {
+        transform: translateY(-1px);
+        box-shadow: 4px 0px 3px 2px rgba(0, 0, 0, 0.2);
         outline: none;
-        color: black;
+        color: rgb(192, 42, 42);
         // border: 1px solid #ccc;
     }
 }
