@@ -1,27 +1,47 @@
 @import './variables.scss';
+@import './mixins.scss';
 .login-page {
-    width: 360px;
+    width: 40rem;
     padding: 8% 0 0;
     margin: auto;
     display: block;
     position: absolute;
-    top: 6%;
-    left: calc(100%/2 - 180px);
+    top: 8%;
+    left: calc(100% / 2 - 18rem);
+    @include respond(phone) {
+        top: 15%;
+    }
+    @include respond(phone-mini) {
+        position: relative;
+        left: 0;
+        transform: translateY(20%);
+    }
     &__form {
-        background-image: linear-gradient(150deg, rgba(196, 186, 186, 0.9) 0%, rgba(255, 255, 255, 0.9) 50%, transparent 50%), url(https://images.pexels.com/photos/4386375/pexels-photo-4386375.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260://https://images.pexels.com/photos/4386366/pexels-photo-4386366.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260.pexels.com/photos/3305/numbers-money-calculating-calculation.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
+        background-image: linear-gradient( 150deg, rgba(196, 186, 186, 0.9) 0%, rgba(255, 255, 255, 0.9) 50%, transparent 50%), url(https://images.pexels.com/photos/4386375/pexels-photo-4386375.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260://https://images.pexels.com/photos/4386366/pexels-photo-4386366.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260.pexels.com/photos/3305/numbers-money-calculating-calculation.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
         background-size: 100%;
         position: relative;
         z-index: 1;
         max-width: 360px;
-        margin: 0 auto 100px;
+        height: 35rem;
+        margin: 0 auto;
         padding: 45px;
         text-align: center;
         box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+        border-radius: 1rem;
+        &__form-grid {
+            height: 100%;
+            display: grid;
+            grid-template-rows: repeat(5, 1fr);
+        }
         &__input-group {
             position: relative;
         }
+        @include respond(phone-mini) {
+            padding: 45px;
+            border: 1px solid rgba(212, 212, 212, 0.7);
+        }
         input {
-            font-family: "Roboto", sans-serif;
+            font-family: 'Roboto', sans-serif;
             outline: 0;
             background: #f2f2f2;
             width: 100%;
@@ -31,9 +51,13 @@
             box-sizing: border-box;
             font-size: 14px;
             border-bottom: 3px solid transparent;
+            border-radius: 0.5rem;
+            @include respond(phone-mini) {
+                border: 1px solid rgba(212, 212, 212, 0.7);
+            }
             &:focus {
                 outline: none;
-                box-shadow: 0 1rem 2rem rgba($color-black, .1);
+                box-shadow: 0 1rem 2rem rgba($color-black, 0.1);
                 border-bottom: 3px solid $color-greenish-dark;
             }
             &:focus:invalid {
@@ -46,35 +70,37 @@
             transform: translateY(-4rem);
         }
         &__label {
-            font-family: "Roboto", sans-serif;
+            font-family: 'Roboto', sans-serif;
             font-size: 12px;
             position: absolute;
             top: 5rem;
             left: 1.6rem;
             display: block;
             font-weight: 500;
-            margin-top: .7rem;
+            margin-top: 0.7rem;
             display: block;
-            transition: all .3s;
+            transition: all 0.3s;
         }
         button {
-            font-family: "Roboto", sans-serif;
+            font-family: 'Roboto', sans-serif;
             text-transform: uppercase;
             outline: 0;
-            background: #4CAF50;
+            background: #4caf50;
             width: 100%;
             border: 0;
             padding: 15px;
-            color: #FFFFFF;
+            color: #ffffff;
             font-size: 14px;
             -webkit-transition: all 0.3 ease;
             transition: all 0.3 ease;
             cursor: pointer;
+            border-radius: 1rem;
+            grid-row: 5/6;
         }
     }
     &__form button:hover,
     &__form button:active,
     &__form button:focus {
-        background: #43A047;
+        background: #43a047;
     }
 }

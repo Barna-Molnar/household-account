@@ -93,12 +93,6 @@
                     font-size: 1.8rem;
                     width: 30%;
                     cursor: pointer;
-                    // &--repayment {
-                    //     padding: .3rem 1rem;
-                    //     font-size: 1.4rem;
-                    //     color: black;
-                    //     ;
-                    // }
                     @include respond(phone) {
                         width: 75%;
                     }
@@ -189,7 +183,6 @@
         color: #444;
         font-weight: 600;
         padding: 1rem;
-        // background-color: #e52a5a;
         font-size: 2rem;
         display: flex;
         justify-content: space-between;
@@ -204,7 +197,6 @@
     }
     &__body {
         display: grid;
-        // grid-template-columns: 1fr 1fr 1fr;
         grid-template-rows: 1fr 1fr;
         .labels {
             display: grid;

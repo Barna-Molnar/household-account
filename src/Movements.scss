@@ -34,9 +34,6 @@
     }
     &__row {
         padding: 0.8rem 1.6rem;
-        // display: flex;
-        // align-items: center;
-        // justify-content: space-between;
         display: grid;
         grid-template-columns: repeat(5, 1fr);
         grid-template-rows: repeat(2, min-content);
@@ -72,7 +69,6 @@
         color: white;
         padding: 0.2rem 0.6rem;
         border-radius: 3px;
-        // background-image: linear-gradient( to right, #82d2e6, #62a5d8, #4678b3, #82d2e6);
         background-image: linear-gradient(to bottom right, #00c6ff, #0072ff);
     }
     &__transactionTyp {
