@@ -1,13 +1,10 @@
 import React from 'react';
 import './Account.scss';
 import './variables.scss';
-
 import './data';
-import { compareAsc, format } from 'date-fns';
+import { format } from 'date-fns';
 import Movements from './Movements';
 import Status from './Status';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
 
 let timer;
 
@@ -316,11 +313,6 @@ class Account extends React.Component {
                   </button>
                 </div>
                 <div className="label-flex">
-                  {/* <div>
-                    <label htmlFor="#" className="form__label">
-                      Account
-                    </label>
-                  </div> */}
                   <div>
                     <label htmlFor="#" className="form__label">
                       Amount
@@ -376,10 +368,7 @@ class Account extends React.Component {
                 </p>
               </div>
             </div>
-            {/* <Calendar activeStartDate={new Date()} showWeekNumbers /> */}
           </div>
-
-          {/* <NewOperator /> */}
         </div>
       </div>
     );

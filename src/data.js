@@ -1,4 +1,4 @@
-import { compareAsc, format } from "date-fns";
+import { format } from "date-fns";
 
 /// implement actuel Date
 // Date formatting with date-fns

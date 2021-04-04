@@ -1,4 +1,3 @@
-import { getQueriesForElement } from '@testing-library/dom';
 import React, { Component } from 'react';
 import './Status.scss';
 
@@ -30,7 +29,6 @@ class Status extends Component {
           </p>
         </div>
         <div className="status__message">
-          {/* /// develop fase string 0 === "hidden"  ${this.props.currentAcc?.debt.length === 0 ? '0' : ''} */}
           <div className="status__message--label">
             <p>Transactions list</p>
           </div>
@@ -62,29 +60,7 @@ class Status extends Component {
                 );
               }
             })}
-
-            {/* <div className="card">
-              <h3>Katie</h3>
-              <p>borrowed</p>
-              <p>value €</p>
-            </div>
-            <div className="card">
-              <h3>Katie</h3>
-              <p>borrowed</p>
-              <p>value €</p>
-            </div>
-            <div className="card">
-              <h3>Katie</h3>
-              <p>borrowed</p>
-              <p>value €</p>
-            </div> */}
           </div>
-          {/* <Calendar
-            onChange={this.onChange}
-            value={this.state.date}
-            activeStartDate={new Date()}
-            defaultView={'year'}
-          /> */}
         </div>
       </div>
     );
