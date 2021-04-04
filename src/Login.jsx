@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import "./Login.scss";
+import React, { Component } from 'react';
+import './Login.scss';
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.inputRef = React.createRef();
     this.state = {
-      username: "",
-      pin: "",
+      username: '',
+      pin: '',
     };
   }
   componentDidMount() {
@@ -17,7 +17,7 @@ class Login extends Component {
     return (
       <div className="login-page">
         <div className="login-page__form">
-          <form className="">
+          <form className="login-page__form__form-grid">
             <div className="login-page__form__input-group">
               <input
                 onChange={(e) => {
@@ -50,8 +50,8 @@ class Login extends Component {
                 console.log();
                 this.props.login(this.state.username, this.state.pin);
                 this.setState({
-                  username: "",
-                  pin: "",
+                  username: '',
+                  pin: '',
                 });
               }}
             >

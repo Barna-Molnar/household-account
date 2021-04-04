@@ -127,11 +127,7 @@
         background-color: #fff;
         background-color: #f7f7f7;
         box-shadow: 0 1rem 4rem rgba(0, 0, 0, 0.2);
-        // developig cards
         display: grid;
-        // @include respond(phone) {
-        //     grid-column: 5/7;
-        // }
         @include respond(phone-mini) {
             grid-column: 1/-1;
             grid-row: 2/3;
