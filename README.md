@@ -19,11 +19,12 @@ There is a loginPage and the application platform. On the platform you can uploa
 
 
 ## How to use?
-In the database I have ceated 4 accounts and the can be used in the app.You can log in only with the usernames, there is not any password provided.
-      ### John Miller => username : <b>jm<b>
-      ### Teresa Miller => username : <b>tm<b>
-      ### Katie Miller => username : <b>km<b>
-      ### Steven Miller => username : <b>sm<b>
+In the database I have ceated 4 accounts and the can be used in the app.You can log in only with the usernames, there is not any password provided.         
+   ###Users  
+        - John Miller => username : <b>jm<b>
+        - Teresa Miller => username : <b>tm<b>
+        - Katie Miller => username : <b>km<b>
+        - Steven Miller => username : <b>sm<b>
 
 ## Tests
 All the updataFunctions were tested with JEST.
