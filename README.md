@@ -34,7 +34,7 @@ In the database I have ceated 4 accounts and the can be used in the app.You can 
 ## Tests
 All the updataFunctions were tested with JEST.
 
-#### Anything else that seems useful
+
 
 
  © [Barnabas Molnar]()
