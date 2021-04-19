@@ -26,10 +26,10 @@ In the database I have ceated 4 accounts and the can be used in the app.You can 
 
 
 ## Users
-        - John Miller => username : **jm**
-        - Teresa Miller => username : **tm**
-        - Katie Miller => username : **km**
-        - Steven Miller => username : **sm**
+        - John Miller => username :  jm
+        - Teresa Miller => username : tm
+        - Katie Miller => username : km
+        - Steven Miller => username : sm
 
 ## Tests
 All the updataFunctions were tested with JEST.
